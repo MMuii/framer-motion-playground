@@ -1,22 +1,50 @@
-import React from "react"
-import { Link } from "gatsby"
-
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import React from "react";
+import { Link } from 'gatsby';
+import GalleryCard from '../components/GalleryCard';
+import Switch from '../components/Switch';
+import Test from '../components/Test';
 
 const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
+    <div className="gallery">
+        <div className="gallery__info">
+            <h1>framer motion<br />playground</h1>
+            <button><Link to="/tutorial">about</Link></button>
+        </div>
+        <div className="gallery__container">
+            <GalleryCard>
+                <Switch />
+            </GalleryCard>
+            <GalleryCard>
+                <Test />
+            </GalleryCard>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+            <div className="gallery__card">Karta 1</div>
+        </div>
     </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
 )
 
 export default IndexPage
