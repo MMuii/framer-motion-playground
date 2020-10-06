@@ -26,7 +26,7 @@ const Switch = () => {
 
     return (
         <div 
-            className="switch background dark"
+            className="switch background"
             data-darkmode={isOn}
         >
             <div 

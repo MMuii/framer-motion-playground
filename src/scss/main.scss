@@ -1,12 +1,10 @@
+@import "./variables.scss";
 @import "./gallery.scss";
 @import "./gallery-card.scss";
 @import "./utilities.scss";
 @import "./switch.scss";
 @import "./tutorial-page.scss";
 
-:root {
-    --font-black: #272727;
-}
 
 html {
     margin: 0;
@@ -76,6 +74,10 @@ main {
     min-height: 100%;
     background: rgb(253,252,251);
     background: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
+}
+
+pre {
+    border-radius: 8px;
 }
 
 .test-3 {

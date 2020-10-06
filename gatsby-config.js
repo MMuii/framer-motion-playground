@@ -34,7 +34,10 @@ module.exports = {
         options: {
             fonts: [
                 'lato\:400,700,900',
-                'poppins\:400,700,900'
+                'poppins\:400,700,900',
+                'inconsolata\:400',
+                'roboto\:400',
+                'open sans\:400'
             ]
         }
     }
