@@ -7,6 +7,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import FullPageContainer from '../components/FullPageContainer';
 import { data } from '../tutorials-data/switch-button';
+import ScrollIcon from '../icons/mousewheel.inline.svg';
 import 'swiper/swiper.scss';
 import 'swiper/components/pagination/pagination.scss';
 
@@ -46,11 +47,19 @@ const Tutorial = props => {
         return slides.map(({ id, content }, index) => {
             return (
                 <SwiperSlide key={index}>
-                    <FullPageContainer className="guide slide">
-                        {content}
-                        <motion.div>
-                            huj
-                        </motion.div>
+                    <FullPageContainer className="slide">
+                        <div className="slide__content">
+                           {content}
+                        </div>
+                        <div className="slide__scroll-icon-wrapper">
+                            <motion.div
+                                className="slide__scroll-icon-animated"
+                                animate={{ y: [0, 15] }}
+                                transition={{ duration: 1.2, yoyo: Infinity }}
+                            >
+                                <ScrollIcon />
+                            </motion.div>
+                        </div>
                     </FullPageContainer>
                 </SwiperSlide>
             )
@@ -61,8 +70,8 @@ const Tutorial = props => {
         <FullPageContainer className="tutorial">
             <div 
                 className="guide guide__wrapper" 
-                onMouseEnter={() => document.addEventListener('mousewheel', onMousewheel)}
-                onMouseLeave={() => document.removeEventListener('mousewheel', onMousewheel)}
+                // onMouseEnter={() => document.addEventListener('mousewheel', onMousewheel)}
+                // onMouseLeave={() => document.removeEventListener('mousewheel', onMousewheel)}
             >
                 <Swiper
                     onSwiper={swiper => setSwiper(swiper)}

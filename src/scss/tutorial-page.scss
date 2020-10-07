@@ -23,30 +23,50 @@
         .swiper-container {
             height: 100%;
         }
+    }
 
-        .slide {
-            padding: 40px;
-            overflow: scroll;
+    .slide {
+        box-sizing: border-box;
+        padding: 60px 10rem;
+        overflow: scroll;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
 
+        &__content {
             & > div {
                 margin-bottom: var(--guide-margin-bot);
             }
-
+    
             h1 {
                 font-size: 4rem;
                 font-weight: 900;
             }
-
+    
             h2 {
                 font-size: 1.6rem;
                 font-weight: 700;
             }
-
+    
             p {
                 font-size: 1.1rem;
                 font-family: 'open sans', sans-serif;
                 margin-bottom: 1rem;
                 line-height: 150%;
+            }
+        }
+
+        &__scroll-icon-wrapper {
+            display: grid;
+            place-items: center center;
+            height: 5rem;
+            margin-bottom: 7rem;
+        }
+
+        &__scroll-icon-animated {
+            svg {
+                fill: rgba($color: #272727, $alpha: .3);
+                height: 5rem;
             }
         }
     }

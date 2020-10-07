@@ -34,6 +34,9 @@ export const data = {
                     <div>
                         <p>On the right side of the page you can see completed component's code, both js and css stylesheet. Next steps will show you how to create such a button step by step.</p>
                     </div>
+                    <div>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore amet eos animi maxime, saepe, autem vero blanditiis quasi molestias omnis alias eius aut. In vel asperiores, dolor accusamus distinctio saepe unde iure doloremque iusto nulla ratione culpa tenetur assumenda, dolorum soluta repellat inventore reprehenderit corporis libero neque. Ea, modi sapiente consectetur asperiores dolor saepe beatae blanditiis tempora aspernatur quia quod animi iusto, velit ullam. Error exercitationem, soluta rem porro repudiandae dolor nihil veritatis labore animi voluptas dolorem voluptates eligendi sed illum assumenda expedita ratione velit nulla doloremque, quas at quibusdam deserunt! Aut, quidem soluta id unde qui magnam dolores aspernatur!</p>
+                    </div>
                 </>
             ),
             code: [
