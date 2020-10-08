@@ -1,117 +1,92 @@
 import React from 'react';
 import Switch from '../components/Switch';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 export const data = {
     files: [
         {
             id: 0,
-            name: 'Switch',
+            name: 'Switch', 
             language: 'javascript',
-            extension: 'js'
-        },
-        {
-            id: 1,
-            name: 'switch',
-            language: 'css',
-            extension: 'scss'
-        }
-    ],
-    slides: [
-        {
-            id: 0,
-            content: (
-                <>
-                    <div>
-                        <h1>Switch button</h1>
-                        <h2>Simple switch button, styled as theme changer</h2>
-                    </div>
-                    <div className="guide__component-wrapper">
-                        <Switch />
-                    </div>
-                    <div>
-                        <p>In this tutorial you will learn how to recreate this very basic switch button using recently added <code>layout</code> prop, fontawesome free icons and some simple css code. I styled the component as a theme changing button, but of course you can easily change its purpuose by picking different gradients or icons.</p>
-                    </div>
-                    <div>
-                        <p>On the right side of the page you can see completed component's code, both js and css stylesheet. Next steps will show you how to create such a button step by step.</p>
-                    </div>
-                    <div>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore amet eos animi maxime, saepe, autem vero blanditiis quasi molestias omnis alias eius aut. In vel asperiores, dolor accusamus distinctio saepe unde iure doloremque iusto nulla ratione culpa tenetur assumenda, dolorum soluta repellat inventore reprehenderit corporis libero neque. Ea, modi sapiente consectetur asperiores dolor saepe beatae blanditiis tempora aspernatur quia quod animi iusto, velit ullam. Error exercitationem, soluta rem porro repudiandae dolor nihil veritatis labore animi voluptas dolorem voluptates eligendi sed illum assumenda expedita ratione velit nulla doloremque, quas at quibusdam deserunt! Aut, quidem soluta id unde qui magnam dolores aspernatur!</p>
-                    </div>
-                </>
-            ),
-            code: [
-`import React, { useState } from 'react';
+            extension: 'js',
+            code: `import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Switch = () => {
-const [isOn, setIsOn] = useState(false);
-const toggleSwitch = () => setIsOn(!isOn);
+    const [isOn, setIsOn] = useState(false);
+    const toggleSwitch = () => setIsOn(!isOn);
 
-const transition = {
-    duration: .2
-}
-
-const variants = {
-    enter: {
-        y: -30,
-        opacity: 0
-    },
-    animate: {
-        y: 0,
-        opacity: 1
-    },
-    exit: {
-        y: 30,
-        opacity: 0
+    const transition = {
+        duration: .2
     }
-}
 
-return (
-    <div 
-        className="switch background dark"
-        data-darkmode={isOn}
-    >
+    const variants = {
+        enter: {
+            y: -30,
+            opacity: 0
+        },
+        animate: {
+            y: 0,
+            opacity: 1
+        },
+        exit: {
+            y: 30,
+            opacity: 0
+        }
+    }
+
+    return (
         <div 
-            className="switch-container" 
-            onClick={toggleSwitch}
-            style={{ justifyContent: isOn ? 'flex-end' : 'flex-start' }}
+            className="switch background dark"
+            data-darkmode={isOn}
         >
-            <motion.div 
-                layout 
-                className="handle"
+            <div 
+                className="switch-container" 
+                onClick={toggleSwitch}
+                style={{ justifyContent: isOn ? 'flex-end' : 'flex-start' }}
             >
-                <AnimatePresence exitBeforeEnter initial={false}>
-                    {isOn 
-                    ? (
-                        <motion.i 
-                            className="icon far fa-moon"
-                            key="moon"
-                            variants={variants}
-                            initial="enter"
-                            animate="animate"
-                            exit="exit" 
-                            transition={transition}
-                        />
-                    )
-                    : (
-                        <motion.i 
-                            className="icon far fa-sun"
-                            key="sun"
-                            variants={variants}
-                            initial="enter"
-                            animate="animate"
-                            exit="exit" 
-                            transition={transition}
-                        />
-                    )}
-                </AnimatePresence>
-            </motion.div>
+                <motion.div 
+                    layout 
+                    className="handle"
+                >
+                    <AnimatePresence exitBeforeEnter initial={false}>
+                        {isOn 
+                        ? (
+                            <motion.i 
+                                className="icon far fa-moon"
+                                key="moon"
+                                variants={variants}
+                                initial="enter"
+                                animate="animate"
+                                exit="exit" 
+                                transition={transition}
+                            />
+                        )
+                        : (
+                            <motion.i 
+                                className="icon far fa-sun"
+                                key="sun"
+                                variants={variants}
+                                initial="enter"
+                                animate="animate"
+                                exit="exit" 
+                                transition={transition}
+                            />
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </div>
         </div>
-    </div>
-
-)
-                }`,
-                `.switch {
+    )
+}`
+        },
+        {
+            id: 1,
+            name: 'switch', 
+            language: 'css',
+            extension: 'scss',
+            code: `.switch {
     transition: all .3s;
 
     &.background {
@@ -166,38 +141,34 @@ return (
         }
     }
 }`
-            ]
-        },
-        {
-            id: 1,
-            content: (
-                <>
-                    <div>page 2</div>
-                </>
-            ),
-            code: [
-                `import React from 'react';`,
-                `.tutorial {
-
-                }`
-            ]
         }
-    ]
+    ],
+    content: (
+        <>
+            <div>
+                <h1>Switch button</h1>
+                <h2>Simple switch button, styled as theme changer</h2>
+            </div>
+            <div className="guide__component-wrapper">
+                <Switch />
+            </div>
+            <div>
+                <p>In this tutorial you will learn how to recreate this very basic switch button using recently added <code>layout</code> prop, fontawesome free icons and some simple css code. I styled the component as a theme changing button, but of course you can easily change its purpuose by picking different gradients or icons.</p>
+            </div>
+            <div>
+                <p>On the right side of the page you can see completed component's code, both js and css stylesheet. Next steps will show you how to create such a button step by step.</p>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore amet eos animi maxime, saepe, autem vero blanditiis quasi molestias omnis alias eius aut. In vel asperiores, dolor accusamus distinctio saepe unde iure doloremque iusto nulla ratione culpa tenetur assumenda, dolorum soluta repellat inventore reprehenderit corporis libero neque. Ea, modi sapiente consectetur asperiores dolor saepe beatae blanditiis tempora aspernatur quia quod animi iusto, velit ullam. Error exercitationem, soluta rem porro repudiandae dolor nihil veritatis labore animi voluptas dolorem voluptates eligendi sed illum assumenda expedita ratione velit nulla doloremque, quas at quibusdam deserunt! Aut, quidem soluta id unde qui magnam dolores aspernatur!</p>
+            </div>
+            <div>
+                <SyntaxHighlighter language="javascript" style={atomOneDark}>
+                    {'const test = () => return false'}
+                </SyntaxHighlighter>
+            </div>
+            <div>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Similique vero soluta omnis ea natus veniam delectus aspernatur consectetur expedita nisi animi nobis, voluptas quisquam incidunt, inventore quae ex, ratione mollitia tenetur assumenda enim. Porro ducimus vero nam quia ad. Similique.</p>
+            </div>
+        </>
+    )
 }
-
-export const files = [
-    {
-        id: 0,
-        name: 'Switch',
-        language: 'javascript',
-        extension: 'js',
-        code: ''
-    },
-    {
-        id: 1,
-        name: 'switch',
-        language: 'css',
-        extension: 'scss',
-        code: ''
-    }
-]

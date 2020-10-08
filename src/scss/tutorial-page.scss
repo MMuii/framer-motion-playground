@@ -10,30 +10,12 @@
 
         &__wrapper {
             height: 100%;
-            overflow: hidden;
+            overflow: scroll;
         }
-
-        &__component-wrapper {
-            overflow: hidden;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .swiper-container {
-            height: 100%;
-        }
-    }
-
-    .slide {
-        box-sizing: border-box;
-        padding: 60px 10rem;
-        overflow: scroll;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
 
         &__content {
+            padding: 60px 10rem;
+
             & > div {
                 margin-bottom: var(--guide-margin-bot);
             }
@@ -56,22 +38,18 @@
             }
         }
 
-        &__scroll-icon-wrapper {
-            display: grid;
-            place-items: center center;
-            height: 5rem;
-            margin-bottom: 7rem;
+        &__component-wrapper {
+            overflow: hidden;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        &__scroll-icon-animated {
-            svg {
-                fill: rgba($color: #272727, $alpha: .3);
-                height: 5rem;
-            }
+        .swiper-container {
+            height: 100%;
         }
     }
 
-    
     ::-webkit-scrollbar-track {
         background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 35%, var(--scroll-color) 55%, var(--body-bg-color) 61%, var(--body-bg-color) 100%);
     }
@@ -86,6 +64,10 @@
         border-radius: 4px;
     }
 
+    code {
+        font-family: 'Inconsolata', monospace;
+    }
+
     .code {
         &__wrapper {
             overflow-y: scroll;
@@ -93,7 +75,6 @@
             padding: 0 20px 20px 20px;
             color: white;
             background-color: #434a56;
-            font-family: 'Inconsolata', monospace;
         }
 
         &__navbar {
@@ -104,12 +85,18 @@
 
             background: rgba(30, 30, 30, 1);
             height: 40px;
-            // width: 100%;
-            // margin-bottom: 20px;
             border-radius: 0 0 8px 8px;
             display: flex;
             align-items: center;
             overflow: hidden;
+
+            & > span {
+                position: relative;
+
+                color: rgba($color: #fff, $alpha: .6);
+                border-right: 1px solid rgba($color: #fff, $alpha: .6);
+                padding: 0 20px;
+            }
         }
 
         &__file {
@@ -119,6 +106,10 @@
             display: flex;
             align-items: center;
             cursor: pointer;
+
+            &:first-of-type {
+                margin-left: 20px;
+            }
 
             &.selected {
                 background: rgba(255, 255, 255, .2);

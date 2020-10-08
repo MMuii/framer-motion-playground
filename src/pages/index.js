@@ -14,9 +14,9 @@ const IndexPage = () => (
             <GalleryCard>
                 <Switch />
             </GalleryCard>
-            <GalleryCard>
+            {/* <GalleryCard>
                 <Test />
-            </GalleryCard>
+            </GalleryCard> */}
             <div className="gallery__card">Karta 1</div>
             <div className="gallery__card">Karta 1</div>
             <div className="gallery__card">Karta 1</div>
