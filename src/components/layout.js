@@ -7,12 +7,18 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const variants = {
     initial: {
+        // clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' //poziomo
+        // clipPath: 'circle(0.0% at 50% 50%)' //kółko
         clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)' //NIEWIDOCZNY LEWO
     },
     animate: {
+        // clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 0% 100%)'
+        // clipPath: 'circle(70.7% at 50% 50%)'
         clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
     },
     exit: {
+        // clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)'
+        // clipPath: 'circle(0.0% at 50% 50%)'
         clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' //NIEWIDOCZNY PRAWO
     }
 }

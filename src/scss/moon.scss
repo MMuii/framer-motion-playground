@@ -1,0 +1,100 @@
+.moon {
+    &__glow {
+        height: 150px;
+        width: 150px;
+        position: absolute;
+        top: 10px;
+        left: -55px;
+        border-radius: 50%;
+        background: rgba($color: #fff, $alpha: .15);
+        box-shadow: 0px 0px 161px 0px rgba($color: #fff, $alpha: .6);
+    }
+
+    &__crescent {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+        box-shadow: 25px 25px 0 0 #d0d5d2;
+        margin-top: -10px;
+        margin-left: -70px;
+    }
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: white;
+    animation: glow 7s infinite;
+
+    &:nth-child(2n) {
+        animation-delay: 3s;
+    }
+
+    &:nth-child(1) {
+        top: 150px;
+        left: 150px; 
+    }
+
+    &:nth-child(2) {
+        top: 100px;
+        left: 100px; 
+    }
+    
+    &:nth-child(3) {
+        top: 153px;
+        left: 279px; 
+    }
+    
+    &:nth-child(4) {
+        top: 54px;
+        left: 68px; 
+    }
+
+    &:nth-child(5) {
+        top: 78px;
+        left: 256px; 
+    }
+
+    &:nth-child(6) {
+        top: 283px;
+        left: 34px; 
+    }
+
+    &:nth-child(7) {
+        top: 204px;
+        left: 56px; 
+    }
+
+    &:nth-child(8) {
+        top: 234px;
+        left: 192px; 
+    }
+
+    &:nth-child(9) {
+        top: 30px;
+        left: 192px; 
+    }
+
+    &:nth-child(10) {
+        top: 189px;
+        left: 200px; 
+    }
+
+    &:nth-child(11) {
+        top: 289px;
+        left: 281px; 
+    }
+
+    &:nth-child(12) {
+        top: 270px;
+        left: 140px; 
+    }
+}
+
+@keyframes glow {
+    0% { opacity: 1 }
+    50% { opacity: .2 }
+    100% { opacity: 1 }
+}

@@ -1,0 +1,126 @@
+.cloud {
+    background: white;
+    height: 45px;
+    width: 115px;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    box-shadow: var(--shadow-md);
+
+    &::after, &::before {
+        background-color: inherit;
+        content: '';
+        position: absolute;
+    }
+
+    &::after {
+        height: 40px;
+        width: 40px;
+        top: -15px;
+        left: 20px;
+        border-radius: 100px;
+    }
+
+    &::before {
+        height: 50px;
+        width: 50px;
+        top: -25px;
+        left: 50px;
+        border-radius: 100px;
+    }
+
+    .rain-stream {
+        width: 1vmin;
+        height: 160vmin;
+        background: repeating-linear-gradient(
+          #5F9ECC, 
+          #5F9ECC 2vmin, 
+          transparent 2vmin, 
+          transparent 5vmin
+        );
+        margin-right: 3vmin;
+        animation: rain 2s infinite linear;
+    }
+    
+    @keyframes rain {
+        0% {
+            transform: translateY(-80vmin);
+          }
+          
+          100% {
+            transform: none;
+          }
+    }
+}
+
+.test-cloud {
+    background: orange;
+    height: 45px;
+    width: 115px;
+    border-radius: 100px;
+    position: absolute;
+    top: 25px;
+    box-shadow: var(--shadow-md);
+
+    &::after, &::before {
+        background: orange;
+        content: '';
+        position: absolute;
+    }
+
+    &::after {
+        height: 40px;
+        width: 40px;
+        top: -15px;
+        left: 20px;
+        border-radius: 100px;
+    }
+
+    &::before {
+        height: 50px;
+        width: 50px;
+        top: -25px;
+        left: 50px;
+        border-radius: 100px;
+    }
+
+    .rain {
+        &__container {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            transform-origin: top left;
+            transform: rotate(25deg);
+            z-index: -1;
+            overflow: hidden;
+            display: flex;
+        }
+
+        &__stream {
+            width: 2px;
+            height: 160vmin;
+            background: repeating-linear-gradient(
+            #5F9ECC, 
+            #5F9ECC 2vmin, 
+            transparent 2vmin, 
+            transparent 5vmin
+            );
+            margin-right: 5px;
+            animation: rain 4s infinite linear;
+            
+            &:nth-child(2) {
+                animation-delay: .3s;
+            }
+        }
+    }
+    
+    @keyframes rain {
+        0% {
+            transform: translateY(-80vmin);
+          }
+          
+          100% {
+            transform: none;
+          }
+    }
+}

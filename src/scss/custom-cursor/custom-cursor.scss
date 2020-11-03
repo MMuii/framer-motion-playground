@@ -1,0 +1,71 @@
+.custom-cursor {
+    width: 100%;
+    height: 100%;
+    
+    background: var(--font-black);
+    display: grid;
+    justify-content: center;
+
+    cursor: none;
+
+    .cursor {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 32px;
+        width: 32px;
+        border-radius: 100%;
+        background: #d9d9d9;
+        transform: translate(-50%, -50%);
+
+        transition: all .1s ease-in-out;
+        transition-property: width, height, border;
+        will-change: width, height, transform, border;
+        pointer-events: none;
+
+        &.fb, &.insta, &.twitter {
+            height: 60px;
+            width: 60px;
+            background: transparent;
+            border: solid 3px var(--font-black);
+        }
+
+        &.fb {
+            border: solid 5px #3b5998;
+        }
+
+        &.insta {
+            border: solid 5px #C13584;
+        }
+
+        &.twitter {
+            border: solid 5px #1DA1F2;
+        }
+    }
+
+    .icons-wrapper {
+        width: 40%;
+        height: 100%;
+        display: grid;
+        place-items: center center;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        span {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center center;
+
+            &:hover {
+                i {
+                    color: #d9d9d9;
+                }
+            }
+        }
+
+        i {
+            color: #4d4d4d;
+            font-size: 32px;
+        }
+    }
+}

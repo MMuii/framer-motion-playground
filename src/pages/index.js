@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from 'gatsby';
 import GalleryCard from '../components/GalleryCard';
 import Switch from '../components/Switch';
-import Test from '../components/Test';
+import TimeOfDay from '../components/TimeOfDay';
+import ClipPathTransition from '../components/ClipPathTransition';
+import ElementScroll from '../components/ElementScroll';
+import CustomCursor from '../components/custom-cursor/CustomCursor';
+import InfiniteCards from '../components/infinite-cards/InfiniteCards';
 
 const IndexPage = () => (
     <div className="gallery">
@@ -14,35 +18,35 @@ const IndexPage = () => (
             <GalleryCard>
                 <Switch />
             </GalleryCard>
-            {/* <GalleryCard>
+
+            <GalleryCard>
+                <InfiniteCards />
+            </GalleryCard>
+
+            <GalleryCard className="c3 r2">
+                <ClipPathTransition />
+            </GalleryCard>
+
+            <GalleryCard className="r3">
+                <ElementScroll />
+            </GalleryCard>
+            
+            <GalleryCard className="c2 r2">
+                <CustomCursor />
+            </GalleryCard>
+
+            {/* <GalleryCard className="c2 r2">
+                <TimeOfDay />
+            </GalleryCard> */}
+
+            {/* <GalleryCard className="c2 r2">
+                <Rain />
+            </GalleryCard>
+
+            <GalleryCard>
                 <Test />
             </GalleryCard> */}
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
-            <div className="gallery__card">Karta 1</div>
+
         </div>
     </div>
 )

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-const GalleryCard = ({ children }) => {
+const GalleryCard = props => {
+    const { children, className, noOverflow, ...restOfProps} = props;
+
     return (
-        <div className="gallery-card container">
+        <div className={`gallery-card container ${className || ''}`} {...restOfProps}>
             <div className="gallery-card__content-wrapper">
                 {children}
             </div>
