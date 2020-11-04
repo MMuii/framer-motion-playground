@@ -1,49 +1,29 @@
-import React from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import React, { useState } from 'react';
+import { graphql } from 'gatsby';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import FullPageContainer from '../components/FullPageContainer';
 
-const Tutorial = ({ pageContext }) => {
-    const { files, content } = pageContext;
-    const [selectedFile, setSelectedFile] = useState(files[0]);
-
-    const renderFiles = () => {
-        return files.map(({id, name, extension}, index) => {
-            const isSelected = selectedFile.id === id ? 'selected' : '';
-
-            return (
-                <div 
-                    key={index} 
-                    className={`code__file code__file--${extension} ${isSelected}`}
-                    onClick={() => setSelectedFile(files[index])}
-                >
-                    {name}<span>.{extension}</span>
-                </div>
-            )
-        });
+export const query = graphql`
+    query($pathSlug: String!) {
+        mdx(frontmatter: { path: { eq: $pathSlug } }) {
+            frontmatter {
+                title
+                path
+            }
+            body
+        }
     }
-    
+`;
+
+export default function Template({ data: { mdx: post } }) {
+    const { title } = post.frontmatter;
+    const { body } = post;
+
     return (
         <FullPageContainer className="tutorial">
-            <div className="guide guide__wrapper">
-                <div className="guide__content">
-                    {content}
-                </div>
-            </div>
-            <div className="code__wrapper">
-                <div className="code__navbar">
-                    <span>Completed code</span>
-                    {renderFiles()}
-                </div>
-                <SyntaxHighlighter 
-                    language={selectedFile.language}
-                    style={atomOneDark} 
-                    showLineNumbers
-                    className="code__content"
-                >
-                    {selectedFile.code}
-                </SyntaxHighlighter>
-            </div>
+            <MDXRenderer>
+                {body}
+            </MDXRenderer>
         </FullPageContainer>
-    )
+    );
 }

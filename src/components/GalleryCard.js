@@ -10,7 +10,7 @@ const GalleryCard = props => {
                 {children}
             </div>
             <div className="gallery-card__buttons-wrapper">
-                <Link to="/tutorial">
+                <Link to="/tutorial/switch-button">
                     <span>Tutorial</span> 
                     <i className="fas fa-code"/>
                 </Link>
