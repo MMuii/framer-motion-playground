@@ -7,6 +7,7 @@ import ClipPathTransition from '../components/ClipPathTransition';
 import ElementScroll from '../components/ElementScroll';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
+import Text3d from '../components/text-3d/Text3d';
 
 const IndexPage = () => (
     <div className="gallery">
@@ -27,12 +28,16 @@ const IndexPage = () => (
                 <ClipPathTransition />
             </GalleryCard>
 
-            <GalleryCard className="r3">
+            {/* <GalleryCard className="r3">
                 <ElementScroll />
-            </GalleryCard>
+            </GalleryCard> */}
             
             <GalleryCard className="c2 r2">
                 <CustomCursor />
+            </GalleryCard>
+
+            <GalleryCard className="c4 r2">
+                <Text3d />
             </GalleryCard>
 
             {/* <GalleryCard className="c2 r2">

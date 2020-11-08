@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@900&display=swap');
+
+.text-3d {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center center;
+    overflow: hidden;
+    position: relative;
+    background: #2BAE66;
+
+    input {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+        color: transparent;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .perspective {
+        transform: rotate(-30deg) skew(24deg);
+        pointer-events: none;
+        height: 100%;
+        width: 100%;
+    }
+
+    .dynamic-text {
+        position: absolute;
+        width: 70%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    
+        span {
+            font-family: 'Source Code Pro', monospace;
+            position: relative;
+            color: #FCF6F5;
+            font-weight: 700;
+            font-size: 80px;
+            text-shadow: 0px 0px 0 #d9d9d9, -1px 1px 0 #d9d9d9,
+                        -2px 2px 0 #d9d9d9, -3px 3px 0 #d9d9d9,
+                        -4px 4px 0 #d9d9d9, -5px 5px 0 #d9d9d9,
+                        -6px 6px 0 #d9d9d9, -7px 7px 0 #d9d9d9,
+                        -8px 8px 0 #d9d9d9, -9px 9px 0 #d9d9d9, 
+                        -10px 10px 0 #d9d9d9, -11px 11px 0 #d9d9d9,
+                        -12px 12px 0 #d9d9d9, -13px 13px 0 #d9d9d9,
+                        -14px 14px 0 #d9d9d9, -15px 15px 0 #d9d9d9,
+                        -16px 16px 0 #d9d9d9, -17px 17px 0 #d9d9d9, 
+                        -18px 18px 0 #d9d9d9, -19px 19px 0 #d9d9d9,
+                        -20px 20px 0 #d9d9d9, -21px 21px 0 #d9d9d9;
+
+            &:before {
+                content: attr(data-text);
+                position: absolute;
+                top: 25px;
+                left: -25px;
+                color: rgba(0, 0, 0, 0.3);
+                text-shadow: none;
+                filter: blur(8px);
+                z-index: -1;
+            }
+        }
+    }
+
+    .pointer {
+        position: absolute;
+        height: 80px;
+        width: 2px;
+        background: rgba(0, 0, 0, .3);
+        top: 44%;
+        left: 67%;
+        z-index: -1000;
+        animation: blink 1s infinite step-end;
+    }
+
+    .placeholders {
+        width: 100%;
+        height: 100%;
+
+        .placeholder {
+            position: absolute;
+
+            .marquee {
+                margin: 0 auto;
+                white-space: nowrap;
+                position: absolute;
+            }
+            
+            .marquee span {
+                display: inline-block;
+                padding-left: 100%;
+                color: rgba($color: #fff, $alpha: .3);
+                font-weight: 700;
+            }
+            
+            &:nth-child(odd) span {
+                animation: marquee-left 40s linear infinite;
+            }
+            
+    
+            &:nth-child(even) span {
+                animation: marquee-right 40s linear infinite;
+            }
+
+            .marquee1 span {
+                animation-delay: -20s;
+            }
+            
+            .marquee2 span {
+                animation-delay: 0s;
+            }
+        }
+    }
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-right {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
