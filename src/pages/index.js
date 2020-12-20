@@ -8,6 +8,7 @@ import ElementScroll from '../components/ElementScroll';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
 import Text3d from '../components/text-3d/Text3d';
+import CameraDecomposition from '../components/camera-decomposition/CameraDecomposition';
 
 const IndexPage = () => (
     <div className="gallery">
@@ -36,8 +37,12 @@ const IndexPage = () => (
                 <CustomCursor />
             </GalleryCard>
 
-            <GalleryCard className="c4 r2">
+            <GalleryCard className="c3 r2">
                 <Text3d />
+            </GalleryCard>
+
+            <GalleryCard className="c2 r3">
+                <CameraDecomposition />
             </GalleryCard>
 
             {/* <GalleryCard className="c2 r2">

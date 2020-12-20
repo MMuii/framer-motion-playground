@@ -1,0 +1,127 @@
+.camera-decomposition {
+    background: antiquewhite;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transition: all .4s;
+    perspective: 600px;
+    
+    .card {
+        transition: transform .1s, box-shadow .3s, top .2s, left .2s;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        background: #eeffff;
+        height: calc(100% - 80px);
+        width: calc(100% - 80px);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .title, .subtitle {
+        position: absolute;
+        background: rgba($color: #000000, $alpha: .1);
+        transition: transform .1s, box-shadow .3s, top .2s, bottom .2s;
+        color: #323232;
+        padding: 10px; 
+    }
+
+    .title {
+        left: 25px;
+        font-weight: 900; 
+        font-size: 26px;
+    }
+
+    .subtitle {
+        right: 25px;
+        font-weight: 700; 
+        font-size: 18px;
+    }
+
+    .mountain {
+        position: absolute;
+        width: 100%;
+
+        &--1 {
+            top: 45%;
+            left: 5%;
+            z-index: 10;
+
+            svg {
+                path {
+                    &:nth-of-type(1) {
+                        fill: #d1d1e0;
+                    }
+
+                    &:nth-of-type(2) {
+                        fill: #efeff5;
+                    }
+                }
+            }
+        }
+
+        &--2 {
+            top: 55%;
+            left: 30%;
+
+            svg {
+                path {
+                    &:nth-of-type(1) {
+                        fill: #d6d6e3;
+                    }
+
+                    &:nth-of-type(2) {
+                        fill: #f1f1f6;
+                    }
+                }
+            }
+        }
+
+        &--3 {
+            top: 60%;
+            left: -35%;
+
+            svg {
+                path {
+                    &:nth-of-type(1) {
+                        fill: #dadae6;
+                    }
+
+                    &:nth-of-type(2) {
+                        fill: #f2f2f7;
+                    }
+                }
+            }
+        }   
+
+        &--4 {
+            top: 65%;
+            left: -20%;
+            svg {
+                path {
+                    &:nth-of-type(1) {
+                        fill: #dfdfe9;
+                    }
+
+                    &:nth-of-type(2) {
+                        fill: #f4f4f8;
+                    }
+                }
+            }
+        }
+    }
+
+    .cloud {
+        position: absolute;
+        top: 50%;
+        animation: cloud 25s linear infinite;
+        transform: scale(0.7);
+    }
+}
+
+@keyframes cloud {
+    from { left: -50%; }
+    to { left: 100%; }
+}
