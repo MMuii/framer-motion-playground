@@ -1,4 +1,4 @@
-.camera-decomposition {
+.rotating-card {
     background: antiquewhite;
     height: 100%;
     width: 100%;
@@ -114,10 +114,37 @@
     }
 
     .cloud {
+        background: white;
+        height: 45px;
+        width: 115px;
+        border-radius: 100px;
         position: absolute;
         top: 50%;
+        box-shadow: var(--shadow-md);
         animation: cloud 25s linear infinite;
         transform: scale(0.7);
+    
+        &::after, &::before {
+            background-color: inherit;
+            content: '';
+            position: absolute;
+        }
+    
+        &::after {
+            height: 40px;
+            width: 40px;
+            top: -15px;
+            left: 20px;
+            border-radius: 100px;
+        }
+    
+        &::before {
+            height: 50px;
+            width: 50px;
+            top: -25px;
+            left: 50px;
+            border-radius: 100px;
+        }
     }
 }
 

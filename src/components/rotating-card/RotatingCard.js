@@ -3,7 +3,7 @@ import { useMousePositionWithinElement } from '../../hooks/useMousePositionWithi
 
 const mountains = [4, 3, 2, 1];
 
-const CameraDecomposition = () => {
+const RotatingCard = () => {
     const containerRef = useRef();
     const [isHovering, setIsHovering] = useState(false);
     const [[x, y], onMouseMove, setPosition] = useMousePositionWithinElement(
@@ -19,7 +19,7 @@ const CameraDecomposition = () => {
 
     return (
         <div 
-            className="camera-decomposition"
+            className="rotating-card"
             ref={containerRef}
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => {
@@ -71,4 +71,4 @@ const CameraDecomposition = () => {
     )
 }
 
-export default CameraDecomposition;
+export default RotatingCard;

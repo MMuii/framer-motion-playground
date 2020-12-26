@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
+import { motion } from 'framer-motion';
 
 const GalleryCard = props => {
+    const [hovering, setHovering] = useState(false);
     const { children, className, noOverflow, ...restOfProps} = props;
 
     return (
-        <div className={`gallery-card container ${className || ''}`} {...restOfProps}>
+        <div 
+            className={`gallery-card container ${className || ''}`} 
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => setHovering(false)}
+            {...restOfProps}
+        >
             <div className="gallery-card__content-wrapper">
                 {children}
             </div>
