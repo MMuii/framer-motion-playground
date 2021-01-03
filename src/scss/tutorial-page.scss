@@ -10,19 +10,43 @@
 
         &__wrapper {
             height: 100%;
-            overflow: scroll;
+            overflow: auto;
+        }
+
+        &__scroll-top {
+            position: fixed;
+            left: 50%;
+            top: 90%;
+            opacity: 1;
+            cursor: pointer;
         }
 
         &__content {
             padding: 60px 10rem;
 
+            p {
+                code {
+                    font-family: 'Inconsolata', monospace;
+                    font-weight: 700;
+                }
+            }
+
+            ul {
+                padding-left: 3rem;
+                list-style-type: disc;
+
+                li {
+                    padding-bottom: .5rem;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
             & > div, h2, p, pre {
                 margin-bottom: var(--guide-margin-bot);
             }
-
-            // & > div {
-            //     margin-bottom: var(--guide-margin-bot);
-            // }
     
             h1 {
                 font-size: 4rem;
@@ -37,7 +61,7 @@
             p {
                 font-size: 1.1rem;
                 font-family: 'open sans', sans-serif;
-                line-height: 150%;
+                line-height: 1.5;
             }
         }
 
@@ -68,14 +92,18 @@
     }
 
     code {
-        font-family: 'Inconsolata', monospace;
+        &.language-css {
+            span {
+                min-width: 2em !important;
+            }
+        }
     }
 
     .code {
         &__wrapper {
             overflow-y: scroll;
             height: 100%;
-            padding: 0 20px 20px 20px;
+            padding: 20px;
             color: white;
             background-color: #434a56;
         }

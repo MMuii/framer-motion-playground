@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'gatsby';
-import { motion } from 'framer-motion';
 
 const GalleryCard = props => {
     const [hovering, setHovering] = useState(false);
@@ -8,10 +7,10 @@ const GalleryCard = props => {
 
     return (
         <div 
-            className={`gallery-card container ${className || ''}`} 
+            className={`gallery-card container ${className || ''}`} {...restOfProps}
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)}
-            {...restOfProps}
+            style={{ zIndex: hovering ? 10 : 1 }}
         >
             <div className="gallery-card__content-wrapper">
                 {children}

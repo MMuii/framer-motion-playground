@@ -18,9 +18,9 @@
                 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             }
 
-            // .gallery-card__buttons-wrapper {
-            //     top: calc(100% - 10px);
-            // }
+            .gallery-card__buttons-wrapper {
+                top: calc(100% - 10px);
+            }
         }
     }
 
@@ -49,6 +49,7 @@
         box-sizing: border-box;
         padding-top: 10px;
         transition: all .3s;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
         display: grid;
         grid-template-columns: 1fr;
