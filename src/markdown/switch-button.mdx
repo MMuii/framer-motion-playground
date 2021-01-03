@@ -5,11 +5,9 @@ title: "Switch button"
 
 import Switch from '../components/Switch';
 import Guide from '../components/Guide';
-import { files, codeFragments } from '../tutorials-data/switch-button';
 import CodeRenderer from '../components/CodeRenderer';
 import CodeFragment from '../components/CodeFragment';
-
-<!-- TODO - trzeba dodać data-darkmode w containerze -->
+import { files, codeFragments } from '../tutorials-data/switch-button';
 
 <Guide>
     <h1>Switch button</h1>
@@ -20,23 +18,23 @@ import CodeFragment from '../components/CodeFragment';
     <p>In this tutorial you will learn how to recreate this very basic switch button using framer motion's <code>layout</code> prop, fontawesome free icons and some simple css code. I styled the component as a theme changing button, but of course you can easily change its purpuose by picking different gradients or icons.</p>
     <p>On the right side of the page you can see completed component's code, both js component and css stylesheet. Next steps will show you how to create such a button step by step.</p>
     <p>Let's start with necessary imports and simple functional component with some basic state logic, which we will use later to store button's state and change its style accordingly.</p>
-    <CodeFragment language="javascript" style={tomorrow}>
+    <CodeFragment language="javascript">
         {codeFragments[0]}
     </CodeFragment>
     <p>There's not much to explain at the moment. Class names speak for themselves: <code>container</code> is the container with gradient background, and <code>handle</code> is... well, the handle. Lets wire up some logic to the container so we can toggle the state by clicking the button.</p>
-    <CodeFragment language="javascript" style={tomorrow}>
+    <CodeFragment language="javascript">
         {codeFragments[1]}
     </CodeFragment>
     <p>That looks better! Now, by clicking the button we can change its state to the opposite. Also, we added some conditional styling. If button is on - handle will be justified to the right corner. If not, it will stick to the left. <code>data-darkmode</code> allows us to change button's background via css attribute selector. Well, at this point we have perfectly working button, but there aren't any animations. Everything will change, when we add one magic prop to handle...</p>
-    <CodeFragment language="javascript" style={tomorrow}>
+    <CodeFragment language="javascript">
         {codeFragments[2]}
     </CodeFragment>
     <p>That's all! Handle's <code>layout</code> prop does all the magic for us. Of course, to make it working we had to make handle a motion component, instead of regular div. By setting <code>layout</code> to true on a motion component, we made it automatically animating any layout changes. So, everything should make sense now. By clicking on the button we switch its state. Justification is dependent on the state, so it changes to the opposite aswell, now with nice, smooth animation. Now, there is only one thing left to implement - icons on the handle.</p>
-    <CodeFragment language="javascript" style={tomorrow}>
+    <CodeFragment language="javascript">
         {codeFragments[3]}
     </CodeFragment>
     <p>By adding <code>i</code> tag with conditional classes we make icons change as we toggle the button. But there is still nothing animating on our handle. Let's change that.</p>
-    <CodeFragment language="javascript" style={tomorrow}>
+    <CodeFragment language="javascript">
         {codeFragments[4]}
     </CodeFragment>
     <p>As you can see, a lot has changed so let me explain everything step by step. For now, ignore <code>AnimatePresence</code> component. Firstly, we had to convert <code>i</code> to a motion component, to make anything animate.</p>
