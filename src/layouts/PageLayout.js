@@ -23,7 +23,8 @@ const variants = {
     }
 }
 
-const Layout = ({ children, location }) => {
+const PageLayout = ({ children, location }) => {
+    console.log('location', location)
     return (
         <AnimatePresence initial={false} exitBeforeEnter>
             <motion.main 
@@ -40,4 +41,4 @@ const Layout = ({ children, location }) => {
     )
 }
 
-export default Layout;
+export default PageLayout;

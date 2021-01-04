@@ -42,8 +42,8 @@ const Switch = () => {
   height: 40px;
   width: 100px;
   background-image: radial-gradient(circle farthest-corner at 10% 20%, 
-                                    rgba(253,203,50,1) 0%, 
-                                    rgba(244,56,98,1) 100.2%);
+                    rgba(253,203,50,1) 0%, 
+                    rgba(244,56,98,1) 100.2%);
   border-radius: 25px;
   display: flex;
   align-items: center;

@@ -1,11 +1,11 @@
 import React from 'react';
-import Layout from './src/components/Layout';
+import PageLayout from './src/layouts/PageLayout';
 
 import './src/scss/main.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 export const wrapPageElement = ({ element, props }) => {
-    return <Layout {...props}>{element}</Layout>;
+    return <PageLayout {...props}>{element}</PageLayout>;
 }
 
 /**
