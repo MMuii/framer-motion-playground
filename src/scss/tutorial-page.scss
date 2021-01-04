@@ -72,8 +72,19 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        .swiper-container {
-            height: 100%;
+        #disqus_thread {
+            margin-top: calc(2 * var(--guide-margin-bot));
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: calc(-1 * var(--guide-margin-bot));
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: rgba($color: #272727, $alpha: .2);
+            }
         }
     }
 

@@ -5,11 +5,11 @@ import CodeRenderer from '../../components/CodeRenderer';
 import CodeFragment from '../../components/CodeFragment';
 import { files, codeFragments } from '../../tutorials-data/switch-button';
 import FullPageContainer from '../../components/FullPageContainer';
-import { Disqus } from 'gatsby-plugin-disqus';
+// import { Disqus } from 'gatsby-plugin-disqus';
 
 const SwitchButtonTutorial = (props) => (
     <FullPageContainer className="tutorial">
-        <Guide>
+        <Guide url={props.location.href} identifier="dw1d12ckec1cda219kc" title="Switch button tutorial">
             <h1 onMouseEnter={() => console.log('PROPSY:', props)}>Switch button</h1>
             <h2>Simple switch button, styled as theme changer</h2>
             <div className="guide__component-wrapper">
@@ -48,13 +48,6 @@ const SwitchButtonTutorial = (props) => (
             <ul>
                 <li><a href="https://www.framer.com/api/motion/animate-presence/" target="_blank">AnimatePresence documentation</a></li>
             </ul>
-            <Disqus
-                config={{
-                    url: props.location.href,
-                    identifier: 'dw1d12ckec1cda219kc',
-                    title: 'Switch button tutorial'
-                }}
-            />
         </Guide>
         <div className="code__wrapper">
             <CodeRenderer files={files} />

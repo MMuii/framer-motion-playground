@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Disqus } from 'gatsby-plugin-disqus';
 
-const Guide = ({ children }) => {
+const Guide = ({ children, url, identifier, title }) => {
     const [showScrollTop, setShowScrollTop] = useState(false);
     const wrapperRef = useRef();
 
@@ -27,6 +28,7 @@ const Guide = ({ children }) => {
             </motion.div>
             <div className="guide__content">
                 {children}
+                <Disqus config={{ url, identifier, title }} />
             </div>
         </div>
     )
