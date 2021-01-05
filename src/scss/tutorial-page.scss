@@ -15,14 +15,42 @@
 
         &__scroll-top {
             position: fixed;
-            left: 50%;
+            left: calc(50% - 10rem);
             top: 90%;
             opacity: 1;
             cursor: pointer;
+        
+            @media (max-width: 1200px) {
+                left: calc(50% - 8rem);
+            }
+        
+            @media (max-width: 992px) {
+                left: calc(50% - 7rem);
+            }
+        
+            @media (max-width: 768px) {
+                left: calc(50% - 6rem);
+            }
         }
 
         &__content {
-            padding: 60px 10rem;
+            padding: 60px 16rem;
+
+            @media (max-width: 1600px) {
+                padding: 60px 13rem;
+            }
+
+            @media (max-width: 1400px) {
+                padding: 60px 11rem;
+            }
+
+            @media (max-width: 1200px) {
+                padding: 60px 10rem;
+            }
+
+            @media (max-width: 992px) {
+                padding: 60px 7rem;
+            }
 
             p {
                 code {
@@ -34,9 +62,10 @@
             ul {
                 padding-left: 3rem;
                 list-style-type: disc;
+                font-size: 1.6rem;
 
                 li {
-                    padding-bottom: .5rem;
+                    padding-bottom: 1rem;
 
                     &:hover {
                         text-decoration: underline;
@@ -49,19 +78,23 @@
             }
     
             h1 {
-                font-size: 4rem;
+                font-size: 6.4rem;
                 font-weight: 900;
             }
     
             h2 {
-                font-size: 1.6rem;
+                font-size: 2.6rem;
                 font-weight: 700;
             }
     
             p {
-                font-size: 1.1rem;
+                font-size: 1.6rem;
                 font-family: 'open sans', sans-serif;
                 line-height: 1.5;
+            }
+
+            pre {
+                font-size: 1.6rem;
             }
         }
 
@@ -105,7 +138,7 @@
     code {
         &.language-css {
             span {
-                min-width: 2em !important;
+                min-width: 2rem !important;
             }
         }
     }
@@ -125,6 +158,7 @@
             left: calc(50% + 20px);
             width: calc(50% - 40px - 10px);
 
+            font-size: 1.6rem;
             background: rgba(30, 30, 30, 1);
             height: 40px;
             border-radius: 0 0 8px 8px;

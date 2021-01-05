@@ -19,12 +19,11 @@ const Guide = ({ children, url, identifier, title }) => {
                 onClick={() => wrapperRef.current.scrollTop = 0}
                 animate={{ 
                     y: showScrollTop ? 0 : -30, 
-                    x: '-250%', 
                     opacity: showScrollTop ? 1 : 0 
                 }}
                 transition={{ duration: .2 }}
             >
-                <i className="fas fa-chevron-up fa-3x" />
+                <i className="fas fa-chevron-up fa-4x" />
             </motion.div>
             <div className="guide__content">
                 {children}

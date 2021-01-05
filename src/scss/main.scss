@@ -20,7 +20,7 @@ html {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
+    font-size: 62.5%;
     font-family: 'Poppins', sans-serif;
     vertical-align: baseline;
     box-sizing: border-box;
@@ -28,6 +28,18 @@ html {
 
     * {
         box-sizing: inherit;
+    }
+
+    @media (max-width: 1200px) {
+        font-size: 56.25%;
+    }
+
+    @media (max-width: 992px) {
+        font-size: 50%;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 43.75%;
     }
 }
 
@@ -94,3 +106,4 @@ a {
     text-decoration: none;
     color: var(--font-black);
 }
+

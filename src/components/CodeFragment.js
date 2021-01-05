@@ -6,7 +6,7 @@ const CodeFragment = ({ language, children }) => (
     <SyntaxHighlighter
         language={language}
         style={tomorrow}
-        customStyle={{ marginBottom: '2.5rem' }}
+        customStyle={{ marginBottom: '2.5rem', fontSize: '1.6rem' }}
         showLineNumbers
     >
         {children}

@@ -6,7 +6,7 @@ const codeTagStyle = {
     color: 'rgb(204, 204, 204)',
     background: 'none',
     fontFamily: 'Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace',
-    fontSize: '1em',
+    fontSize: '1.6rem',
     textAlign: 'left',
     whiteSpace: 'pre',
     wordSpacing: 'normal',
@@ -45,7 +45,7 @@ const CodeRenderer = ({ files }) => {
             <SyntaxHighlighter 
                 language={selectedFile.language}
                 style={tomorrow} 
-                customStyle={{ lineHeight: 1 }}
+                customStyle={{ lineHeight: 1, fontSize: '1.6rem' }}
                 codeTagProps={{ style: codeTagStyle }}
                 showLineNumbers
                 className="code__content"

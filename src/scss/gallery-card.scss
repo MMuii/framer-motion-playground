@@ -61,12 +61,13 @@
             text-decoration: none;
             color: var(--font-black);
 
-            &:hover {
-                font-size: 105%;
-            }
+            // &:hover {
+            //     font-size: 120%;
+            // }
 
             span {
                 padding-right: 8px;
+                font-size: 1.6rem;
             }
         }
     }

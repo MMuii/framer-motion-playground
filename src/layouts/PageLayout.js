@@ -24,7 +24,8 @@ const variants = {
 }
 
 const PageLayout = ({ children, location }) => {
-    console.log('location', location)
+    console.log('location', location);
+    console.log('children', children)
     return (
         <AnimatePresence initial={false} exitBeforeEnter>
             <motion.main 
