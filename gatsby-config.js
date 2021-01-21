@@ -14,7 +14,7 @@ module.exports = {
         options: {
             name: `posts`,
             path: `${__dirname}/src/markdown/`,
-        },
+        }, 
     },
     `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-remark`,
