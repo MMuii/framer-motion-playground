@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
+import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
 const colors = ['#FFBE0B', '#FB5607', '#FF006E', '#8338EC', '#3A86FF'];
 
 const randomColor = current => {
-    console.log('CURRENT:', current);
-
     while (true) {
         const index = Math.floor(Math.random() * colors.length);
-        console.log('current index:', colors.indexOf(current), 'wylosowany index:', index);
         if (current != colors[index]) {
-            console.log('returning:', index);
             return colors[index];
-        } else {
-            console.log('kolor sie powtórzył');
-        }
+        } 
     }
 }
 
@@ -37,6 +32,8 @@ const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate })
 )
 
 const InfiniteCards = () => {
+    const { width } = useContext(WindowSizeContext); 
+
     const [cards, setCards] = useState([
         { text: 'Up or down', background: colors[0] }, 
         { text: 'Left or right', background: colors[1] }, 
@@ -56,10 +53,6 @@ const InfiniteCards = () => {
     const shadowOpacity = useTransform(dragStart.axis === 'x' ? x : y, [-175, 0, 175], [0, .2, 0]);
     const boxShadow = useMotionTemplate`0 ${shadowBlur}px 25px -5px rgba(0, 0, 0, ${shadowOpacity})`;
 
-    useEffect(() => {
-        console.log('cards:', cards);
-    }, [cards]);
-
     const onDragStart = info => setDragStart({ ...dragStart, offset: info.offset });
     const onDirectionLock = axis => setDragStart({ ...dragStart, axis: axis });
     const animateCardSwipe = animation => {
@@ -75,11 +68,13 @@ const InfiniteCards = () => {
     }
 
     const onDragEnd = info => {
+        const xDistance = width >= 768 ? 175 : 250;
+
         if (dragStart.axis === 'x') {
             if (info.offset.x - dragStart.offset.x >= 100) 
-                animateCardSwipe({ x: 175, y: 0 });
+                animateCardSwipe({ x: xDistance, y: 0 });
             else if (info.offset.x - dragStart.offset.x <= -100)
-                animateCardSwipe({ x: -175, y: 0 }); 
+                animateCardSwipe({ x: -xDistance, y: 0 }); 
         } else {
             if (info.offset.y - dragStart.offset.y >= 100)
                 animateCardSwipe({ x: 0, y: 175 }); 

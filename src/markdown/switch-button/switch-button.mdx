@@ -1,0 +1,110 @@
+---
+path: "/tutorial/switch-button"
+title: "Switch button"
+type: "tutorial"
+---
+
+import Switch from '../../components/Switch';
+
+# Switch button
+## Simple switch button, styled as theme changer
+
+<div className="guide__component-wrapper">
+    <Switch />
+</div>
+
+In this tutorial you will learn how to recreate this very basic switch button using framer motion's `layout` prop, fontawesome free icons and some simple css code. I styled the component as a theme changing button, but of course you can easily change its purpuose by picking different gradients or icons.
+
+On the right side of the page you can see completed component's code, both js component and css stylesheet. Next steps will show you how to create such a button step by step.
+
+Let's start with necessary imports and simple functional component with some basic state logic, which we will use later to store button's state and change its style accordingly.
+
+```jsx
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const Switch = () => {
+  const [isOn, setIsOn] = useState(false);
+
+  return (
+    <div className="container">
+      <div className="handle">
+
+      </div>
+    </div>
+  )
+}
+```
+
+There's not much to explain at the moment. Class names speak for themselves: `container` is the container with gradient background, and `handle` is... well, the handle. Lets wire up some logic to the container so we can toggle the state by clicking the button.
+
+```jsx
+<div 
+  className="container"
+  data-darkmode={isOn}
+  onClick={() => setIsOn(!isOn)}    
+  style={{ justifyContent: isOn ? 'flex-end' : 'flex-start' }}
+>
+  <div className="handle">
+
+  </div>
+</div>
+```
+
+That looks better! Now, by clicking the button we can change its state to the opposite. Also, we added some conditional styling. If button is on - handle will be justified to the right corner. If not, it will stick to the left. `data-darkmode` allows us to change button's background via css attribute selector. Well, at this point we have perfectly working button, but there aren't any animations. Everything will change, when we add one magic prop to handle...
+
+```jsx
+<div 
+  className="container"
+  data-darkmode={isOn}
+  onClick={() => setIsOn(!isOn)}    
+  style={{ justifyContent: isOn ? 'flex-end' : 'flex-start' }}
+>
+  <motion.div layout className="handle">
+
+  </motion.div>
+</div>
+```
+
+That's all! Handle's `layout` prop does all the magic for us. Of course, to make it working we had to make handle a motion component, instead of regular div. By setting `layout` to true on a motion component, we made it automatically animating any layout changes. So, everything should make sense now. By clicking on the button we switch its state. Justification is dependent on the state, so it changes to the opposite aswell, now with nice, smooth animation. Now, there is only one thing left to implement - icons on the handle.
+
+```jsx
+<motion.div layout className="handle">
+  <i className={`icon far fa-${isOn ? 'moon' : 'sun'}`} />
+</motion.div>
+```
+
+By adding `i` tag with conditional classes we make icons change as we toggle the button. But there is still nothing animating on our handle. Let's change that.
+
+```jsx
+<motion.div layout className="handle">
+  <AnimatePresence exitBeforeEnter initial={false}>
+    <motion.i
+      className={`icon far fa-${isOn ? 'moon' : 'sun'}`}
+      key={isOn ? 'moon' : 'sun'}
+      initial={{ y: -30, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 30, opacity: 0 }} 
+      transition={{ duration: .2 }}
+    />
+  </AnimatePresence>
+</motion.div>
+```
+
+As you can see, a lot has changed so let me explain everything step by step. For now, ignore `AnimatePresence` component. Firstly, we had to convert `i` to a motion component, to make anything animate.
+
+Our animation is defined by objects that we pass as `initial`, `animate` and `exit` props. `initial` prop describes the initial state of animation. If we set it to false, we can disable mount animation, which we actually did in `AnimatePresence`, but we will talk about it later. So, by setting `y` to -30 and `opacity` to 0 we say that we want our component to be shifted by 30px on Y axis and to be transparent at the beginning of the animation. Pretty simple.
+
+`animate` prop describes the actual animation. Whenever it changes, component will animate to new values. It will also animate when component mounts, but as I mentioned, we disabled that in `AnimatePresence`.
+
+`exit` prop is responsible for... exit animation. Exit animations are possible because we wrapped our icon with `AnimatePresence`.
+
+In `transition` we specify duration of the animation. Not much to explain.
+
+So, let's finally explain what's that `AnimatePresence` and why we need it. Basically, we use it to animate components when they are removed from the React tree. Component must be inside `AnimatePresence` to have exit prop and unmount animation. `key` prop which we passed to icon is crucial for `AnimatePresence`. All of it's child components must have unique `key`, so `AnimatePresence` is able to track their presence in the tree.
+
+And, finally, let's talk about `AnimatePresence` props. As you might guessed, by setting `initial` to false, we disabled icon's mount animation. `exitBeforeEnter` does pretty much exactly what its name says. If set to true, `AnimatePresence` will render only one component at a time, and wait for exiting component's animation to be finished before rendering new entering component.
+
+## Useful links
+
+- [AnimatePresence documentation](https://www.framer.com/api/motion/animate-presence/)

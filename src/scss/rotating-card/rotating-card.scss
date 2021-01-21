@@ -7,6 +7,10 @@
     left: 50%;
     transition: all .4s;
     perspective: 600px;
+
+    @media (max-width: 768px) {
+        min-height: 400px;
+    }
     
     .card {
         transition: transform .1s, box-shadow .3s, top .2s, left .2s;

@@ -1,4 +1,9 @@
 .infinite-cards {
+    height: 200px;
+    width: 100%;
+    display: grid;
+    place-items: center center;
+
     .card {
         position: absolute;
         left: 0px;
@@ -10,6 +15,11 @@
         display: grid;
         place-items: center center;
         padding: 10px;
+
+        @media (max-width: 768px) {
+            left: auto;
+            top: auto;   
+        }
     
         p {
             text-align: center;

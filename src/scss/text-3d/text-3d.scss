@@ -9,6 +9,10 @@
     position: relative;
     background: #2BAE66;
 
+    @media (max-width: 768px) {
+        min-height: 250px;
+    }
+
     input {
         position: absolute;
         left: 50%;

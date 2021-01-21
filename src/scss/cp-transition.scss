@@ -4,6 +4,10 @@
         width: 100%;
         position: relative;
 
+        @media (max-width: 768px) {
+            min-height: 250px;
+        }
+        
         & > div {
             height: 100%;
         }
@@ -117,6 +121,11 @@
             width: 175px;
             background: rgba(255, 255, 255, .7);
             border-radius: 50%;
+
+            @media (max-width: 768px) {
+                height: 100px;
+                width: 100px;
+            }
         }
 
         &__text-placeholder {

@@ -1,5 +1,7 @@
 import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { WindowSizeContext } from '../contexts/WindowSizeContext';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 // 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' WIDOCZNY
 // polygon(0 0, 0 0, 0 100%, 0% 100%) NIEWIDOCZNY LEWO
@@ -24,8 +26,10 @@ const variants = {
 }
 
 const PageLayout = ({ children, location }) => {
-    console.log('location', location);
-    console.log('children', children)
+    const { height, width } = useWindowSize();
+    // console.log('location', location);
+    // console.log('children', children)
+
     return (
         <AnimatePresence initial={false} exitBeforeEnter>
             <motion.main 
@@ -36,7 +40,9 @@ const PageLayout = ({ children, location }) => {
                 exit="exit"
                 transition={{ duration: .3 }}
             >
-                {children}
+                <WindowSizeContext.Provider value={{ height, width }}>
+                    {children}
+                </WindowSizeContext.Provider>
             </motion.main>
         </AnimatePresence>
     )

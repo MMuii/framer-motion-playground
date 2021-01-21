@@ -8,6 +8,10 @@
 
     cursor: none;
 
+    @media (max-width: 768px) {
+        min-height: 150px;
+    }
+
     .cursor {
         position: absolute;
         top: 0;

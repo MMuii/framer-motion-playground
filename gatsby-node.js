@@ -1,9 +1,10 @@
 exports.createPages = async({ actions, graphql, reporter }) => {
     const result = await graphql(`
         query {
-            allMdx {
+            allMdx(filter: {frontmatter: {type: {eq: "tutorial"}}}) {
                 nodes {
                     frontmatter {
+                        title
                         path
                     }
                 }
@@ -23,41 +24,8 @@ exports.createPages = async({ actions, graphql, reporter }) => {
             component: require.resolve('./src/templates/tutorial.js'),
             context: {
                 pathSlug: page.frontmatter.path,
+                title: page.frontmatter.title
             },
         });
     });
 }
-
-//do zwyklego markdowna
-// const path = require(`path`);
-
-// exports.createPages = async ({ actions, graphql, reporter }) => {
-//     const { createPage } = actions;
-//     const tutorialTemplate = path.resolve(`src/templates/tutorial.js`);
-//     const result = await graphql(`
-//         {
-//             allMarkdownRemark {
-//                 edges {
-//                     node {
-//                         frontmatter {
-//                             path
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     `)
-
-//     if (result.errors) {
-//         reporter.panicOnBuild('Error while running GraphQL query.');
-//         return;
-//     }
-
-//     result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-//         createPage({
-//             path: node.frontmatter.path,
-//             component: tutorialTemplate,
-//             context: {}
-//         })
-//     })
-// }

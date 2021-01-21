@@ -7,22 +7,16 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    {
         resolve: 'gatsby-plugin-mdx',
     },
     {
         resolve: `gatsby-source-filesystem`,
         options: {
             name: `posts`,
-            path: `${__dirname}/src/markdown`,
+            path: `${__dirname}/src/markdown/`,
         },
     },
+    `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

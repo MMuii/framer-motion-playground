@@ -43,6 +43,10 @@ const IndexPage = () => (
                 <RotatingCard />
             </GalleryCard>
 
+            <GalleryCard className="c2 r3">
+                dupa
+            </GalleryCard>
+
             {/* <GalleryCard className="c2 r2">
                 <TimeOfDay />
             </GalleryCard> */}
