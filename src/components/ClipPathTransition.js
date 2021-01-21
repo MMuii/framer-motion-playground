@@ -37,7 +37,7 @@ const squareVariants = {
 
 const ClipPathTransition = () => {
     const [selectedSquare, setSelectedSquare] = useState(null);
-    const { width } = useContext(WindowSizeContext);
+    const { width } = useContext(WindowSizeContext) || undefined;
 
     useEffect(() => {
         const onkeypress = () => setSelectedSquare(null);

@@ -32,7 +32,7 @@ const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate })
 )
 
 const InfiniteCards = () => {
-    const { width } = useContext(WindowSizeContext) || 0; 
+    const { width } = useContext(WindowSizeContext) || undefined; 
 
     const [cards, setCards] = useState([
         { text: 'Up or down', background: colors[0] }, 
