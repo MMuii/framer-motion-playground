@@ -13,10 +13,6 @@ const RotatingCard = () => {
             : [0, 0]
     );
 
-    useEffect(() => {
-        console.log('isHovering', isHovering);
-    }, [isHovering]);
-
     return (
         <div 
             className="rotating-card"

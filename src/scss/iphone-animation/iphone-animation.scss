@@ -1,0 +1,95 @@
+// .iphone-animation {
+//     height: 100%;
+//     width: 100%;
+//     display: grid;
+//     place-items: start center;
+//     position: relative;
+
+//     .wrapper {
+//         display: grid;
+//         grid-template-columns: repeat(4, 50px);
+//         place-items: center center;
+//         padding: 4rem;
+//         gap: 1rem;
+//         width: min-content;
+//     }
+
+//     .app {
+//         background: orange;
+//         height: 5rem;
+//         width: 5rem;
+//         border-radius: 10px;
+
+//         &--opened {
+//             background: orangered;
+//             z-index: 10;
+//             position: absolute;
+//             top: 0;
+//             left: 0;
+//             height: 100%;
+//             width: 100%;
+//         }
+//     }
+
+//     // .placeholder {
+//     //     background: transparent !important;
+//     // }
+// }
+//////////////////////////////////////////////////
+.iphone-animation {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: start center;
+    overflow: hidden;
+
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 5rem);
+        place-items: center center;
+        padding: 4rem;
+        gap: 1rem;
+        width: min-content;
+    }
+
+    .app {
+        background: orange;
+        height: 5rem;
+        width: 5rem;
+        border-radius: 5px;
+    }
+      
+    .placeholder {
+        background: transparent;
+    }
+      
+    .opened {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+        border-radius: none;
+    }
+      
+    .content {
+        background: beige;
+        width: min-content;
+        padding: 10px;
+        margin: 10px;
+        color: black;
+
+        h1 {
+            font-size: 3.6rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+        }
+    }
+}
+  
