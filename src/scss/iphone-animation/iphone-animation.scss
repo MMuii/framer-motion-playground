@@ -1,119 +1,83 @@
-// .iphone-animation {
-//     height: 100%;
-//     width: 100%;
-//     display: grid;
-//     place-items: start center;
-//     position: relative;
-
-//     .wrapper {
-//         display: grid;
-//         grid-template-columns: repeat(4, 50px);
-//         place-items: center center;
-//         padding: 4rem;
-//         gap: 1rem;
-//         width: min-content;
-//     }
-
-//     .app {
-//         background: orange;
-//         height: 5rem;
-//         width: 5rem;
-//         border-radius: 10px;
-
-//         &--opened {
-//             background: orangered;
-//             z-index: 10;
-//             position: absolute;
-//             top: 0;
-//             left: 0;
-//             height: 100%;
-//             width: 100%;
-//         }
-//     }
-
-//     // .placeholder {
-//     //     background: transparent !important;
-//     // }
-// }
-//////////////////////////////////////////////////
 .iphone-animation {
     height: 100%;
     width: 100%;
     display: grid;
-    place-items: start center;
+    place-items: end center;
     overflow: hidden;
     position: relative;
-    background-color: #21D4FD;
-    background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-    
+    // background-color: #21D4FD;
+    // background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+    background-image: linear-gradient(315deg, #FAD961 0%, #F76B1C 100%); 
+
+    .home-bar {
+        position: absolute;
+        top: 1.5rem;
+        left: 0;
+        width: 100%;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        color: white;
+        font-size: 1.2rem;
+        z-index: 30;
+
+        &__icons {
+            display: flex;
+
+            i:first-of-type {
+                padding-right: .8rem;
+            }
+        }
+    }
+
     .wrapper {
         display: grid;
         grid-template-columns: repeat(4, 5rem);
         place-items: center center;
-        padding: 4rem;
-        gap: 1rem;
-        width: min-content;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        // padding: 6rem 4rem;
+        gap: 1.5rem;
+        // width: min-content;
+        background: rgba($color: #000, $alpha: .1);
+        border-radius: 15px;
     }
 
-    .app {
-        height: 5rem;
-        width: 5rem;
-        border-radius: 5px;
+    .app-icon {
+        &__wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &__bg {
+            height: 5rem;
+            width: 5rem;
+            border-radius: 8px;
+            background: orange;
+            display: grid;
+            place-items: center center;
+        }
+
+        &__name {
+            margin-top: .5rem;
+            color: white;
+            font-size: 1.1rem;
+        }
     }
       
-    .placeholder {
-        background: transparent;
-    }
-      
-    .opened {
+    .app-opened {
         height: 100%;
         width: 100%;
         position: absolute;
-        margin: auto;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: 10;
-        border-radius: none;
+        padding: 3rem;
+        box-sizing: border-box;
+        overflow: hidden;
     }
       
-    .content {
-        &__container {
-            box-sizing: border-box;
-            color: black;
-            position: relative;
-            width: 100%;
-            height: 100%;
-            padding: 2rem;
-        }
-
-        &__wrapper {
-            &--outer {
-                width: 100%;
-                display: flex;
-                justify-content: center;
-                background: beige;
-
-                h1 {
-                    font-size: 3.6rem;
-                }
-        
-                h2 {
-                    font-size: 2.8rem;
-                }
-            }
-
-            &--inner {
-                width: 100%;
-                background: green;
-            }
-        }
-    }
-
     .close-bar {
-        width: 40%;
-        height: .4rem;
+        width: 35%;
+        height: 3px;
         background-color: white;
         border-radius: 10px;
         position: absolute;

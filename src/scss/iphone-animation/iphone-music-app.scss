@@ -1,0 +1,67 @@
+.iphone-music-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+    h1 {
+        font-weight: 700;
+        font-size: 4.8rem;
+        margin-top: 5rem;
+    }
+
+    h2 {
+        font-weight: 400;
+        font-size: 3.6rem;
+    }
+
+    .progress-bar {
+        &__bar {
+            margin-top: 7rem;
+            width: 100%;
+            height: 5px;
+            border-radius: 10px;
+            background: rgba($color: #000000, $alpha: .1);
+            position: relative;
+    
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 60%;
+                background: rgba($color: #000000, $alpha: .5);
+                border-radius: 10px;
+            }
+        }
+
+        &__time-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-top: .7rem;
+            font-size: 1.4rem;
+        }
+    }
+
+    .music-controls, .player-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;  
+        width: 100%;
+    }
+
+    .music-controls {
+        margin-top: 5rem;
+    }
+
+    .player-controls {
+        margin-top: 2rem;
+        justify-content: space-around;  
+
+        i:first-of-type {
+            color: violet;
+        }
+    }
+}

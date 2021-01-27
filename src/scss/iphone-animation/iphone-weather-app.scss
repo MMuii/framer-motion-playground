@@ -1,0 +1,189 @@
+.iphone-weather-app {
+    display: flex;
+    flex-direction: column;
+    color: white;
+
+    h1 {
+        font-weight: 700;
+        font-size: 4.8rem;
+        margin-top: 6rem;
+        z-index: 10;
+    }
+
+    h2 {
+        font-size: 2.8rem;
+    }
+
+    .forecast {
+        &__wrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 18rem;
+            background: white;
+            border-radius: 15px 15px 0 0;
+            color: var(--font-black);
+            padding: 1.5rem 3rem;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: min-content 1fr;
+            place-items: center center;
+
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+        }
+
+        &__location {
+            font-size: 1.8rem;
+
+            span {
+                font-weight: 700;
+            }
+        }
+
+        &__days-wrapper {
+            // margin-top: 1.5rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__day-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            padding: .75rem 0;
+        }
+
+        &__temp-wrapper {
+            display: grid;
+            grid-template-columns: 2.5rem 2rem;
+
+            div {
+                justify-self: flex-start;
+                margin-right: 2rem;
+            }
+
+            i {
+                justify-self: center;
+            }
+        }
+    }
+
+    .sun {
+        &__wrapper {
+            &--big {
+                background: transparent;
+                position: absolute;
+                // position: relative;
+                top: 0%;
+                left: 75%;   
+                width: 120px;
+                height: 120px;
+            }
+    
+            &--small {
+                box-shadow: 0 0 100px #ffdf05;
+                background-color: #ffdf22;
+                position: absolute;
+                width: 150px;
+                height: 150px;
+                // width: 95px;
+                // height: 95px;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    .light {
+        &__wrapper {
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            width: 1px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &--big {
+                height: 240px;
+
+                &:nth-child(1) {
+                    transform: translateX(-50%) rotate(0deg);
+                }
+            
+                &:nth-child(2) {
+                    transform: translateX(-50%) rotate(45deg);
+                }
+            
+                &:nth-child(3) {
+                    transform: translateX(-50%) rotate(90deg);
+                }
+            
+                &:nth-child(4) {
+                    transform: translateX(-50%) rotate(135deg);
+                }
+            }
+
+            &--small {
+                height: 300px;
+                width: 2px;
+
+                &:nth-child(1) {
+                    transform: translateX(-50%) rotate(22.5deg);
+                }
+            
+                &:nth-child(2) {
+                    transform: translateX(-50%) rotate(67.5deg);
+                }
+            
+                &:nth-child(3) {
+                    transform: translateX(-50%) rotate(112.5deg);
+                }
+            
+                &:nth-child(4) {
+                    transform: translateX(-50%) rotate(157.5deg);
+                }
+            }
+        }
+
+        &__beam {
+            width: 100%;
+            background: #ffdf22;
+
+            &--big {
+                height: 20px;
+                animation: light-beam-big 3s infinite;
+            }
+
+            &--small {
+                height: 15px;
+                animation: light-beam-small 6s infinite;
+            }
+        }
+    }
+}
+
+@keyframes rotating {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes light-beam-big {
+    0% { height: 25px; }
+    50% { height: 20px; }
+    100% { height: 25px; }
+}
+
+@keyframes light-beam-small {
+    0% { height: 20px; }
+    50% { height: 16px; }
+    100% { height: 20px; }
+}
