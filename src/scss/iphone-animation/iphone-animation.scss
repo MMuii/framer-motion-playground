@@ -73,13 +73,16 @@
         padding: 3rem;
         box-sizing: border-box;
         overflow: hidden;
+
+        .content-wrapper {
+            height: 100%;
+        }
     }
       
     .close-bar {
         width: 35%;
         height: 3px;
-        background-color: white;
-        border-radius: 10px;
+        border-radius: 100px;
         position: absolute;
         top: 97.5%;
         z-index: 20;

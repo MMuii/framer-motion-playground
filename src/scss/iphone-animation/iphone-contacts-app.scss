@@ -1,0 +1,102 @@
+.iphone-contacts-app {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr;
+    height: 100%;
+
+    .header {
+        &__wrapper {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 1fr repeat(2, min-content);
+            align-items: center;
+            color: var(--font-black);
+            background-image: radial-gradient(circle at 107.92% 90.56%, #dff38a 0, #caea89 16.67%, #b4df88 33.33%, #9fd286 50%, #8bc584 66.67%, #7bb982 83.33%, #6cae80 100%);
+            color: #fff;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 2rem;
+            padding-top: 4rem;
+
+            h1 {
+                font-weight: 700;
+                font-size: 2.8rem;
+            }
+
+            i {
+                font-size: 1.6rem;
+                
+                &:nth-child(2) {
+                    padding-right: 2rem;
+                }
+            }
+        }
+    }
+
+    .contacts {
+        &__wrapper {
+            &--outer {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr min-content;
+                // padding-top: 1.5rem;
+                padding-top: 8rem;
+            }
+        }
+
+        &__letter {
+            font-size: 1.8rem;
+            color: #bbb;
+        }
+    }
+
+    .contact {
+        &__wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: 1rem;
+        }
+
+        &__avatar {
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            display: grid;
+            place-items: center center;
+            color: white;
+
+            i {
+               font-size: 2rem; 
+            }
+        }
+
+        &__info-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin-left: 2rem;
+        }
+
+        &__name {
+            font-size: 1.6rem;
+        }
+
+        &__description {
+            color: #999;
+        }
+    }
+
+    .alphabet {
+        height: 100%;
+        display: flex;
+        text-transform: uppercase;
+        flex-direction: column;
+        justify-content: space-between;
+        color: #bbb;
+    }
+}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
-//TODO - wywala sie gdy otwiera sie kolejną aplikację zanim dojdzie do końca animacja zamykania jednej
 const OpenedApp = ({ app, closeApp, content }) => {
     const onDragEnd = (event, info) => {
         if (info.offset.y < 0) closeApp();

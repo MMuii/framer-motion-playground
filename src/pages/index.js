@@ -25,19 +25,15 @@ const IndexPage = () => (
             </GalleryCard>
 
             <GalleryCard className="c3 r2">
-                <ClipPathTransition />
+                <Text3d />
             </GalleryCard>
-
-            {/* <GalleryCard className="r3">
-                <ElementScroll />
-            </GalleryCard> */}
             
             <GalleryCard className="c2 r2">
                 <CustomCursor />
             </GalleryCard>
 
             <GalleryCard className="c3 r2">
-                <Text3d />
+                <ClipPathTransition />
             </GalleryCard>
 
             <GalleryCard className="c2 r3">
@@ -47,19 +43,6 @@ const IndexPage = () => (
             <GalleryCard className="c2 r3">
                 <IphoneAnimation />
             </GalleryCard>
-
-            {/* <GalleryCard className="c2 r2">
-                <TimeOfDay />
-            </GalleryCard> */}
-
-            {/* <GalleryCard className="c2 r2">
-                <Rain />
-            </GalleryCard>
-
-            <GalleryCard>
-                <Test />
-            </GalleryCard> */}
-
         </div>
     </div>
 )

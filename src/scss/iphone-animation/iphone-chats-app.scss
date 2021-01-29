@@ -1,0 +1,100 @@
+.iphone-chats-app {
+    .header {
+        &__wrapper {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 1fr min-content;
+            align-items: center;
+            color: var(--font-black);
+            background-image: radial-gradient(circle at 107.92% 90.56%, #dff38a 0, #caea89 16.67%, #b4df88 33.33%, #9fd286 50%, #8bc584 66.67%, #7bb982 83.33%, #6cae80 100%);
+            color: #fff;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 2rem;
+            padding-top: 4rem;
+
+            h1 {
+                font-weight: 700;
+                font-size: 2.8rem;
+            }
+
+            i {
+                font-size: 1.6rem;
+            }
+        }
+    }
+
+    .chats {
+        &__wrapper {
+            &--outer {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr min-content;
+                padding-top: 8rem;
+            }
+        }
+    }
+
+    .chat {
+        &__wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        &__avatar {
+            border-radius: 50%;
+            min-width: 4.5rem;
+            min-height: 4.5rem;
+            display: grid;
+            place-items: center center;
+            color: white;
+
+            i {
+               font-size: 2rem; 
+            }
+        }
+
+        &__info-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+
+            height: 4.5rem;
+            padding-left: 2rem;
+        }
+
+        &__name {
+            font-size: 1.4rem;
+        }
+
+        &__msg {
+            font-size: 1.2rem;
+            color: #999;
+        }
+
+        &__time {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #999;
+        }
+
+        &__active {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: .8rem;
+            width: .8rem;
+            border-radius: 50%;
+            background: #11d646;
+        }
+    }
+}
