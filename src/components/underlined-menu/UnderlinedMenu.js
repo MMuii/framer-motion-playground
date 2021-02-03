@@ -7,13 +7,19 @@ const backgrounds = [
     'radial-gradient(circle at 85.36% -11.24%, #ffffa7 0, #ffffa4 16.67%, #eaffa1 33.33%, #d5f29d 50%, #c1e499 66.67%, #afd896 83.33%, #a0cd93 100%)',
     'radial-gradient(circle at 85.36% -11.24%, #fdffa0 0, #e6ff9f 16.67%, #d0ff9f 33.33%, #b9f29d 50%, #a4e49b 66.67%, #92d89a 83.33%, #82cd99 100%)',
     'radial-gradient(circle at 85.36% -11.24%, #eeffd0 0, #deffc9 16.67%, #cbfdc0 33.33%, #b5f2b5 50%, #9ee7ab 66.67%, #88dda5 83.33%, #74d6a1 100%)'
-]
+];
+const underlineColors = [
+    'rgba(255, 255, 255, .75)',
+    'rgba(255, 255, 255, .85)',
+    'rgba(255, 255, 255, .95)',
+    'rgba(255, 255, 255, 1)'
+];
 
-const MenuItem = ({ text, selected, onClick }) => (
+const MenuItem = ({ text, selected, underlineColor, onClick }) => (
     <div className="menu-item" onClick={onClick}>
         {text}
         {selected && (
-            <motion.div className="underline" layoutId="test"/>
+            <motion.div className="underline" layoutId="test" animate={{ background: underlineColor }} />
         )}
     </div>
 )
@@ -33,6 +39,7 @@ const UnderlinedMenu = () => {
                             text={el} 
                             key={i}
                             selected={selected === i}
+                            underlineColor={ underlineColors[selected] }
                             onClick={() => setSelected(i)}
                         /> 
                     ))}

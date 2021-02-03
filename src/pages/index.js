@@ -29,6 +29,10 @@ const IndexPage = () => (
                 <Text3d />
             </GalleryCard>
 
+            <GalleryCard className="c2 r1">
+                Wave
+            </GalleryCard>
+
             <GalleryCard className="c4 r1">
                 <UnderlinedMenu />
             </GalleryCard>
