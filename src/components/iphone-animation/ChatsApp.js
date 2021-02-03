@@ -23,10 +23,10 @@ const ChatsApp = () => {
             <div className="chats__wrapper--outer">
                 <div className="chats__wrapper--inner">
                     <Chat name="Adam Smith" msg="Lorem ipsum dolort, con secteuter..." color="#fdb813" />
-                    <Chat name="Adam Smith" msg="Lorem ipsum dolort, con secteuter..." color="#fa7a92" time="1 min ago" />
-                    <Chat name="Adam Smith" msg="Lorem ipsum dolort, con secteuter..." color="#e3182e" time="3 min ago" />
-                    <Chat name="Adam Smith" msg="Lorem ipsum dolort, con secteuter..." color="#a2be59" time="6 min ago" />
-                    <Chat name="Adam Smith" msg="Lorem ipsum dolort, con secteuter..." color="#72c9cb" time="14 min ago" />
+                    <Chat name="Ethan Parkers" msg="Lorem ipsum dolort, con secteuter..." color="#fa7a92" time="1 min ago" />
+                    <Chat name="David Cook" msg="Lorem ipsum dolort, con secteuter..." color="#e3182e" time="3 min ago" />
+                    <Chat name="Clay Bailey" msg="Lorem ipsum dolort, con secteuter..." color="#a2be59" time="6 min ago" />
+                    <Chat name="Lily Lewis" msg="Lorem ipsum dolort, con secteuter..." color="#72c9cb" time="14 min ago" />
                 </div>
             </div>
         </div>

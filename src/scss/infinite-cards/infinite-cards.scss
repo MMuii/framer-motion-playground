@@ -3,6 +3,7 @@
     width: 100%;
     display: grid;
     place-items: center center;
+    position: relative;
 
     .card {
         position: absolute;
@@ -21,10 +22,20 @@
             top: auto;   
         }
     
-        p {
+        span {
             text-align: center;
             font-size: 28px;
             font-weight: 700;
         }
     }
+}
+
+.infinite-cards__guide-wrapper {
+    width: 20rem;
+    height: 20rem;
+    padding: 2.5rem;
+    margin: 2.5rem;
+    overflow: hidden;
+    background-image: radial-gradient(circle at 85.54% 7.65%, #fdecc7 0, #f2deb5 50%, #e7d0a4 100%);
+    border-radius: 15px;
 }

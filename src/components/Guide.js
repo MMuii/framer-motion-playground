@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Disqus } from 'gatsby-plugin-disqus';
 
-//TODO - w templatce dodać url, title i identifier
-const Guide = ({ children, url, identifier, title, isMobile }) => {
+//TODO - w templatce dodać url, title i identifier (chyba zrobione ale disqus może dalej nie działać)
+const Guide = (/*{ children, url, identifier, title, isMobile }*/ props) => {
     const [showScrollTop, setShowScrollTop] = useState(false);
     const wrapperRef = useRef();
 
@@ -14,7 +14,7 @@ const Guide = ({ children, url, identifier, title, isMobile }) => {
 
     return (
         <div className="guide guide__wrapper" ref={wrapperRef} onScroll={onScroll}>
-            {!isMobile && (
+            {!props.isMobile && (
                 <motion.div 
                     className="guide__scroll-top" 
                     key="scroll-top"
@@ -29,8 +29,8 @@ const Guide = ({ children, url, identifier, title, isMobile }) => {
                 </motion.div>
             )}
             <div className="guide__content">
-                {children}
-                <Disqus config={{ url, identifier, title }} />
+                {props.children}
+                <Disqus config={{ url: props.url , identifier: props.identifier, title: props.title }} />
             </div>
         </div>
     )

@@ -16,11 +16,11 @@ const IndexPage = () => (
             <button><Link to="/tutorial">about</Link></button>
         </div>
         <div className="gallery__container">
-            <GalleryCard>
+            <GalleryCard tutorial="switch-button">
                 <Switch />
             </GalleryCard>
 
-            <GalleryCard>
+            <GalleryCard tutorial="infinite-cards">
                 <InfiniteCards />
             </GalleryCard>
 

@@ -37,6 +37,7 @@ export default function Template ({ data: { mdx: post, allMdx: { nodes: files } 
     const { width } = useWindowSize();
 
     const { body } = post;
+
     const filesData = files.map((file, idx) => {
         return {
             id: idx,
@@ -58,7 +59,7 @@ export default function Template ({ data: { mdx: post, allMdx: { nodes: files } 
     if (width >= 768) {
         return (
             <FullPageContainer className="tutorial">
-                <Guide isMobile={false}>
+                <Guide isMobile={false} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
                     <MDXRenderer>
                         {body}
                     </MDXRenderer>
@@ -79,7 +80,7 @@ export default function Template ({ data: { mdx: post, allMdx: { nodes: files } 
                 </div> 
             )
             : (
-                <Guide isMobile={true}>
+                <Guide isMobile={true} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
                     <MDXRenderer>
                         {body}
                     </MDXRenderer>

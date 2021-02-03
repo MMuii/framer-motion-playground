@@ -55,7 +55,7 @@
                 padding: 60px 7rem;
             }
 
-            p {
+            p, li {
                 code {
                     font-family: 'Inconsolata', monospace;
                     font-weight: 700;
@@ -70,8 +70,13 @@
                 li {
                     padding-bottom: 1rem;
 
-                    &:hover {
-                        text-decoration: underline;
+                    a {
+                        font-family: 'Poppins', sans-serif;
+                        line-height: 1;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
                     }
                 }
             }
@@ -90,7 +95,7 @@
                 font-weight: 700;
             }
     
-            p {
+            p, li {
                 font-size: 1.6rem;
                 font-family: 'open sans', sans-serif;
                 line-height: 1.5;
@@ -106,6 +111,8 @@
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: grid;
+            place-items: center center;
         }
 
         #disqus_thread {

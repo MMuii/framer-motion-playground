@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
@@ -27,7 +27,7 @@ const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate })
         transition={{ ease: [.6, .05, -.01, .9] }}
         whileTap={{ scale: .85 }}
     >
-        <p>{card.text}</p>
+        <span>{card.text}</span>
     </motion.div>
 )
 
@@ -45,6 +45,10 @@ const InfiniteCards = () => {
         axis: null,
         animation: { x: 0, y: 0 }
     });
+
+    useEffect(() => {
+        console.log(dragStart);
+    })
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -67,18 +71,34 @@ const InfiniteCards = () => {
         }, 200);
     }
 
+    // const onDragEnd = info => {
+    //     const xDistance = width >= 768 ? 175 : 250;
+
+    //     if (dragStart.axis === 'x') {
+    //         if (info.offset.x - dragStart.offset.x >= 100) 
+    //             animateCardSwipe({ x: xDistance, y: 0 });
+    //         else if (info.offset.x - dragStart.offset.x <= -100)
+    //             animateCardSwipe({ x: -xDistance, y: 0 }); 
+    //     } else {
+    //         if (info.offset.y - dragStart.offset.y >= 100)
+    //             animateCardSwipe({ x: 0, y: 175 }); 
+    //         else if (info.offset.y - dragStart.offset.y <= -100)
+    //             animateCardSwipe({ x: 0, y: -175 }); 
+    //     }
+    // }
+
     const onDragEnd = info => {
         const xDistance = width >= 768 ? 175 : 250;
 
         if (dragStart.axis === 'x') {
-            if (info.offset.x - dragStart.offset.x >= 100) 
+            if (info.offset.x >= 100) 
                 animateCardSwipe({ x: xDistance, y: 0 });
-            else if (info.offset.x - dragStart.offset.x <= -100)
+            else if (info.offset.x <= -100)
                 animateCardSwipe({ x: -xDistance, y: 0 }); 
         } else {
-            if (info.offset.y - dragStart.offset.y >= 100)
+            if (info.offset.y >= 100)
                 animateCardSwipe({ x: 0, y: 175 }); 
-            else if (info.offset.y - dragStart.offset.y <= -100)
+            else if (info.offset.y <= -100)
                 animateCardSwipe({ x: 0, y: -175 }); 
         }
     }
@@ -92,7 +112,7 @@ const InfiniteCards = () => {
                         key={index}
                         style={{ x, y, zIndex: index }}
                         onDirectionLock={axis => onDirectionLock(axis)}
-                        onDragStart={(e, info) => onDragStart(info)}
+                        // onDragStart={(e, info) => onDragStart(info)}
                         onDragEnd={(e, info) => onDragEnd(info)}
                         animate={dragStart.animation}
                     />

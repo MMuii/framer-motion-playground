@@ -10,7 +10,7 @@ import Switch from '../../components/Switch';
 ## Simple switch button, styled as theme changer
 
 <div className="guide__component-wrapper">
-    <Switch />
+  <Switch />
 </div>
 
 In this tutorial you will learn how to recreate this very basic switch button using framer motion's `layout` prop, fontawesome free icons and some simple css code. I styled the component as a theme changing button, but of course you can easily change its purpuose by picking different gradients or icons.
@@ -66,7 +66,7 @@ That looks better! Now, by clicking the button we can change its state to the op
 </div>
 ```
 
-That's all! Handle's `layout` prop does all the magic for us. Of course, to make it working we had to make handle a motion component, instead of regular div. By setting `layout` to true on a motion component, we made it automatically animating any layout changes. So, everything should make sense now. By clicking on the button we switch its state. Justification is dependent on the state, so it changes to the opposite aswell, now with nice, smooth animation. Now, there is only one thing left to implement - icons on the handle.
+That's all! Handle's `layout` prop does all the magic for us. Of course, to make it working we had to make handle a motion component, instead of regular div. By setting `layout` to true on a motion component, we made it automatically animating any layout changes, such as flexbox justification. If you are curious what exactly Framer Motion counts as layout change, see the docs - I put link on the bottom of the page. So, everything should make sense now. By clicking on the button we switch its state. Justification is dependent on the state, so it changes to the opposite aswell, now with nice, smooth animation. Now, there is only one thing left to implement - icons on the handle.
 
 ```jsx
 <motion.div layout className="handle">
@@ -108,3 +108,4 @@ And, finally, let's talk about `AnimatePresence` props. As you might guessed, by
 ## Useful links
 
 - [AnimatePresence documentation](https://www.framer.com/api/motion/animate-presence/)
+- [Layout animations](https://www.framer.com/api/motion/animation/#layout-animations)
