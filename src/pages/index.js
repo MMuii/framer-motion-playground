@@ -6,6 +6,7 @@ import ClipPathTransition from '../components/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
 import Text3d from '../components/text-3d/Text3d';
+import UnderlinedMenu from '../components/underlined-menu/UnderlinedMenu';
 import RotatingCard from '../components/rotating-card/RotatingCard';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 
@@ -26,6 +27,10 @@ const IndexPage = () => (
 
             <GalleryCard className="c3 r2">
                 <Text3d />
+            </GalleryCard>
+
+            <GalleryCard className="c4 r1">
+                <UnderlinedMenu />
             </GalleryCard>
             
             <GalleryCard className="c2 r2">

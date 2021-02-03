@@ -38,4 +38,10 @@
     overflow: hidden;
     background-image: radial-gradient(circle at 85.54% 7.65%, #fdecc7 0, #f2deb5 50%, #e7d0a4 100%);
     border-radius: 15px;
+    
+    @media (max-width: 768px) {
+        & > div {
+            height: 100%;
+        }
+    }
 }

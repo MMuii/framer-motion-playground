@@ -42,14 +42,13 @@ const InfiniteCards = () => {
   ]);
 
   const [dragStart, setDragStart] = useState({
-    offset: null,
     axis: null,
     animation: { x: 0, y: 0 }
   });
 
   return (
     <div className="infinite-cards">
-
+      {renderCards()}
     </div>
   )
 }
@@ -69,7 +68,6 @@ const renderCards = () => {
           key={index}
           style={{ x, y, zIndex: index }}
           onDirectionLock={axis => onDirectionLock(axis)}
-          onDragStart={(e, info) => onDragStart(info)}
           onDragEnd={(e, info) => onDragEnd(info)}
           animate={dragStart.animation}
         />
@@ -92,14 +90,13 @@ const renderCards = () => {
 `renderCards` maps over `cards` and returns `Card` component, which I will cover in next code block. When `map` function finds last card, it passes to it drag handling functions. It won't do so to previous cards, because only last one needs to handle events, as the only visible. 
 
 ```jsx
-const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate }) => (    
+const Card = ({ card, style, onDirectionLock, onDragEnd, animate }) => (    
   <motion.div
     className="card"
     drag
     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
     dragDirectionLock
     onDirectionLock={onDirectionLock}
-    onDragStart={onDragStart}
     onDragEnd={onDragEnd}
     animate={animate}
     style={{ ...style, background: card.background }}
@@ -116,7 +113,7 @@ const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate })
 - `drag`, when set to true, enables dragging.
 - `dragConstraints` defines (in pixels) how far the draggable component can be actually dragged. When dragged over the constraints, it will jump back to the last viable position. It might seem different at the first glance, but we don't want our card to be able to be dragged anywhere, so I set all the constraints to 0. Check it by yourself - if you drag the card too close away, nothing will happen. Only if you drag far enough, card will slide away.
 - `onDirectionLock` is a callback function that runs when drag direction is determined. If you drag vertically it will return "y", if horizontally, "x".
-- `onDragStart` and `onDragEnd` speak for themselves. As you probably guessed, they are callback functions that fire when drag event starts or ends.
+- `onDragEnd` speak for itself. As you probably guessed, it's a callback function that fire when drag event starts or ends.
 - `animate` describes card animation. Whenever this prop changes, framer motion will animate the component to new values. `transition` describes... well, the animation's transition. If not set manually, framer motion will create default one.
 - `style` is just React inline css styling.
 - `whileTap` - when tapped or clicked, component will animate to passed values.
@@ -145,41 +142,59 @@ That's the way we calculate animation properties based on another property. When
 Last thing I didn't mention is `useMotionTemplate` hook, but it's actually pretty simple. As the docs say, `useMotionTemplate` combines multiple motion values into a new one using a string template literal. And we did exactly that to get whole box shadow dynamically updated with previously calculated `shadowBlur` and `shadowOpacity`.
 
 ```jsx
-const onDragStart = info => setDragStart({ ...dragStart, offset: info.offset });
-
 const onDirectionLock = axis => setDragStart({ ...dragStart, axis: axis });
 
 const animateCardSwipe = animation => {
   setDragStart({ ...dragStart, animation });
     
   setTimeout(() => {
-    setDragStart({ offset: null, axis: null, animation: { x: 0, y: 0 } });
+    setDragStart({ axis: null, animation: { x: 0, y: 0 } });
     x.set(0);
     y.set(0);
-    const firstCardColor = cards[0].background;
-    setCards([{ text: 'just an another card', background: randomColor(firstCardColor) }, ...cards.slice(0, cards.length - 1)]);
+    setCards([{ 
+        text: 'just an another card', 
+        background: randomColor(cards[0].background) 
+      }, ...cards.slice(0, cards.length - 1)]);
   }, 200);
 }
 
 const onDragEnd = info => {
   if (dragStart.axis === 'x') {
-    if (info.offset.x - dragStart.offset.x >= 100) 
+    if (info.offset.x >= 100) 
       animateCardSwipe({ x: 175, y: 0 });
-    else if (info.offset.x - dragStart.offset.x <= -100)
+    else if (info.offset.x <= -100)
       animateCardSwipe({ x: -175, y: 0 }); 
   } else {
-    if (info.offset.y - dragStart.offset.y >= 100)
+    if (info.offset.y >= 100)
       animateCardSwipe({ x: 0, y: 175 }); 
-    else if (info.offset.y - dragStart.offset.y <= -100)
+    else if (info.offset.y <= -100)
       animateCardSwipe({ x: 0, y: -175 }); 
   }
 }
 ```
 
-Now, let's take a look on the event handlers. `onDragStart` and `onDirectionLock` are as simple as they can be. Their only job is to update drag state with fresh data, when an event occurs. 
+Now, let's take a look on the event handlers. `onDirectionLock` fires once the drag axis is determined and updates the state with fresh data. When user finishes the drag, `onDragEnd` checks the drag's offset, which is passed in `info` object as argument. If user has dragged the card farther than 100 pixels in some direction, `animateCardSwipe` is called with object that describes in which direction card should be animated.
 
-TODO - trzeba wywalić onDragStart i poprawić onDragEnd, trzeba też wywalić dragStart.offset ze state bo jest niepotrzebne
+`animateCardSwipe` firstly updates state with data received from `onDragEnd`, and by doing that it makes `Card` animate, as it gets new values passed as `animate` prop. Take a look again at `renderCards` and `Card` component and I am sure now everyting will be clear about how it works. Then, setTimeout is being run with timeout of 200 miliseconds - about the same time `Card` animation takes, so we make sure the code will be executed after the animation finishes. First three lines inside setTimeout sets the state and MotionValues to the initial values. Then, new card is pushed to the array, and last one, which has been just dragged away, is removed. 
 
+```jsx
+const randomColor = current => {
+  while (true) {
+    const index = Math.floor(Math.random() * colors.length);
+    if (current != colors[index]) {
+      return colors[index];
+    } 
+  }
+}
+```
 
+Very last think I haven't mentioned yet is `randomColor` function. All it does is return a random color, different from `current` passed as argument. That's why we called it with `cards[0].background` in `animateCardSwipe`.
+
+And that's all! Below, I put links to usefull Framer Motion docs. If you have any questions, feel free to ask about anything in the comments.
+
+## Useful links
+- [MotionValue documentation](https://www.framer.com/api/motion/motionvalue/)
+- [useTransform](https://www.framer.com/api/motion/motionvalue/#usetransform)
+- [useMotionTemplate](https://www.framer.com/api/motion/motionvalue/#usemotiontemplate)
 
 

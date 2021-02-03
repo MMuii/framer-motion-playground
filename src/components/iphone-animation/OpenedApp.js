@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const OpenedApp = ({ app, closeApp, content }) => {
     const onDragEnd = (event, info) => {

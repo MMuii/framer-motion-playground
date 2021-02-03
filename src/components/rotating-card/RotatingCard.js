@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useMousePositionWithinElement } from '../../hooks/useMousePositionWithinElement';
 
 const mountains = [4, 3, 2, 1];

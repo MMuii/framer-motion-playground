@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
@@ -13,14 +13,13 @@ const randomColor = current => {
     }
 }
 
-const Card = ({ card, style, onDirectionLock, onDragStart, onDragEnd, animate }) => (    
+const Card = ({ card, style, onDirectionLock, onDragEnd, animate }) => (    
     <motion.div
         className="card"
         drag
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
         dragDirectionLock
         onDirectionLock={onDirectionLock}
-        onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         animate={animate}
         style={{ ...style, background: card.background }}
@@ -41,14 +40,9 @@ const InfiniteCards = () => {
     ]);
 
     const [dragStart, setDragStart] = useState({
-        offset: null,
         axis: null,
         animation: { x: 0, y: 0 }
     });
-
-    useEffect(() => {
-        console.log(dragStart);
-    })
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -57,35 +51,18 @@ const InfiniteCards = () => {
     const shadowOpacity = useTransform(dragStart.axis === 'x' ? x : y, [-175, 0, 175], [0, .2, 0]);
     const boxShadow = useMotionTemplate`0 ${shadowBlur}px 25px -5px rgba(0, 0, 0, ${shadowOpacity})`;
 
-    const onDragStart = info => setDragStart({ ...dragStart, offset: info.offset });
     const onDirectionLock = axis => setDragStart({ ...dragStart, axis: axis });
     const animateCardSwipe = animation => {
         setDragStart({ ...dragStart, animation });
         
         setTimeout(() => {
-            setDragStart({ offset: null, axis: null, animation: { x: 0, y: 0 } });
+            setDragStart({ axis: null, animation: { x: 0, y: 0 } });
             x.set(0);
             y.set(0);
             const firstCardColor = cards[0].background;
             setCards([{ text: 'just an another card', background: randomColor(firstCardColor) }, ...cards.slice(0, cards.length - 1)]);
         }, 200);
     }
-
-    // const onDragEnd = info => {
-    //     const xDistance = width >= 768 ? 175 : 250;
-
-    //     if (dragStart.axis === 'x') {
-    //         if (info.offset.x - dragStart.offset.x >= 100) 
-    //             animateCardSwipe({ x: xDistance, y: 0 });
-    //         else if (info.offset.x - dragStart.offset.x <= -100)
-    //             animateCardSwipe({ x: -xDistance, y: 0 }); 
-    //     } else {
-    //         if (info.offset.y - dragStart.offset.y >= 100)
-    //             animateCardSwipe({ x: 0, y: 175 }); 
-    //         else if (info.offset.y - dragStart.offset.y <= -100)
-    //             animateCardSwipe({ x: 0, y: -175 }); 
-    //     }
-    // }
 
     const onDragEnd = info => {
         const xDistance = width >= 768 ? 175 : 250;
@@ -112,7 +89,6 @@ const InfiniteCards = () => {
                         key={index}
                         style={{ x, y, zIndex: index }}
                         onDirectionLock={axis => onDirectionLock(axis)}
-                        // onDragStart={(e, info) => onDragStart(info)}
                         onDragEnd={(e, info) => onDragEnd(info)}
                         animate={dragStart.animation}
                     />
