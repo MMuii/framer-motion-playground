@@ -1,12 +1,23 @@
 .gallery {
     padding: 150px 0;
     height: 100%;
-    width: calc(750px + 9.6rem);
+    // width: calc(750px + 9.6rem);
+    width: calc(750px + 12rem);
     margin: 0 auto;
 
     @media (max-width: 768px) {
         padding: 75px 0;
         width: 100%;
+    }
+
+    &__dim-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: black;
+        z-index: 2;
+        pointer-events: none;
     }
 
     &__info {
@@ -45,7 +56,8 @@
         display: grid;
         grid-template-columns: repeat(5, 150px);
         grid-auto-rows: 150px;
-        gap: 2.4rem;
+        // gap: 2.4rem;
+        gap: 3rem;
         grid-auto-flow: dense;
         
         justify-content: left;
