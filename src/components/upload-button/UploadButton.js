@@ -52,8 +52,25 @@ const UploadButton = () => {
 
     return (
         <div className="upload-button">
-            <div className="wrapper" onClick={() => !isAnimating && animate()}>
-                <motion.div 
+            <div className="wrapper" /* onClick={() => !isAnimating && animate()} */>
+                <div 
+                    className="container loading"
+                    // initial={{ top: '-100%' }}
+                    // animate={loadingControls}
+                >
+                    <motion.div 
+                        className="loader"
+                        initial={{ rotate: 0 }} 
+                        animate={{ 
+                            rotate: 360,
+                            transition: { repeat: Infinity, ease: 'linear', duration: .5 }
+                        }}
+                        whileHover={{ scale: 2 }}
+                    />
+                    <div>loading</div>
+                </div>
+                
+                {/* <motion.div 
                     className="container upload"
                     // initial={{ top: '0%' }}
                     animate={uploadControls}
@@ -82,7 +99,7 @@ const UploadButton = () => {
                 >
                     <i className="fas fa-angle-double-up" />
                     <div>done</div>
-                </motion.div>
+                </motion.div> */}
             </div>
         </div>
     )
