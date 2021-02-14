@@ -1,0 +1,40 @@
+.flashcards {
+    height: 100%;
+    width: 100%; 
+    display: grid;
+    place-items: center center;   
+    background: #4da6ff;
+
+    &__container {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow-x: scroll;
+        perspective: 150px;
+
+        -ms-overflow-style: none; 
+        scrollbar-width: none;  
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .card {
+        position: relative;
+        display: inline-block;
+        height: 80px;
+        width: 80px;
+        background: white;
+        margin: 2rem 1rem;
+        border-radius: 15px;
+        cursor: pointer;
+
+        &:first-of-type {
+            margin-left: 15rem;
+        }
+
+        &:last-of-type {
+            margin-right: 15rem;
+        }
+    }
+}

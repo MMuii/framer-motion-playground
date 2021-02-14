@@ -7,10 +7,13 @@ import Switch from '../components/Switch';
 import ClipPathTransition from '../components/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
+import TextWave from '../components/text-wave/TextWave';
 import Text3d from '../components/text-3d/Text3d';
 import UnderlinedMenu from '../components/underlined-menu/UnderlinedMenu';
+import Checkbox from '../components/checkbox/Checkbox';
 import RotatingCard from '../components/rotating-card/RotatingCard';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
+import Flashcards from '../components/flashcards/Flashcards';
 
 const tutorials = [
     {
@@ -40,9 +43,9 @@ const tutorials = [
     {
         slug: 'wave',
         name: 'Text wave',
-        description: 'You didn\'t hovered it just once, did you? // TODO',
+        description: 'You didn\'t hovered it just once, did you?',
         className: 'c2 r1',
-        component: 'Wave',
+        component: <TextWave />,
         direction: 'left'
     },
     {
@@ -54,11 +57,11 @@ const tutorials = [
         direction: 'left'
     },
     {
-        slug: 'custom-cursor',
-        name: 'Custom cursor',
-        description: 'Even though it\'s Framer Motion Playground, this cursor is pure, plain CSS!',
-        className: 'c2 r2',
-        component: <CustomCursor />,
+        slug: 'checkbox',
+        name: 'Checkbox',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c1 r1',
+        component: <Checkbox />,
         direction: 'left'
     },
     {
@@ -83,6 +86,22 @@ const tutorials = [
         description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
         className: 'c2 r3',
         component: <IphoneAnimation />,
+        direction: 'right'
+    },
+    {
+        slug: 'custom-cursor',
+        name: 'Custom cursor',
+        description: 'Even though it\'s Framer Motion Playground, this cursor is pure, plain CSS!',
+        className: 'c2 r2',
+        component: <CustomCursor />,
+        direction: 'left'
+    },
+    {
+        slug: 'flashcards',
+        name: 'Flashcards',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r1',
+        component: <Flashcards />,
         direction: 'right'
     }
 ]
