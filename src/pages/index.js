@@ -12,6 +12,7 @@ import Text3d from '../components/text-3d/Text3d';
 import UnderlinedMenu from '../components/underlined-menu/UnderlinedMenu';
 import Checkbox from '../components/checkbox/Checkbox';
 import RotatingCard from '../components/rotating-card/RotatingCard';
+import UploadButton from '../components/upload-button/UploadButton';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';
 
@@ -86,6 +87,14 @@ const tutorials = [
         description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
         className: 'c2 r3',
         component: <IphoneAnimation />,
+        direction: 'right'
+    },
+    {
+        slug: 'upload-button',
+        name: 'Upload button',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c1 r1',
+        component: <UploadButton />,
         direction: 'right'
     },
     {

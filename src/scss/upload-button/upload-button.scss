@@ -1,0 +1,62 @@
+.upload-button {
+    height: 100%;
+    width: 100%; 
+    display: grid;
+    place-items: center center;      
+    // background-image: radial-gradient(circle at 50% 50%, #ff57bb 0, #ff4bb8 25%, #f23cb5 50%, #e42cb2 75%, #d61cb0 100%);
+    // background-image: radial-gradient(circle at 50% 50%, #fcd9c6 0, #f2c9b5 50%, #e8b9a5 100%);
+    // background-image: radial-gradient(circle at 50% 50%, #fdc0f8 0, #f2b5f2 50%, #e6abec 100%);
+    // background-image: radial-gradient(circle at 50% 50%, #ffb0c5 0, #faa7bf 25%, #f29db9 50%, #ea93b3 75%, #e38bae 100%);
+    
+    background: #ffcad4;
+
+    .wrapper {
+        position: relative;
+        height: 4rem;
+        width: 11rem;
+        // overflow: hidden;
+
+        .container {
+            position: absolute;
+            left: 0;
+            height: 100%;
+            width: 100%;
+
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            padding: 0 2rem;
+
+            &.upload {
+                background: white;
+                color: #eb417b;
+                z-index: 1;
+                top: 0;
+            }
+
+            &.loading {
+                background: #f0759e;
+                color: white;
+                z-index: 2;
+                top: -100%;
+
+                .loader {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    border: transparent solid 3px;
+                    border-top: white solid 3px;
+                    border-radius: 50%;
+                }
+            }
+
+            &.done {
+                background: #eb417b;
+                color: white;
+                z-index: 3;
+                top: -100%;
+            }
+        }
+    }
+}
