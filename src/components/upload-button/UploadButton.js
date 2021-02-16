@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+
+const iconVariants = {
+    hovered: {
+        y: [0, -2, 0, 2, 0],
+        transition: { duration: .5, ease: 'easeInOut' }
+    }
+}
 
 const UploadButton = () => {
     const [isAnimating, setIsAnimating] = useState(false);
@@ -7,99 +14,92 @@ const UploadButton = () => {
     const uploadControls = useAnimation();
     const loadingControls = useAnimation();
     const doneControls = useAnimation();
+    const loaderControls = useAnimation();
+    const loadingBarControls = useAnimation();
 
-    //upload -> loading -> done -> upload
     const animate = async () => {
-        console.log('animating');
         setIsAnimating(true);
 
         uploadControls.start({
             zIndex: 1
-        })
+        });
 
         await loadingControls.start({
-            top: 0
+            top: 0,
+            transition: { duration: .3 }
+        });
+
+        loadingBarControls.start({
+            width: '100%',
+            transition: { duration: 1.35 }
         });
 
         uploadControls.start({
             top: '-100%',
             transition: { duration: 0 }
-        })
+        });
 
         await doneControls.start({ 
             top: 0,
-            transition: { delay: 1 }
+            transition: { delay: 1.5, duration: .3 }
         });
 
         loadingControls.start({
             top: '-100%',
             transition: { duration: 0 }
-        })
+        });
+
+        loadingBarControls.start({
+            width: '0%'
+        });
 
         await uploadControls.start({ 
             top: 0,
             zIndex: 4,
-            transition: { delay: 1 }
-        })
+            transition: { delay: 2, duration: .3 }
+        });
 
         doneControls.start({
             top: '-100%',
             transition: { duration: 0 }
-        })
+        });
 
         setIsAnimating(false);
-    }
+    };
+
+    useEffect(() => {
+        loaderControls.start({
+            rotate: 360,
+            transition: { repeat: Infinity, ease: 'linear', duration: .5 }
+        })
+    }, []);
 
     return (
         <div className="upload-button">
-            <div className="wrapper" /* onClick={() => !isAnimating && animate()} */>
-                <div 
-                    className="container loading"
-                    // initial={{ top: '-100%' }}
-                    // animate={loadingControls}
-                >
-                    <motion.div 
-                        className="loader"
-                        initial={{ rotate: 0 }} 
-                        animate={{ 
-                            rotate: 360,
-                            transition: { repeat: Infinity, ease: 'linear', duration: .5 }
-                        }}
-                        whileHover={{ scale: 2 }}
-                    />
-                    <div>loading</div>
-                </div>
-                
-                {/* <motion.div 
+            <div className="wrapper" onClick={() => !isAnimating && animate()}>
+                <motion.div 
                     className="container upload"
-                    // initial={{ top: '0%' }}
                     animate={uploadControls}
+                    whileHover="hovered"
                 >
-                    <i className="fas fa-angle-double-up" />
+                    <motion.i className="fas fa-angle-double-up" variants={iconVariants}/>
                     <div>upload</div>
                 </motion.div>
                 <motion.div 
                     className="container loading"
-                    // initial={{ top: '-100%' }}
                     animate={loadingControls}
                 >
-                    <motion.div 
-                        className="loader" 
-                        animate={{ 
-                            rotate: 360,
-                            transition: { repeat: Infinity, ease: 'linear', duration: .5 }
-                        }}
-                    />
+                    <motion.div className="loader" animate={loaderControls} />
                     <div>loading</div>
+                    <motion.div className="loading-bar" animate={loadingBarControls}/>
                 </motion.div>
-                <motion.div 
+                <motion.div  
                     className="container done"
-                    // initial={{ top: '-100%' }}
                     animate={doneControls}
                 >
-                    <i className="fas fa-angle-double-up" />
+                    <i className="fas fa-check" />
                     <div>done</div>
-                </motion.div> */}
+                </motion.div>
             </div>
         </div>
     )

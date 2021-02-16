@@ -15,6 +15,7 @@ import RotatingCard from '../components/rotating-card/RotatingCard';
 import UploadButton from '../components/upload-button/UploadButton';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';
+import BouncingBar from '../components/bouncing-bar/BouncingBar';
 
 const tutorials = [
     {
@@ -112,7 +113,15 @@ const tutorials = [
         className: 'c2 r1',
         component: <Flashcards />,
         direction: 'right'
-    }
+    },
+    {
+        slug: 'bouncing-bar',
+        name: 'Bouncing bar',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r2',
+        component: <BouncingBar />,
+        direction: 'right'
+    },
 ]
 
 const IndexPage = () => {

@@ -1,0 +1,86 @@
+.bouncing-bar {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center center;
+
+    .bar-container {
+        width: 100%;
+        height: 100%;
+        background: #FF312E;
+        position: relative;
+    
+        .icons-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: absolute;
+            bottom: 2.2rem;
+            color: #FF312E;
+            width: 100%;
+            z-index: 3;
+            font-size: 2.2rem;
+            padding: 0 3rem;
+
+            i {
+                opacity: .4;
+                color: #db3d4b;
+            }
+
+            .icon-background {
+                height: 4rem;
+                width: 4rem;
+                border-radius: 50%;
+                display: grid;
+                place-items: center center;
+                background-color: #ffffff;
+
+                i {
+                    color: #FF312E;
+                    opacity: 1;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .bar {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            fill: white;
+            z-index: 2;
+        }
+
+        .bubbles-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 3rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .bubble {
+            height: 5rem;
+            width: 5rem;
+            background: white;
+            border-radius: 50%;
+            display: grid;
+            place-items: center center;
+
+            font-size: 2.2rem;
+            color: #FF312E;
+
+            &:nth-child(1), &:nth-child(3) {
+                height: 4rem;
+                width: 4rem;
+                font-size: 2rem;
+            }
+        }
+    }
+}
