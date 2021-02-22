@@ -7,15 +7,16 @@ import Switch from '../components/Switch';
 import ClipPathTransition from '../components/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
-import TextWave from '../components/text-wave/TextWave';
-import Text3d from '../components/text-3d/Text3d';
+// import TextWave from '../components/text-wave/TextWave';
+// import Text3d from '../components/text-3d/Text3d';
 import UnderlinedMenu from '../components/underlined-menu/UnderlinedMenu';
 import Checkbox from '../components/checkbox/Checkbox';
-import RotatingCard from '../components/rotating-card/RotatingCard';
+// import RotatingCard from '../components/rotating-card/RotatingCard';
 import UploadButton from '../components/upload-button/UploadButton';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';
 import BouncingBar from '../components/bouncing-bar/BouncingBar';
+import SideMenu from '../components/side-menu/SideMenu';
 
 const tutorials = [
     {
@@ -27,6 +28,22 @@ const tutorials = [
         direction: 'left'
     },
     {
+        slug: 'bouncing-bar',
+        name: 'Bouncing bar',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r2',
+        component: <BouncingBar />,
+        direction: 'right'
+    },
+    {
+        slug: 'flashcards',
+        name: 'Flashcards',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r1',
+        component: <Flashcards />,
+        direction: 'right'
+    },
+    {
         slug: 'infinite-cards',
         name: 'Infinite cards',
         description: 'You can swipe them all day long and they never end!',
@@ -34,14 +51,22 @@ const tutorials = [
         component: <InfiniteCards />,
         direction: 'right'
     },
-    // {
-    //     slug: 'wave',
-    //     name: 'Text wave',
-    //     description: 'You didn\'t hovered it just once, did you?',
-    //     className: 'c2 r1',
-    //     component: <TextWave />,
-    //     direction: 'left'
-    // },
+    {
+        slug: 'custom-cursor',
+        name: 'Custom cursor',
+        description: 'Even though it\'s Framer Motion Playground, this cursor is pure, plain CSS!',
+        className: 'c2 r2',
+        component: <CustomCursor />,
+        direction: 'left'
+    },
+    {
+        slug: 'clip-path-transition',
+        name: 'Clip Path Transition',
+        description: 'Nice transition made possible with animating clip path. Same mechanism as this site\'s page transition.',
+        className: 'c3 r2',
+        component: <ClipPathTransition />,
+        direction: 'right'
+    },
     {
         slug: 'underlined-menu',
         name: 'Underlined Menu',
@@ -57,14 +82,6 @@ const tutorials = [
         className: 'c1 r1',
         component: <Checkbox />,
         direction: 'left'
-    },
-    {
-        slug: 'clip-path-transition',
-        name: 'Clip Path Transition',
-        description: 'Nice transition made possible with animating clip path. Same mechanism as this site\'s page transition.',
-        className: 'c3 r2',
-        component: <ClipPathTransition />,
-        direction: 'right'
     },
     {
         slug: 'app-open',
@@ -83,29 +100,13 @@ const tutorials = [
         direction: 'right'
     },
     {
-        slug: 'custom-cursor',
-        name: 'Custom cursor',
-        description: 'Even though it\'s Framer Motion Playground, this cursor is pure, plain CSS!',
-        className: 'c2 r2',
-        component: <CustomCursor />,
+        slug: 'side-menu',
+        name: 'Side menu',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r3',
+        component: <SideMenu />,
         direction: 'left'
-    },
-    {
-        slug: 'flashcards',
-        name: 'Flashcards',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
-        className: 'c2 r1',
-        component: <Flashcards />,
-        direction: 'right'
-    },
-    {
-        slug: 'bouncing-bar',
-        name: 'Bouncing bar',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
-        className: 'c2 r2',
-        component: <BouncingBar />,
-        direction: 'right'
-    },
+    }
 ]
 
 // const tutorials = [

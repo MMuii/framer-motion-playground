@@ -3,7 +3,8 @@
     width: 100%;
     display: grid;
     place-items: center left;
-    color: rgba($color: #171717, $alpha: .7);
+    color: rgba($color: #171717, $alpha: .8);
+    background: #ffd11a;
 
     .wrapper {
         display: flex;
@@ -29,5 +30,7 @@
         width: 100%;
         height: 4px;
         border-radius: 15px; 
+        background: white;
+        opacity: 0.85;
     }
 }

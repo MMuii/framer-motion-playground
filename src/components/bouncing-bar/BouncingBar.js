@@ -43,6 +43,13 @@ const BouncingBar = () => {
         } 
     }
 
+    const handleTapCancel = () => {
+        setIsTapping(false);
+        svgControls.start({
+            d: 'M 0 100 Q 200 100 400 100 L 400 200 L 0 200 Z'
+        })
+    }
+
     return (
         <div className="bouncing-bar">
             <div className="bar-container">
@@ -63,7 +70,7 @@ const BouncingBar = () => {
                         onClick={() => setClicked(!clicked)}
                         onTapStart={handleTapStart}
                         onTap={handleTapEnd}
-                        onTapCancel={() => setIsTapping(false)}
+                        onTapCancel={handleTapCancel}
                         whileTap={{ backgroundColor: '#ffcdcc' }}
                     >
                         <i className="fas fa-plus" />
