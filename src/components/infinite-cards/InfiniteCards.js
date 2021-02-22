@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
-const colors = ['#FFBE0B', '#FB5607', '#FF006E', '#8338EC', '#3A86FF'];
+const colors = ['#FF006E', '#FB5607', '#FFBE0B', '#8338EC', '#3A86FF'];
 
 const randomColor = current => {
     while (true) {

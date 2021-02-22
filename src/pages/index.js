@@ -60,6 +60,14 @@ const tutorials = [
         direction: 'left'
     },
     {
+        slug: 'app-open',
+        name: 'App opening animation',
+        description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
+        className: 'c2 r3',
+        component: <IphoneAnimation />,
+        direction: 'right'
+    },
+    {
         slug: 'clip-path-transition',
         name: 'Clip Path Transition',
         description: 'Nice transition made possible with animating clip path. Same mechanism as this site\'s page transition.',
@@ -82,14 +90,6 @@ const tutorials = [
         className: 'c1 r1',
         component: <Checkbox />,
         direction: 'left'
-    },
-    {
-        slug: 'app-open',
-        name: 'App opening animation',
-        description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
-        className: 'c2 r3',
-        component: <IphoneAnimation />,
-        direction: 'right'
     },
     {
         slug: 'upload-button',
