@@ -8,7 +8,6 @@
         display: flex;
         font-size: 3rem;
         color: gold;
-        cursor: pointer;
 
         .star-wrapper {
             position: relative;
@@ -26,12 +25,13 @@
                 width: 1.5rem;
                 border-radius: 50%;
                 background: #aaa;
+                cursor: pointer;
             }
 
             i {
                 position: relative;
                 z-index: 10;
-                // pointer-events: none;
+                cursor: pointer;        
             }
         }
     }

@@ -83,11 +83,7 @@ const Star = ({ i, isVisible, isRated }) => {
 const StarRating = () => {
     const [isRated, setIsRated] = useState(0);
     const [isHovering, setIsHovering] = useState(0);
-
-    useEffect(() => {
-        console.log('isHovering', isHovering);
-    }, [isHovering]);
-
+    
     return (
         <div className="star-rating">
             <div className="stars-container">

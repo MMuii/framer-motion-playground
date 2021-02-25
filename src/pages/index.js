@@ -119,8 +119,8 @@ const tutorials = [
         direction: 'left'
     },
     {
-        slug: 'soft-shadow-button',
-        name: 'Soft shadow button',
+        slug: 'link-hover',
+        name: 'Link hover animation',
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
         className: 'c1 r1',
         component: <LinkAnimation />,

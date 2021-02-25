@@ -18,7 +18,10 @@ const LinkAnimation = () => {
                         <motion.div
                             initial={{ left: '-100%' }}
                             animate={{ left: isHovered ? '0%' : '-100%' }}
-                            transition={{ duration: isHovered ? .6 : .4, ease: [.7, 0, .3, 1] }}
+                            transition={{ 
+                                duration: isHovered ? .7 : .5, 
+                                ease: [.7, 0, .3, 1] 
+                            }}
                         >
                             {letter.toUpperCase()}
                         </motion.div>
