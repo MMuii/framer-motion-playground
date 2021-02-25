@@ -36,7 +36,10 @@ const starVariants = {
         }
     }),
     hovered: {
-        scale: .8
+        scale: .8,
+        transition: {
+            duration: .2
+        }
     }
 }
 
