@@ -7,4 +7,69 @@ type: "tutorial"
 # Underlined menu
 ## Great example of very basic AnimateSharedLayout usage.
 
-test test test
+import UnderlinedMenu from '../../components/underlined-menu/UnderlinedMenu';
+
+<div className="guide__component-wrapper">
+  <div className="underlined-menu__guide-wrapper">
+    <UnderlinedMenu />
+  </div>
+</div>
+
+Despite looking subtle and cool, this menu transition is really easy to do. To be honest, the only thing we animate manually is the underline opacity. `AnimateSharedLayout` component is responsible for all rest of the magic. So, let's start with `UnderlinedMenu` component. 
+
+```jsx
+const menuItems = ['Lorem', 'ipsum', 'dolor', 'sit'];
+
+const UnderlinedMenu = () => {
+  const [selected, setSelected] = useState(0);
+
+  return (
+    <div className="underlined-menu">
+      <div className="wrapper">
+        <AnimateSharedLayout>
+          {menuItems.map((el, i) => (
+            <MenuItem 
+              text={el} 
+              key={i}
+              selected={selected === i}
+              onClick={() => setSelected(i)}
+            /> 
+          ))}
+        </AnimateSharedLayout>
+      </div>
+    </div>
+  )
+}
+```
+
+There's not much to explain, except the `AnimateSharedLayout` component. As you can see, all the logic outside the return statement is simple `useState` hook which keeps the information about which menu item is currently selected.
+
+Let's focus on `AnimateSharedLayout`, which we can use to animate between completely different `motion` components. If there is a `motion` component inside `AnimateSharedLayout` with a `layoutId` and it gets removed as another component with the same `layoutId` is added, the new component will automatically perform a layout animation from previous one. At the bottom of the page I linked another great example of that, which I found in Framer's docs. 
+
+```jsx
+const MenuItem = ({ text, selected, onClick }) => (
+    <motion.div 
+        className="menu-item" 
+        onClick={onClick} 
+        animate={{ opacity: selected ? 1 : .5}}
+    >
+        {text}
+        {selected && (
+            <motion.div 
+                className="underline" 
+                layoutId="underline" 
+            />
+        )}
+    </motion.div>
+)
+```
+
+`MenuItem` isn't too complicated aswell. `text` prop is just the text that component displays, `selected` is a boolean value which tells the component whether it's selected or not, and `onClick` sets `MenuItem` as the selected one in `UnderlinedMenu` state.
+
+As I mentioned, the only thing animated manually is the opacity. If `MenuItem` is selected, its non opaque, if not, its half opaque. 
+
+The tricky thing is the second div with `underline` class. As you can see, it is only rendered if `MenuItem` is selected and it has layoutId. Only one `MenuItem` can be selected at the same time, so if you select one item, another's underline disappears, and because underlines have the same layoutId and are wrapped in `AnimateSharedLayout`, a layout animation is performed every time selected item changes. That's all!
+
+## Useful links
+- [AnimateSharedLayout](https://www.framer.com/api/motion/animate-shared-layout/#animate-between-components)
+- [Another example from docs](https://codesandbox.io/s/framer-motion-2-animatesharedlayout-animate-between-different-components-dy0bv)
