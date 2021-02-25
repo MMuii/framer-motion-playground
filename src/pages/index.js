@@ -17,6 +17,9 @@ import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';
 import BouncingBar from '../components/bouncing-bar/BouncingBar';
 import SideMenu from '../components/side-menu/SideMenu';
+import SharedLayoutCards from '../components/shared-layout-cards/SharedLayoutCards';
+import LinkAnimation from '../components/link-animation/LinkAnimation';
+import StarRating from "../components/star-rating/StarRating";
 
 const tutorials = [
     {
@@ -105,6 +108,30 @@ const tutorials = [
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
         className: 'c2 r3',
         component: <SideMenu />,
+        direction: 'left'
+    },
+    {
+        slug: 'shared-layout-cards',
+        name: 'Shared layout cards',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c3 r2',
+        component: <SharedLayoutCards />,
+        direction: 'left'
+    },
+    {
+        slug: 'soft-shadow-button',
+        name: 'Soft shadow button',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c1 r1',
+        component: <LinkAnimation />,
+        direction: 'left'
+    },
+    {
+        slug: 'star-rating',
+        name: 'Star rating',
+        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        className: 'c2 r1',
+        component: <StarRating />,
         direction: 'left'
     }
 ]
