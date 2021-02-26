@@ -41,7 +41,7 @@ const tutorials = [
     {
         slug: 'flashcards',
         name: 'Flashcards',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'Card flip animation, which you might have seen on Framer Motion landing page.',
         className: 'c2 r1',
         component: <Flashcards />,
         direction: 'right'

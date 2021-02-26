@@ -67,7 +67,7 @@ const Flashcards = () => {
         if (card && !selectedCard) {
             cardRefs.current[card - 1].scrollIntoView({
                 behavior: 'smooth',
-                block: 'center',
+                block: 'nearest',
                 inline: 'center'
             }); 
         }
@@ -105,8 +105,7 @@ const Flashcards = () => {
                         variants={cardVariants}
                         animate={selectedCard === card ? "selected" : "notSelected"}
                         custom={selectedCard ? selectedCard - card : 0}
-                    >
-                    </motion.div>
+                    />
                 ))}
             </motion.div>
         </div>

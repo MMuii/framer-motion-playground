@@ -1,0 +1,197 @@
+---
+path: "/tutorial/flashcards"
+title: "Flashcards"
+type: "tutorial"
+---
+
+import Flashcards from '../../components/flashcards/Flashcards';
+
+# Flashcards
+## Card flip animation, which you might have seen on Framer Motion landing page.
+
+<div className="guide__component-wrapper">
+  <div className="flashcards__guide-wrapper">
+    <Flashcards />
+  </div>
+</div>
+
+Most of this component's code is actually not a Framer Motion animations, but my implementation of mouse dragging. Let's start with the main concept and then I will move on to the dragging mechanism.
+
+```jsx
+<div 
+  className="flashcards"
+  onMouseDown={handleMouseDown}
+  onMouseUp={() => setDragStart(prev => ({ ...prev, isDragging: false }))}
+  onMouseMove={handleMouseMove}
+>
+  <div 
+    className="flashcards__container" 
+    ref={containerRef}
+  >
+    {cards.map((card, i) => (
+      <motion.div 
+        className="card" 
+        key={card}
+        ref={el => cardRefs.current.push(el)}
+        onMouseUp={e => handleCardMouseUp(e, card)}
+        variants={cardVariants}
+        animate={selectedCard === card ? "selected" : "notSelected"}
+        custom={selectedCard ? selectedCard - card : 0}
+      />
+    ))}
+  </div>
+</div>
+```
+
+The `flashcards` div is the main wrapper for the whole component and it handles most of the mouse events used for dragging. `flashcards__container` is the draggable container which contains the cards, and `card` is well... the card. I will focus on `card` later, as it is the pretty much only thing animated with Framer Motion here. For now, let's talk about the dragging mechanism.
+
+```jsx 
+const containerRef = useRef();
+const cardRefs = useRef(new Array());
+        
+<div 
+  className="flashcards__container" 
+  ref={containerRef}
+>
+  <motion.div
+    className="card"
+    ref={el => cardRefs.current.push(el)}
+  />
+</div>
+```
+
+For implementing dragging access to elements' DOM properties is neccessary, so first thing I did was setting up refs. There are multiple cards, so I store their refs in an array. Anyway, card refs aren't used in dragging mechanism, so let's forget about them for now.
+
+```jsx
+const [{ 
+  startX,
+  startScrollLeft,
+  isDragging
+}, setDragStart] = useState({ 
+  startX: undefined, 
+  startScrollLeft: undefined, 
+  isDragging: false
+});
+```
+
+This is the state used for storing information about the current drag. `startX` is for storing drag start X position, `startScrollLeft` contains information about `scrollLeft` of element when the drag started, and `isDragging` is a boolean which tells if container is currently being dragged.
+
+```jsx
+<div 
+  className="flashcards"
+  onMouseDown={handleMouseDown}
+  onMouseUp={() => setDragStart(prev => ({ ...prev, isDragging: false }))}
+  onMouseMove={handleMouseMove}
+>
+</div>
+```
+
+```jsx
+const handleMouseDown = e => {
+  setDragStart({ 
+    startX: e.pageX - containerRef.current.offsetLeft,
+    startScrollLeft: containerRef.current.scrollLeft,
+    isDragging: true
+  });
+}
+```
+
+Let's take a look on event handlers, starting with `handleMouseDown`. This one is pretty simple, all it does is just filling the state with fresh data about drag start, which of course starts on mouse down. `e.pageX` is where the user clicked in pixels, relatively to whole page, so I subtracted `containerRef.current.offsetLeft` to get it relatively to the container. If you are confused what are all these offsets and scrolls and what do they actually represent, I linked really usefull pictures explaining that at the bottom of the page. 
+
+```jsx
+const handleMouseMove = e => {
+  if (!isDragging || selectedCard) return;
+
+  const x = e.pageX - containerRef.current.offsetLeft;
+  const walk = x - startX;
+  containerRef.current.scrollLeft = startScrollLeft - walk;
+}
+```
+
+`handleMouseMove` runs whenever user moves cursor inside the container. If user currently isn't dragging or there is a selected card, the function does nothing and returns immediately. If other cases, `walk` (difference between current mouse position (relative to the container) and drag start) is calculated, then it's subtracted from `startScrollLeft` to get current container `scrollLeft`. 
+
+```jsx
+onMouseUp={() => setDragStart(prev => ({ ...prev, isDragging: false }))}
+```
+
+The only thing `onMouseUp` does is telling the state that user is no longer dragging.
+
+```jsx
+useEffect(() => {
+  const { scrollWidth, clientWidth } = containerRef.current;
+  const halfScroll = (scrollWidth - clientWidth) / 2;
+  containerRef.current.scrollLeft = halfScroll;
+}, [containerRef.current]); 
+```
+
+I also added useEffect that scrolls the container by setting its scrollLeft to the half of its amount.
+
+```jsx
+<motion.div 
+  className="card" 
+  key={card}
+  ref={el => cardRefs.current.push(el)}
+  onMouseUp={e => handleCardMouseUp(e, card)}
+  variants={cardVariants}
+  animate={selectedCard === card ? "selected" : "notSelected"}
+  custom={selectedCard ? selectedCard - card : 0}
+/>
+```
+
+```jsx
+const handleCardMouseUp = (e, card) => {
+  if (isDragging) {
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = x - startX;
+    if (Math.abs(walk) < 5) selectCard(card);
+  } else selectCard(card);
+}
+```
+
+It's finally time to take a look on a actual card, starting with `onMouseUp` handler. If user is not currently dragging, it calls `selectCard()` and that's all. But, if there is a drag happening, again, `walk` is being calculated. If the walk is small enough (user has dragged less than 5 pixels in any direction - that's why I used Math.abs() here, so I always get positive values, even if walk is going left), then card is selected. Otherwise, nothing happens. I set my limit as 5 pixels because in my opinion it feels pretty natural, but if you want the cards to be able to be selected by only exact clicks, you can set the condition to `walk === 0`.
+
+```jsx
+const selectCard = card => {
+  setSelectedCard(selectedCard ? null : card);
+  
+  if (card && !selectedCard) {
+    cardRefs.current[card - 1].scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    }); 
+  }
+}
+```
+
+`selectCard` is pretty straightforward. If there is currently selectedCard, it sets the state to null. If not, it sets the state to the passed card. If a card has been selected, it also scrolls the container to position the selected card in the center of the view. My card indexes start with 1, so I had to subract 1 (`cardRefs.current[card - 1]`) to get correct ref from refs array.
+
+Now, let's talk about `custom` prop. Framer Motion allows us to make our variants dynamic by defining them as a functions with a single argument. And, as you might have guessed, `custom` is the value passed as that argument to variants. In my case, I set `custom` to `selectedCard - card` if there is a selected card, which gives me card position relative to the selected one. If there isn't a selected one, `custom` is just 0.
+
+```jsx
+const cardVariants = {
+  selected: {
+    rotateY: 180,
+    scale: 1.1,
+    transition: { duration: .35 },
+    zIndex: 10,
+    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px'
+  },
+  notSelected: i => ({
+    rotateY: i * 15,
+    scale: 1 - Math.abs(i * 0.15),
+    x: i ? i * 50 : 0,
+    opacity: 1 - Math.abs(i * .15),
+    zIndex: 10 - Math.abs(i),
+    boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px',
+    transition: { duration: .35 }
+  })
+}
+```
+
+`selected` variant is static, but `notSelected` values vary depending on the argument I called 'i' (index). If card is -2 positions from the selected card, its `rotateY` will be animated to -2 * 15 = -30 degrees, `scale` to 1 - abs(-2 * 0.15) = 1 - 0.3 = 0.7, etc.
+
+## Useful links
+- [Offsets, widths and scrolls explanation thread](https://stackoverflow.com/questions/21064101/understanding-offsetwidth-clientwidth-scrollwidth-and-height-respectively)
+- [Direct link to picture explaining these properties](https://i.stack.imgur.com/Cl1IA.png)
+- [Dynamic variants](https://www.framer.com/api/motion/animation/#dynamic-variants)
