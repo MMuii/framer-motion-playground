@@ -6,21 +6,20 @@ const LinkAnimation = () => {
 
     return (
         <div className="link-animation">
-            <div className="container">
+            <div 
+                className="container"
+                onMouseOver={() => setIsHovered(true)}
+                onMouseOut={() => setIsHovered(false)}
+            >
                 {'hover'.split('').map((letter, i) => (
-                    <div 
-                        className="letter-container" 
-                        key={i}
-                        onMouseOver={() => setIsHovered(true)}
-                        onMouseOut={() => setIsHovered(false)}
-                    >
+                    <div className="letter-container" key={i}>
                         <div>{letter}</div>
                         <motion.div
                             initial={{ left: '-100%' }}
                             animate={{ left: isHovered ? '0%' : '-100%' }}
                             transition={{ 
                                 duration: isHovered ? .7 : .5, 
-                                ease: [.7, 0, .3, 1] 
+                                ease: [.7, 0, .3, 1],
                             }}
                         >
                             {letter.toUpperCase()}

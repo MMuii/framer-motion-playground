@@ -89,7 +89,7 @@ const tutorials = [
     {
         slug: 'checkbox',
         name: 'Checkbox',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'You can animate SVGs easier than you\'d think.',
         className: 'c1 r1',
         component: <Checkbox />,
         direction: 'left'
@@ -119,9 +119,9 @@ const tutorials = [
         direction: 'left'
     },
     {
-        slug: 'link-hover',
+        slug: 'link-animation',
         name: 'Link hover animation',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'Simple, yet cool effect. More of CSS trick, but still there\'s some Framer Motion magic.',
         className: 'c1 r1',
         component: <LinkAnimation />,
         direction: 'left'

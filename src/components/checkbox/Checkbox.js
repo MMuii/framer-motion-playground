@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { motion, useTransform, useMotionValue, useAnimation } from 'framer-motion';
 
 const variants = {
-    checked: { pathLength: 1, opacity: 1, transition: { duration: .3 } },
-    unchecked: { pathLength: 0, opacity: 0, transition: { duration: .3 } }
+    checked: { 
+        pathLength: 1, 
+        transition: { duration: .3 } 
+    },
+    unchecked: { 
+        pathLength: 0, 
+        transition: { duration: .3 } 
+    }
 }
 
 const Checkbox = () => {
@@ -33,8 +39,8 @@ const Checkbox = () => {
         <motion.div 
             className="checkbox"
             onClick={() => {
-                setIsChecked(!isChecked);
                 !isChecked && lineAnimation();
+                setIsChecked(!isChecked);
             }}
         >
             <motion.div 

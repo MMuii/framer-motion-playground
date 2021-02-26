@@ -1,0 +1,44 @@
+---
+tutorial: "Link hover animation"
+name: "styles"
+extension: "scss"
+language: "css"
+type: "tutorial-file"
+---
+
+```css
+.link-animation {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center center;
+  background: #4DA6FF;
+  color: white;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    border-bottom: 3px solid white;
+    cursor: pointer;
+
+    .letter-container {
+      font-size: 3rem;
+      font-family: 'Roboto Mono', monospace;
+
+      position: relative;
+      width: 1.7rem;
+      height: 3rem;
+      overflow: hidden;
+      font-weight: 700;
+
+      div {
+        position: absolute;
+        background: #4DA6FF;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+      }
+    }
+  }
+}
+```

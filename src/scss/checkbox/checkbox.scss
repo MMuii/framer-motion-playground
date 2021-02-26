@@ -76,12 +76,17 @@
             transform: rotate(-25deg);
         }
 
-        &--2 {
-
-        }
-
         &--3 {
             transform: rotate(25deg);
         }
     }
+}
+
+.checkbox__guide-wrapper {
+    position: relative;
+    margin: 20px 0;
+    border-radius: 15px;
+    background: #F6F1EC;
+    height: 125px;
+    width: 125px;
 }
