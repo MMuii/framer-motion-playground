@@ -63,7 +63,7 @@ const tutorials = [
         direction: 'left'
     },
     {
-        slug: 'app-open',
+        slug: 'app-opening-animation',
         name: 'App opening animation',
         description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
         className: 'c2 r3',

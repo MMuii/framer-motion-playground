@@ -1,14 +1,11 @@
-.iphone-animation {
+.iphone-animation, .iphone-animation-tut {
     height: 100%;
     width: 100%;
     display: grid;
     place-items: end center;
     overflow: hidden;
     position: relative;
-    background: #cc0099;
-    // background-color: #21D4FD;
-    // background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-    // background-image: linear-gradient(315deg, #FAD961 0%, #F76B1C 100%); 
+    background: #5F4A8B;
 
     .home-bar {
         position: absolute;
@@ -53,7 +50,6 @@
             height: 5rem;
             width: 5rem;
             border-radius: 8px;
-            background: orange;
             display: grid;
             place-items: center center;
             cursor: pointer;
@@ -73,6 +69,7 @@
         padding: 3rem;
         box-sizing: border-box;
         overflow: hidden;
+        border-radius: 8px;
 
         .content-wrapper {
             height: 100%;
@@ -88,4 +85,27 @@
         z-index: 20;
     }
 }
+
+.iphone-animation-tut {
+    .app-opened {
+        background: #E69A8D;
+    }
+
+    .app-icon {
+        &__bg {
+            background: #E69A8D;
+        }
+    }
+
+    .close-bar {
+        background: #272727;
+    }
+}
   
+.app-opening-animation__guide-wrapper {
+    width: 30rem;
+    height: 45rem;
+    margin: 20px 0;
+    border-radius: 15px;
+    overflow: hidden;
+}

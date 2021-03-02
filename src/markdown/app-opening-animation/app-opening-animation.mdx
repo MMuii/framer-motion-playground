@@ -1,0 +1,114 @@
+---
+path: "/tutorial/app-opening-animation"
+title: "App opening animation"
+type: "tutorial"
+---
+
+import IphoneAnimationTut from '../../components/iphone-animation/IphoneAnimationTut';
+
+# App opening animation
+## AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don't believe!
+
+<div className="guide__component-wrapper">
+  <div className="app-opening-animation__guide-wrapper">
+    <IphoneAnimationTut />
+  </div>
+</div>
+
+In this tutorial I decided not to focus on opened apps' content, so I replaced it with simple empty screens to make the tutorial more about actual Framer Motion and `AnimateSharedLayout`, instead of plain CSS. Anyway, let's dive into the code.
+
+```jsx
+const [openedApp, setOpenedApp] = useState(null);
+
+return (
+  <div className="app-opening-animation">
+    <div className="wrapper">
+      <AnimateSharedLayout>
+        {[1, 2, 3, 4].map((app) => (
+          <motion.div
+            className="app-icon__bg"
+            key={app}
+            layoutId={app}
+          />
+        ))}
+        <AnimatePresence>
+          {openedApp && (
+            <>
+              <motion.div 
+                className="app-opened"
+                layoutId={openedApp}
+                onClick={() => canOpenApp && setOpenedApp(app)}
+              />
+              <motion.div 
+                className="close-bar" 
+                initial={{ y: 8, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 8, opacity: 0 }}
+                transition={{ ease: 'linear' }}
+              />
+            </>
+          )}
+        </AnimatePresence>
+      </AnimateSharedLayout>
+    </div>
+  </div>
+)
+```
+
+The code above is basically whole component, but with removed some props to make the main concept easier to explain. Later, I will talk more about each component's part more deeply. 
+
+The core trick here is using `AnimatePresence` inside the `AnimateSharedLayout`. If there is a component with a `layoutId`, and new one with that same `layoutId` is added, older component will automatically be hidden, and new one will animate out from older's position. Also, if you wrap the new component in `AnimatePresence`, Framer Motion will animate it back to the original component when it's removed, as an exit animation. 
+
+So, I did exactly that. Inside the `AnimateSharedLayout` I'm rendering 4 app icons from `map`, and two elements inside the `AnimatePresence`: opened app, and that iphone-like line at the bottom which I called `close-bar`, just to make it look a little bit better. Elements inside `AnimatePresence` are rendered only when there is a `openedApp`. 
+
+And well... that's the whole mechanism! Although, there is one think I should mention about, and that is a `type="crossfade"` prop that you can pass to `AnimateSharedLayout`. If you animate components with `AnimateSharedLayout` and `AnimatePresence`, and their appearance differ by much, `crossfade` might give a really nice effect. By adding it, children from `AnimatePresence` will crossfade with their old component, giving a more smooth transition. I used it in the component that you can see on the main page, because there are many differences between apps' content, and app icons on the 'desktop' actually have icons inside. Here, in the tutorial, there is no need for that as there are no content inside opened apps, and everything looks perfectly smooth without `type="crossfade"`.
+
+Now, let's talk about how I implemented that 'close-by-drag' mechanism.
+
+```jsx
+const [canOpenApp, setCanOpenApp] = useState(true);
+
+const closeApp = () => {
+  setOpenedApp(null);
+  setCanOpenApp(false);
+  setTimeout(() => {
+    setCanOpenApp(true);
+  }, 500);
+}
+
+const onDragEnd = (event, info) => {
+  if (info.offset.y < 0) closeApp();
+}
+
+<motion.div 
+  className="app-opened"
+  layoutId={openedApp}
+  drag
+  dragConstraints={{ 
+    left: 0, 
+    right: 0, 
+    top: 0, 
+    bottom: 0
+  }}
+  dragElastic={.03}
+  onDragEnd={onDragEnd}
+  whileTap={{
+    scale: .9,  
+    borderRadius: '15px',
+  }}
+/>
+```
+
+`onDragEnd` function checks if user has dragged upwards by checking if `offset.y` is less than 0. It gets that data from `info` object that contain various data about the drag end event. The object itself is passed to the event handler automatically. If user has dragged component the right way, it invokes `closeApp` function.
+
+`closeApp` could be replaced with just `setOpenedApp(false)`, but I added a `canOpenApp` state variable and a 500ms timeout, so user can't open an app while another one is being closed.
+
+`drag` prop enables dragging in any direction, but the draggable area is constrained by `dragConstraints` object to 0px in any direction. `dragElastic={.03}` means that user can drag outside of the constraints, but the movement will be really slow. Larger values here means faster movement. And, of course, object dragged outside of the constraints will be animated back when the drag ends, to the farthest possible position inside of its constraints.
+
+`whileTap` scales down the opened app a little bit, so you can see the 'desktop' background, and gives it a nice `borderRadius` of 15 pixels. 
+
+And that's all! Simple, yet cool effect. `AnimateSharedLayout` is really powerful.
+
+## Useful links
+- [Drag gesture](https://www.framer.com/api/motion/gestures/#drag)
+- [AnimateSharedLayout](https://www.framer.com/api/motion/animate-shared-layout/)

@@ -10,7 +10,6 @@ const OpenedApp = ({ app, closeApp, content }) => {
         <motion.div
             layoutId={app.id}
             className="app-opened"
-            onClick={closeApp}
             drag
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0}}
             dragElastic={.03}
@@ -20,7 +19,6 @@ const OpenedApp = ({ app, closeApp, content }) => {
                 borderRadius: '15px',
             }}
             style={app.appStyle}
-            onAnimationEnd={() => console.log('ended')}
         >
             <motion.div
                 className="content-wrapper"
