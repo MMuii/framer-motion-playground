@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 
@@ -33,18 +33,9 @@ const squareVariants = {
     }
 }
 
-// const squares = ['yellow', 'green', 'blue', 'violet'];
-
 const ClipPathTransition = () => {
     const [selectedSquare, setSelectedSquare] = useState(null);
     const { width } = useContext(WindowSizeContext) || 0;
-
-    useEffect(() => {
-        const onkeypress = () => setSelectedSquare(null);
-        document.addEventListener('keydown', onkeypress);
-
-        return () => document.removeEventListener('keydown', onkeypress);
-    });
 
     const renderSquares = () => {
         const squares = width >= 768 
@@ -62,17 +53,6 @@ const ClipPathTransition = () => {
             />    
         ));
     }
-
-    // const renderSquares = () => squares.map((color, index) => (
-    //     <motion.div 
-    //         key={index}
-    //         className={`square square--${color}`} 
-    //         onClick={() => setSelectedSquare(color)}
-    //         whileHover={{ scale: 1.05 }}
-    //         variants={squareVariants}
-    //         transition={{ duration: .2, type: 'spring', mass: 1 }}
-    //     />
-    // ));
 
     return (
         <div className={`cp-transition cp-transition__container cp-transition__container--${selectedSquare}`}>

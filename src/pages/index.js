@@ -17,7 +17,7 @@ import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';
 import BouncingBar from '../components/bouncing-bar/BouncingBar';
 import SideMenu from '../components/side-menu/SideMenu';
-import SharedLayoutCards from '../components/shared-layout-cards/SharedLayoutCards';
+import LayoutCards from '../components/layout-cards/LayoutCards';
 import LinkAnimation from '../components/link-animation/LinkAnimation';
 import StarRating from "../components/star-rating/StarRating";
 
@@ -111,11 +111,11 @@ const tutorials = [
         direction: 'left'
     },
     {
-        slug: 'shared-layout-cards',
-        name: 'Shared layout cards',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        slug: 'layout-cards',
+        name: 'Layout cards',
+        description: 'A little bit trickier usage of layout animations',
         className: 'c3 r2',
-        component: <SharedLayoutCards />,
+        component: <LayoutCards />,
         direction: 'left'
     },
     {

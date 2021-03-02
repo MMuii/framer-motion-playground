@@ -1,0 +1,173 @@
+---
+path: "/tutorial/layout-cards"
+title: "Layout cards"
+type: "tutorial"
+---
+
+import LayoutCards from '../../components/layout-cards/LayoutCards';
+
+# Layout cards
+## A little bit trickier usage of layout animations.
+
+<div className="guide__component-wrapper">
+  <div className="layout-cards__guide-wrapper">
+    <LayoutCards />
+  </div>
+</div>
+
+Framer motion's layout animations are really powerful and I think this is a great example of that. Despite looking quite complex, this component is actually pretty simple, maybe except one trick. Anyway, let's dive into the code. 
+
+```jsx
+const [selectedId, setSelectedId] = useState(null);
+
+<div className="layout-cards">
+  {cards.map((card, i) => (
+    <motion.div 
+      className={selectedId === card ? 'opened-card' : 'card' }
+      key={i}
+      layout
+      drag={selectedId === card ? 'x' : false}
+    >
+      {selectedId === card && (
+        <>
+          <div />
+          <div />
+          <div />
+        </>
+      )}
+    </motion.div>
+  ))}
+  <motion.div 
+    className="dim-layer" 
+    animate={{ opacity: selectedId ? .3 : 0 }}
+  />
+</div>
+```
+
+Main concept is really simple: there's a state storing information about which card is currently selected. Card's `className` vary, depending on whether the card is selected or not. `card` class is nothing more than just a white rectangle placed in a grid, but `opened-card` comes with more functionality. It works as a draggable container for opened 'gallery'. As you can see, horizontal drag is also only enabled when card is selected:
+
+```jsx
+drag={selectedId === card ? 'x' : false}
+```
+
+These 3 anonymous divs rendered if the card is selected are the 'children' gallery cards, displaying in the draggable container. 
+
+```jsx
+{selectedId === card && (
+  <>
+    <div />
+    <div />
+    <div />
+  </>
+)}
+```
+
+Dim layer is a full width and height layer between opened card's content and rest of the component, widh a black background color and pointer events disabled. Initially it's fully transparent, but when card is selected its opacity becomes 0.3. 
+
+```jsx
+<motion.div 
+  className="dim-layer" 
+  animate={{ opacity: selectedId ? .3 : 0 }}
+/>
+```
+
+To this point everything was pretty simple. The tricky part (in my opinion) is to make card closing animation look good. Because whole draggable container is the layout-animated element, and its appearance differs in many ways from a simple, white rectangular closed card, the layout animation looks bad if its scrolled right. See that by yourself, changing `handlePanEnd` to:
+
+```jsx
+const handlePanEnd = (e, info, card) => {
+  if (selectedId && info.offset.x < 5) {
+    setSelectedId(null);
+  } else {
+    setSelectedId(card);
+  }
+}
+```
+
+To fix that, as you might have guessed if you tried the code from above, I made the container to scroll left firstly, before actually deselecting a card. For that, I set up a separate state value to track whether the container can be dragged or not:
+
+```jsx
+const [canDrag, setCanDrag] = useState(false);
+```
+
+It's being set to true each time a card is selected. As I mentioned, I need this value to scroll the container to the left when it's closing, and I achieved that this tricky way:
+
+```jsx
+dragConstraints={{ left: canDrag ? -850 : 0, right: 0 }}
+```
+
+`dragConstraints` from the code above is a prop passed to cards container. You can pass an object with optional values of `top, left, right` and `bottom` to define maximum drag distance in these directions, measured in pixels. So, `left: -850` means that user can drag 850 pixels 'to the left' from the left border.    
+
+The tricky thing here is if we set `dragConstraints` to 0 when the container is scrolled, it will smoothly animate back to its default, non-dragged position.
+
+Last thing left is to make the container close just after the 'scroll-back' animation finishes. For that, I calculated the timeout based on how far the container is scrolled. Normally, if the container were just a regular element with a `overflow: scroll`, I could get the information about scroll progress from its `ref.current.scrollLeft`, but it's a Framer Motion's draggable object instead. As the user drags, its `scrollLeft` remains 0 and its moved just by CSS `translate`. 
+
+Anyway, first thing that needed to be done to access any information was creating the refs. As there are multiple cards, I created a ref array:
+
+```jsx
+const containerRefs = useRef(new Array());
+```
+
+And pushed the cards into it:
+
+```jsx
+{cards.map((card, i) => (
+  <motion.div 
+    ref={el => containerRefs.current[card] = el}
+  >
+  //rest of code
+  </motion.div>
+))}
+```
+
+With refs ready, let's take a look on `handlePanEnd` function.
+
+```jsx
+const handlePanEnd = (e, info, card) => {
+  if (selectedId) {
+    if (Math.abs(info.offset.x) < 5) {
+      const styles = getComputedStyle(containerRefs.current[card]);
+      const timeout = styles.transform.split(',')[4] * -.6;
+
+      setCanDrag(false);
+      setTimeout(() => {
+        setSelectedId(null);
+      }, timeout);
+    }
+  } else {
+    setCanDrag(true);
+    setSelectedId(card);
+  }
+}
+```
+
+This function is a callback for `onPanEnd`, which is basically the same as `onMouseUp`. If there isn't a card selected (`selectedId` is false), function only selects a card and updates states. More things are happening in cases when there's a card selected. Firstly, it checks if the event was actually a click and not a drag to make card not close at drag end. 
+
+```jsx
+if (Math.abs(info.offset.x) < 5) {
+//rest of code
+}
+```
+
+To do that, I check if the horizontal offset is less than 5, which means that user has dragged no more than 5px. If I set the condition to `offset === 0` instead, only direct clicks would pass it. `offset` is a property of `info` object, which Framer Motion passes to event callback functions and it contains various data about the event. 
+
+Now, when I'm sure that user intended to close the card, it's time to calculate previously mentioned timeout. 
+
+```jsx
+const styles = getComputedStyle(containerRefs.current[card]);
+const timeout = styles.transform.split(',')[4] * -.6;
+```
+
+Firstly I used `getComputedStyle` with card ref passed as argument to get an object containg the values of all CSS properties of a card element. Although there isn't a `transformX` property, I could get it just from `styles.transform` which is a string containing 3d matrix, looking like that: `matrix(1, 0, 0, 1, -200, 0)`. 5th value, in this example -200 is the `transformX` value we are looking for. To get it into a separate variable I splitted the string by comma, and picked 5th value from the result array. Then, I multiplied it by -0.6 to make it positive and a little bit smaller, to make it more similiar to actual animation time.
+
+```jsx
+setCanDrag(false);
+setTimeout(() => {
+  setSelectedId(null);
+}, timeout);
+```
+
+Now, with an appropriate timeout calculated, I set `canDrag` to true to make the container go back to its default position, and after that `selectedId` to null, to deselect a card and make it animate back to a white rectangle again. That's all!
+
+## Useful links
+- [Framer motion drag gesture](https://www.framer.com/api/motion/gestures/#drag)
+- [Layout animations](https://www.framer.com/api/motion/animation/#layout-animations)
