@@ -1,0 +1,239 @@
+---
+path: "/tutorial/custom-cursor"
+title: "Custom cursor"
+type: "tutorial"
+---
+
+import CustomCursor from '../../components/custom-cursor/CustomCursor';
+
+# Custom cursor
+## It's almost pure CSS. Almost!
+
+<div className="guide__component-wrapper">
+  <div className="custom-cursor__guide-wrapper">
+    <CustomCursor />
+  </div>
+</div>
+
+As the subtitle says, most of this component is pure CSS. The only thing that Framer Motion is responsible for is making the cursor appear smaller and squished a little when it moves fast. 
+
+Let's start from the beggining. Default system cursor is hidden by `cursor: none` css property, and it's replaced by a custom one, which is just a `motion div`, with its `left` and `top` properties set to match the real cursor location. To calculate these values, I needed the parent container ref to get mouse position relavite to it.
+
+```jsx
+const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+const containerRef = useRef();
+
+const onMouseMove = (e) => {
+  if (hoveringIcon) return;
+
+  const { left, top } = containerRef.current.getBoundingClientRect();
+
+  const newX = e.clientX - left;
+  const newY = e.clientY - top;
+  const absDeltaX = Math.abs(mousePosition.x - newX);
+  const absDeltaY = Math.abs(mousePosition.y - newY);
+
+  setMovementAnimation([
+    absDeltaX * .5,
+    absDeltaY * .5,
+    1 - absDeltaY * 0.005,
+    1 - absDeltaX * 0.005
+  ]);
+
+  setMousePosition( { x: newX, y: newY });
+}
+
+<div 
+  className="custom-cursor"
+  ref={containerRef}
+  onMouseMove={onMouseMove}
+>
+  <motion.div 
+    className={`cursor ${hoveringIcon ? hoveringIcon : ''}`} 
+    style={{ 
+      left: mousePosition.x,
+      top: mousePosition.y 
+    }}
+    animate={{ 
+      translateX: hoveringIcon ? -30 : -16,
+      translateY: hoveringIcon ? -30 : -16,
+      rotateX,
+      rotateY,
+      scaleX,
+      scaleY
+    }}
+  />
+</div>
+```
+
+For now, just ignore conditional that `className` and `animate` props. I will talk about them later. Let's focus on how are cursor's `left` and `top` calculated. `custom-cursor` div is the main container, so it has the `containerRef` passed. It also has `onMouseMove` event handler which runs each time user moves his cursor and basically makes the whole component work. 
+
+```jsx
+const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+const onMouseMove = (e) => {
+  if (hoveringIcon) return;
+
+  const { left, top } = containerRef.current.getBoundingClientRect();
+
+  const newX = e.clientX - left;
+  const newY = e.clientY - top;
+  const absDeltaX = Math.abs(mousePosition.x - newX);
+  const absDeltaY = Math.abs(mousePosition.y - newY);
+
+  setMovementAnimation([
+    absDeltaX * .5,
+    absDeltaY * .5,
+    1 - absDeltaY * 0.005,
+    1 - absDeltaX * 0.005
+  ]);
+
+  setMousePosition( { x: newX, y: newY });
+}
+```
+
+I also made a state object `mousePosition` to store current mouse X and Y coordinates.
+
+`onMouseMove` does nothing if user is hovering over an icon, to make cursor lock at its position. `hoveringIcon` is also a state boolean, but I will talk about it a little bit later. 
+
+To calculate custom cursor X and Y positions relative to its container, firstly I needed to know how far the container is located from top-left corner of the viewport. Luckily, `getBoundingClientRect` gives exactly that info. `getBoundingClientRect` is a HTML DOM element method, so I needed a ref to access it. 
+
+Having the container `left` and `top`, now it's possible to get cursor's X and Y by subtracting it from `clientX` and `clientY`, which are properties of an event object, passed to function automatically, as it's an event callback.
+
+That's basically it, if I push freshly calculated position to the state and then pass it as `style` prop to the custom cursor div, it will follow the real cursor correctly. But there are more things happening in the function. 
+
+```jsx
+const [[rotateX, rotateY, scaleX, scaleY], setMovementAnimation] = useState([0, 0, 1, 1]);
+
+const onMouseMove = (e) => {
+  if (hoveringIcon) return;
+
+  const { left, top } = containerRef.current.getBoundingClientRect();
+
+  const newX = e.clientX - left;
+  const newY = e.clientY - top;
+  const absDeltaX = Math.abs(mousePosition.x - newX);
+  const absDeltaY = Math.abs(mousePosition.y - newY);
+
+  setMovementAnimation([
+    absDeltaX * .5,
+    absDeltaY * .5,
+    1 - absDeltaY * 0.005,
+    1 - absDeltaX * 0.005
+  ]);
+
+  setMousePosition( { x: newX, y: newY });
+}
+```
+
+To store data about rotate and scale, which are then used to make the cursor smaller as it moves faster I created a `movementAnimation` state array. But, how can we know how fast actually is the cursor moving? By calculating the difference between its last and current position. Lines 10 and 11 of above code fragment do exactly that. I also wrapped it into `Math.abs`, since I will only need positive values. Having it calculated, I push it into the state multipling it first by some fractions, to make the effect subtle enough. As you can see, mechanism is simple - the larger the delta in pixels is, the larger the effect will be. 
+
+```jsx
+<motion.div 
+  className={`cursor ${hoveringIcon ? hoveringIcon : ''}`} 
+  style={{ 
+    left: mousePosition.x,
+    top: mousePosition.y 
+  }}
+  animate={{ 
+    translateX: hoveringIcon ? -30 : -16,
+    translateY: hoveringIcon ? -30 : -16,
+    rotateX,
+    rotateY,
+    scaleX,
+    scaleY
+  }}
+/>
+```
+
+Then, movement animation values are passed to the `animate` prop, so Framer Motion will animate these properties each time they change. 
+
+One thing worth mentioning is why I put translates here? Basically, because framer pushes calculated CSS as inline styling, which overrides regular stylesheet properties. If I put `translate: -50%, -50%` in CSS and not inside the `animate`, inline styling of that element would contain `transform` property, but without any translates inside, overriding these set in the CSS. That's why it must be here. 
+
+It's set to -30 or -16, depending on whether user is currently hovering an icon or not. These values come from the fact that our custom cursor has fixed width of 60px when hovering an icon, and 32px when not. So -30 and -16 are basically the same as `translate: -50%, -50%`, but in pixels. 
+
+```jsx
+const icons = [
+  {
+    iconClass: 'fa-facebook-f',
+    cursorStyle: 'fb'
+  },
+  {
+    iconClass: 'fa-instagram',
+    cursorStyle: 'insta'
+  },
+  {
+    iconClass: 'fa-twitter',
+    cursorStyle: 'twitter'
+  }
+]
+
+const [hoveringIcon, setHoveringIcon] = useState(false);
+const iconRefs = useRef(new Array());
+
+const hoverIcon = (iconRef, cursorStyle) => {
+  const { left, top } = iconRef.getBoundingClientRect();
+  const { 
+    left: leftContainer, 
+    top: topContainer 
+  } = containerRef.current.getBoundingClientRect();
+  
+  setHoveringIcon(cursorStyle);
+  setRotate([0, 0]);
+  setMousePosition({ x: left - leftContainer + 24, y: top - topContainer + 24 });
+}
+
+<div className="icons-wrapper">
+  {icons.map(({ cursorStyle, iconClass }, i) => (
+    <span
+      key={i}
+      ref={el => iconRefs.current.push(el)}
+      onMouseEnter={() => hoverIcon(iconRefs.current[i], cursorStyle)}
+      onMouseLeave={() => setHoveringIcon(null)}
+    >
+      <i className={`fab ${iconClass}`}/>
+    </span>
+  ))}
+</div>
+```
+
+The last thing left is how the cursor locks at icons. Each icon has a wrapper with width of 48, but the icons itself are smaller, which gives the effect of cursor snapping to them. Just like when calculating cursor's position, icon wrapper refs will be needed. There are 3 of them, so I created a refs array and pushed them into it.
+
+```jsx
+const iconRefs = useRef(new Array());
+
+//icon-wrapper prop
+ref={el => iconRefs.current.push(el)}
+```
+
+Let's move to `hoverIcon` then.
+
+```jsx
+const hoverIcon = (iconRef, cursorStyle) => {
+  const { left, top } = iconRef.getBoundingClientRect();
+  const { 
+    left: leftContainer, 
+    top: topContainer 
+  } = containerRef.current.getBoundingClientRect();
+  
+  setHoveringIcon(cursorStyle);
+  setRotate([0, 0]);
+  setMousePosition({ x: left - leftContainer + 24, y: top - topContainer + 24 });
+}
+```
+
+Function from above is called when user hovers over an icon container. `iconRef` argument is just a hovered icon ref, and `cursorStyle` is an appropriate className applied to the cursor giving it unique color for each hovered icon. It's pushed to `hoveringIcon` state value later.
+
+Locked cursor position needs to be calculated relatively to the `containerRef` aswell, so to do that I needed to get both `iconRef` and `containerRef` position relative to the viewport and subtract one from another. And again, `getBoundingClientRect` came with the solution. Then, I had to add 24px (half of icon wrapper width) to make the cursor appear in the exact middle of a hovered icon. 
+
+Also, setting `hoveringIcon` to a truthy value will make `onMouseMove` immediately return and prevent custom cursor from moving, as long user hovers an icon with the real, hidden pointer.
+
+When the real pointer leaves an icon-wrapper, `hoveringIcon` is set to falsy `null` again, so custom cursor can move again.
+
+```jsx
+//icon-wrapper prop
+onMouseLeave={() => setHoveringIcon(null)}
+```
+
+## Useful links
+- [getBoundingClientRect documentation](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)

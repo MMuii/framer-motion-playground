@@ -1,0 +1,111 @@
+---
+tutorial: "Upload button"
+name: "UploadButton"
+extension: "js"
+language: "javascript"
+type: "tutorial-file"
+---
+
+```jsx
+import React, { useState } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+
+const iconVariants = {
+  hovered: {
+    y: [0, -2, 0, 2, 0],
+    transition: { duration: .5, ease: 'easeInOut' }
+  }
+}
+
+const UploadButton = () => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const uploadControls = useAnimation();
+  const loadingControls = useAnimation();
+  const doneControls = useAnimation();
+  const loaderControls = useAnimation();
+  const loadingBarControls = useAnimation();
+
+  const animate = async () => {
+    setIsAnimating(true);
+
+    uploadControls.start({
+      zIndex: 1
+    });
+
+    await loadingControls.start({
+      top: 0,
+      transition: { duration: .3 }
+    });
+
+    loadingBarControls.start({
+      width: '100%',
+      transition: { duration: 1.35 }
+    });
+
+    uploadControls.start({
+      top: '-100%',
+      transition: { duration: 0 }
+    });
+
+    await doneControls.start({ 
+      top: 0,
+      transition: { delay: 1.5, duration: .3 }
+    });
+
+    loadingControls.start({
+      top: '-100%',
+      transition: { duration: 0 }
+    });
+
+    loadingBarControls.start({
+      width: '0%'
+    });
+
+    await uploadControls.start({ 
+      top: 0,
+      zIndex: 4,
+      transition: { delay: 2, duration: .3 }
+    });
+
+    doneControls.start({
+      top: '-100%',
+      transition: { duration: 0 }
+    });
+
+    setIsAnimating(false);
+  };
+
+  return (
+    <div className="upload-button">
+      <div className="wrapper" onClick={() => !isAnimating && animate()}>
+        <motion.div 
+          className="container upload"
+          animate={uploadControls}
+          whileHover="hovered"
+        >
+          <motion.i className="fas fa-angle-double-up" variants={iconVariants}/>
+          <div>upload</div>
+        </motion.div>
+
+        <motion.div 
+          className="container loading"
+          animate={loadingControls}
+        >
+          <motion.div className="loader" animate={loaderControls} />
+          <div>loading</div>
+          <motion.div className="loading-bar" animate={loadingBarControls}/>
+        </motion.div>
+        
+        <motion.div  
+          className="container done"
+          animate={doneControls}
+        >
+          <i className="fas fa-check" />
+          <div>done</div>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+```

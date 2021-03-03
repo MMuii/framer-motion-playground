@@ -1,0 +1,181 @@
+---
+path: "/tutorial/upload-button"
+title: "Upload button"
+type: "tutorial"
+---
+
+import UploadButton from '../../components/upload-button/UploadButton';
+
+# Upload button
+## The power of AnimationControls!
+
+<div className="guide__component-wrapper">
+  <div className="upload-button__guide-wrapper">
+    <UploadButton />
+  </div>
+</div>
+
+In this component one single, asynchronous function is responsible for pretty much all of the animations. Let's start with the main concept.
+
+```jsx
+return (
+  <div className="upload-button">
+    <div className="wrapper" onClick={() => !isAnimating && animate()}>
+      <motion.div 
+        className="container upload"
+        animate={uploadControls}
+        whileHover="hovered"
+      >
+        <motion.i className="fas fa-angle-double-up" variants={iconVariants}/>
+        <div>upload</div>
+      </motion.div>
+
+      <motion.div 
+        className="container loading"
+        animate={loadingControls}
+      >
+        <motion.div className="loader" animate={loaderControls} />
+        <div>loading</div>
+        <motion.div className="loading-bar" animate={loadingBarControls}/>
+      </motion.div>
+      
+      <motion.div  
+        className="container done"
+        animate={doneControls}
+      >
+        <i className="fas fa-check" />
+        <div>done</div>
+      </motion.div>
+    </div>
+  </div>
+)
+```
+
+`wrapper` contains 3 sibling divs, which are containers for each 'layer' of the button. Animation mechanism basically on animating containers' `zIndex` and `top` values in the correct order. 
+
+```jsx
+const uploadControls = useAnimation();
+const loadingControls = useAnimation();
+const doneControls = useAnimation();
+const loaderControls = useAnimation();
+const loadingBarControls = useAnimation();
+```
+
+As I mentioned, one single asynchronous function does pretty much all the animations here. But, to make it work that way, animations must be controlled by `AnimationControls`, created with `useAnimation` hook.
+
+With `AnimationControls` you can trigger or stop animations programmaticaly with `start` and `stop` methods. Also, `start` returns a promise so you can sequence animations using `await`, or `then`. I used `async await` variant here. One more thing that needs to be done to use `start` method is passing `AnimationControls` as `animate` prop to `motion` component. I did so to every container, as you can see in the first code fragment.
+
+Moving on to `animate` function, I think the best way to explain what is going inside of it is just to paste the code with appropriate comments:
+
+```jsx
+const animate = async () => {
+  //setting the state value to true
+  setIsAnimating(true);
+
+  //there are 3 layers: 'upload', 'loading' and 'done'
+  //they are visible in the same order
+
+  //resetting uploadControls zIndex to 1
+  //at the end of the function it is set to 4
+  //so it needs to be resetted to 1 again
+  uploadControls.start({
+    zIndex: 1
+  });
+
+  //triggering loading layer slide-down animation
+  //its z-index is set to 2 in CSS
+  await loadingControls.start({
+    top: 0,
+    transition: { duration: .3 }
+  });
+
+  //animating loading bar from width 0% to 100%
+  //simulating the progress
+  loadingBarControls.start({
+    width: '100%',
+    transition: { duration: 1.35 }
+  });
+
+  //putting upload layer above the button so it can slide down again
+  //after the uploading is 'finished'
+  //duration: 0 means it is done immediately
+  uploadControls.start({
+    top: '-100%',
+    transition: { duration: 0 }
+  });
+
+  //triggering done layer slide-down animation
+  //its z-index is set to 3 in CSS
+  //delay: 1.5 so it waits for progress bar to finish its animation
+  await doneControls.start({ 
+    top: 0,
+    transition: { delay: 1.5, duration: .3 }
+  });
+
+  //putting loading layer above the button so it can 
+  //be animated again
+  loadingControls.start({
+    top: '-100%',
+    transition: { duration: 0 }
+  });
+
+  //resetting loading bar width to 0
+  loadingBarControls.start({
+    width: '0%'
+  });
+
+  //setting upload layer to 4 to make it 
+  //on the front again
+  await uploadControls.start({ 
+    top: 0,
+    zIndex: 4,
+    transition: { delay: 2, duration: .3 }
+  });
+
+  //putting done layer above the button so it can
+  //be animated again
+  doneControls.start({
+    top: '-100%',
+    transition: { duration: 0 }
+  });
+
+  //setting the state to false to communicate that
+  //animation has finished
+  setIsAnimating(false);
+};
+```
+
+One thing I haven't mention yet is `isAnimating` state variable. I use it to prevent user from triggering animation again, before it finished. I set it to `true` when the animation begins and to `false`, then it ends. 
+
+```jsx
+//button's wrapper container onClick
+//it won't call animate() if isAnimating is true
+onClick={() => !isAnimating && animate()}
+```
+
+And the very last thing is that really subtle upload layer hover animation. If you hover it, double chevron icon inside go 2px up and down. 
+
+```jsx
+const iconVariants = {
+  hovered: {
+    y: [0, -2, 0, 2, 0],
+    transition: { duration: .5, ease: 'easeInOut' }
+  }
+}
+```
+
+To animate icon on its parent hover event, I had to use variants. 
+
+```jsx
+//parent whileHover
+whileHover="hovered"
+
+//child with "hovered" variant
+<motion.i className="fas fa-angle-double-up" variants={iconVariants}/>
+```
+
+By setting parent `whileHover` to a variant name, it will propagate through children and if some of them have variant with the same name, it will be animated aswell.
+
+## Useful links
+- [Variants propagation](https://www.framer.com/api/motion/animation/#propagation)
+- [AnimationControls](https://www.framer.com/api/motion/animation/#component-animation-controls)

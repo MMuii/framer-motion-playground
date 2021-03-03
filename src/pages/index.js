@@ -57,7 +57,7 @@ const tutorials = [
     {
         slug: 'custom-cursor',
         name: 'Custom cursor',
-        description: 'Even though it\'s Framer Motion Playground, this cursor is pure, plain CSS!',
+        description: 'It\'s almost pure CSS. Almost!',
         className: 'c2 r2',
         component: <CustomCursor />,
         direction: 'left'
@@ -97,7 +97,7 @@ const tutorials = [
     {
         slug: 'upload-button',
         name: 'Upload button',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'The power of AnimationControls!',
         className: 'c1 r1',
         component: <UploadButton />,
         direction: 'right'
@@ -113,7 +113,7 @@ const tutorials = [
     {
         slug: 'layout-cards',
         name: 'Layout cards',
-        description: 'A little bit trickier usage of layout animations',
+        description: 'A little bit trickier usage of layout animations.',
         className: 'c3 r2',
         component: <LayoutCards />,
         direction: 'left'
@@ -129,7 +129,7 @@ const tutorials = [
     {
         slug: 'star-rating',
         name: 'Star rating',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'Simple and common design implemented with Framer Motion.',
         className: 'c2 r1',
         component: <StarRating />,
         direction: 'left'

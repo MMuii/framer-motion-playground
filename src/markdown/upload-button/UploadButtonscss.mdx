@@ -1,0 +1,79 @@
+---
+tutorial: "Upload button"
+name: "styles"
+extension: "scss"
+language: "css"
+type: "tutorial-file"
+---
+
+```css
+.upload-button {
+  height: 100%;
+  width: 100%; 
+  display: grid;
+  place-items: center center;      
+  background: #ffcad4;
+
+  .wrapper {
+    position: relative;
+    height: 4rem;
+    width: 11rem;
+    overflow: hidden;
+    cursor: pointer;
+
+    .container {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: 100%;
+
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.3rem;
+      padding: 0 2rem;
+      overflow: hidden;
+
+      &.upload {
+        background: white;
+        color: #eb417b;
+        z-index: 1;
+        top: 0;
+      }
+
+      &.loading {
+        background: #f0759e;
+        color: white;
+        z-index: 2;
+        top: -100%;
+        position: relative;
+
+        .loader {
+          height: 1.5rem;
+          width: 1.5rem;
+          border: transparent solid 3px;
+          border-top: white solid 3px;
+          border-radius: 50%;
+        }
+
+        .loading-bar {
+          position: absolute;
+          top: calc(100% - 3px);
+          left: 0;
+          width: 0%;
+          height: 3px;
+          background: white;
+        }
+      }
+
+      &.done {
+        background: #eb417b;
+        color: white;
+        z-index: 3;
+        top: -100%;
+      }
+    }
+  }
+}
+```

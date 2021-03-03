@@ -1,20 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 
-const stars = [0, 1, 2, 3, 4];
-
-const backgroundVariants = {
-    initial: {
-        background: '#aaaaaa'
-    },
-    animate: {
-        background: '#ffd700'
-    }, 
-    exit: {
-        background: '#aaaaaa'
-    }
-}
-
 const starVariants = {
     initial: {
         scale: 0
@@ -55,16 +41,15 @@ const Star = ({ i, isVisible, isRated }) => {
     }, [isRated, isHovering]);
 
     useEffect(() => {
-        if (isVisible) backgroundControls.start('animate');
-        else backgroundControls.start('exit');
+        if (isVisible) backgroundControls.start({ background: '#ffd700' });
+        else backgroundControls.start({ background: '#aaaaaa' });
     }, [isVisible]);
 
     return (
         <>
             <motion.div 
                 className="star-background" 
-                variants={backgroundVariants}
-                initial="initial"
+                initial={{ background: '#aaaaaa' }}
                 animate={backgroundControls}
             />
             <motion.i 
@@ -87,7 +72,7 @@ const StarRating = () => {
     return (
         <div className="star-rating">
             <div className="stars-container">
-                {stars.map((star, i) => (
+                {[0, 1, 2, 3, 4].map((i) => (
                     <motion.div 
                         className="star-wrapper"
                         onMouseOver={() => setIsHovering(i)}

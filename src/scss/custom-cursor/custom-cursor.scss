@@ -1,8 +1,6 @@
 .custom-cursor {
     width: 100%;
     height: 100%;
-    
-    // background: var(--font-black);
     background: white;
     display: grid;
     justify-content: center;
@@ -20,9 +18,7 @@
         height: 32px;
         width: 32px;
         border-radius: 100%;
-        // background: #d9d9d9;
         background: #4d4d4d;
-        transform: translate(-50%, -50%);
 
         transition: all .1s ease-in-out;
         transition-property: width, height, border;
@@ -33,7 +29,6 @@
             height: 60px;
             width: 60px;
             background: transparent;
-            border: solid 3px var(--font-black);
         }
 
         &.fb {
@@ -65,15 +60,19 @@
             &:hover {
                 i {
                     color: var(--font-black);
-                    // color: #d9d9d9;
                 }
             }
         }
 
         i {
             color: #d9d9d9;
-            // color: #4d4d4d;
             font-size: 32px;
         }
     }
+}
+
+.custom-cursor__guide-wrapper {
+    position: relative;
+    width: 100%;
+    height: 25rem;
 }

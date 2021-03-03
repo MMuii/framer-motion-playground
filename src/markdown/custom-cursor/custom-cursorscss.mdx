@@ -1,0 +1,77 @@
+---
+tutorial: "Custom cursor"
+name: "styles"
+extension: "scss"
+language: "css"
+type: "tutorial-file"
+---
+
+```css
+.custom-cursor {
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: grid;
+  justify-content: center;
+  cursor: none;
+
+  .cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 32px;
+    width: 32px;
+    border-radius: 100%;
+    background: #4d4d4d;
+
+    transition: all .1s ease-in-out;
+    transition-property: width, height, border;
+    will-change: width, height, transform, border;
+    pointer-events: none;
+
+    &.fb, &.insta, &.twitter {
+      height: 60px;
+      width: 60px;
+      background: transparent;
+    }
+
+    &.fb {
+      border: solid 5px #3b5998;
+    }
+
+    &.insta {
+      border: solid 5px #C13584;
+    }
+
+    &.twitter {
+      border: solid 5px #1DA1F2;
+    }
+  }
+
+  .icons-wrapper {
+    width: 40%;
+    height: 100%;
+    display: grid;
+    place-items: center center;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    span {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center center;
+
+      &:hover {
+        i {
+          color: var(--font-black);
+        }
+      }
+    }
+
+    i {
+      color: #d9d9d9;
+      font-size: 32px;
+    }
+  }
+}
+```

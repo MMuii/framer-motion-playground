@@ -1,0 +1,167 @@
+---
+path: "/tutorial/star-rating"
+title: "Star rating"
+type: "tutorial"
+---
+
+import StarRating from '../../components/star-rating/StarRating';
+
+# Star rating
+## Simple and common design implemented with Framer Motion.
+
+<div className="guide__component-wrapper">
+  <div className="star-rating__guide-wrapper">
+    <StarRating />
+  </div>
+</div>
+
+The star rating consists of two components: `StarRating`, which is basically a container for all the stars and it's tracking which star is currently hovered (`isHovering`), and if user has clicked one of them, which one has been clicked (`isClicked`). 
+
+I separated `Star` into a individual component, so it can have its independent state variables and `useEffect` hooks, which then are used to run some animations programmaticaly. 
+
+```jsx
+const StarRating = () => {
+  const [isClicked, setIsClicked] = useState(0);
+  const [isHovering, setIsHovering] = useState(0);
+  
+  return (
+    <div className="star-rating">
+      <div className="stars-container">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <motion.div 
+            className="star-wrapper"
+            onMouseOver={() => setIsHovering(i)}
+            onClick={() => setIsClicked(i)}
+            key={i}
+          >
+            <Star 
+              i={i} 
+              isHoveringWrapper={isHovering >= i} 
+              isClicked={isClicked >= i}    
+            />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+```
+
+Let's start from analysing the `StarRating` component. As you can see, there are `isClicked` and `isHovering` state variables, which I mentioned before. `isHovering` is updated each time user hover the `star-wrapper`, and `isClicked` each time user clicks it. 
+
+Then, these values are passed to `Star` as booleans: true, if user is hovering/has rated star with index (`i`) equal or greater than currently interacted star's index. By doing it that way, for example, if you hover 4th star wrapper, all previous wrappers will also be animated to the hovered state. Same with clicking, if you click on 3rd wrapper, all stars with index less or equal than 3 will be noticed, that they should animate.
+
+```jsx
+const Star = ({ i, isHoveringWrapper, isClicked }) => {
+  const [isHovering, setIsHovering] = useState(false);
+  const starControls = useAnimation();
+  const backgroundControls = useAnimation();
+
+  useEffect(() => {
+    if (isClicked && isHovering) starControls.start('hovered');
+    else if (isClicked) starControls.start('animate');
+    else starControls.start('exit');
+  }, [isClicked, isHovering]);
+
+  useEffect(() => {
+    if (isHoveringWrapper) backgroundControls.start('animate');
+    else backgroundControls.start('exit');
+  }, [isHoveringWrapper]);
+
+  return (
+    <>
+      <motion.div 
+        className="star-background" 
+        variants={backgroundVariants}
+        initial="initial"
+        animate={backgroundControls}
+      />
+      <motion.i 
+        className="fas fa-star" 
+        onMouseOver={() => setIsHovering(true)}
+        onMouseOut={() => setIsHovering(false)}
+        variants={starVariants}
+        initial="initial"
+        animate={starControls}
+        custom={i}
+      />
+    </>
+  )
+}
+```
+
+You already know what `Star` props are doing, so let's move on straight to the animations. `AnimationControls` are created by Framer Motion's `useAnimation` hook and allow us to start and stop animations programmaticaly by `start` and `stop` methods. The only thing you need to do to make it working is passing `AnimationControls` as `animate` prop to a `motion` component.
+
+Combining `AnimationControls` with `useEffect` is a good way to animate something on state or prop changes.
+
+```jsx
+const [isHovering, setIsHovering] = useState(false);
+const starControls = useAnimation();
+const backgroundControls = useAnimation();
+```
+
+I created two `AnimationControls`: `starControls` for animating the star itself, and `backgroundControls` for star's background. To be specific, star background is an element appearing as grey circle, animating to gold when hovered. 
+
+AnimationControls' `start` method can also run variant animation, if there is a variants property set. 
+
+```jsx
+const starVariants = {
+  initial: {
+    scale: 0
+  },
+  animate: i => ({
+    scale: 1,
+    transition: {
+      delay: i * .04,
+      duration: .25,
+      type: 'spring',
+      stiffness: 175
+    }
+  }),
+  exit: i => ({
+    scale: 0,
+    transition: {
+      duration: .25,
+      delay: .2 - i * .04,
+    }
+  }),
+  hovered: {
+    scale: .8,
+    transition: {
+      duration: .2
+    }
+  }
+}
+```
+
+`starVariants` object contain 4 variants:
+
+- initial - star isn't visible,
+- exit - same as initial, but with specified transition
+- animate - star is visible, again with specified transition
+- hovered - scaled down a little
+
+`animate` and `exit` variants are dynamic, they are defined as functions with a single `i` argument, which is set in a star `custom` prop and it's used to calculate transition delay. The larger the star index is, the longer or shorter the delay will be. As you can see, dynamic variants can be helpful for orchestrating animations of more than 1 component.
+
+```jsx
+useEffect(() => {
+  if (isClicked && isHovering) starControls.start('hovered');
+  else if (isClicked) starControls.start('animate');
+  else starControls.start('exit');
+}, [isClicked, isHovering]);
+
+useEffect(() => {
+  if (isHoveringWrapper) backgroundControls.start({ background: '#ffd700' });
+  else backgroundControls.start({ background: '#aaaaaa' });
+}, [isHoveringWrapper]);
+```
+
+Last thing left unexplained are the `useEffect`s. First `useEffect` is responsible for controlling star animations, second one for it's wrapper. First one triggers whenever `isClicked` or `isHovering` props change, and the second one watches for `isHoveringWrapper`.
+
+Insides of these hooks are pretty obvious. If star is clicked and hovered, it gets animated to hovered variant. If it's only clicked, it animates to be visible. Every other case means that star is no longer clicked, so it disappears in `exit` animation. 
+
+Second `useEffect` is even simplier, the only thing it does is changing star background's color depending on whether it is hovered or not.
+
+## Useful links
+- [Dynamic variants](https://www.framer.com/api/motion/animation/#dynamic-variants)
+- [AnimationControls](https://www.framer.com/api/motion/animation/#component-animation-controls)
