@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
 import GalleryCard from '../components/GalleryCard';
 import Switch from '../components/Switch';
-import ClipPathTransition from '../components/ClipPathTransition';
+import ClipPathTransition from '../components/clip-path-transition/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
 // import TextWave from '../components/text-wave/TextWave';

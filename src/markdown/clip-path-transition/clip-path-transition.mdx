@@ -1,0 +1,235 @@
+---
+path: "/tutorial/clip-path-transition"
+title: "Clip path transition"
+type: "tutorial"
+---
+
+import ClipPathTransition from '../../components/clip-path-transition/ClipPathTransition';
+
+# Clip path transition
+## Nice transition made possible with animating clip path. Same mechanism as this site's page transition.
+
+<div className="guide__component-wrapper">
+  <div className="cp-transition__guide-wrapper">
+    <ClipPathTransition />
+  </div>
+</div>
+
+As the subtitle says, this component's mechanism is pretty much the same as this site's page transition. Animating clip paths is a great way for creating many kinds of transitions.
+
+```jsx
+const [selectedSquare, setSelectedSquare] = useState(null);
+
+<div className={`cp-transition cp-transition__container cp-transition__container--${selectedSquare}`}>
+  <AnimatePresence exitBeforeEnter initial={false}>
+    {selectedSquare 
+      ? (
+        <motion.div 
+          className={`card card__wrapper card__wrapper--${selectedSquare}`}
+          key="card"
+          variants={wrapperVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          transition={{ duration: .4 }}
+        >
+          <div className="card__header">
+            <h2>Lorem ipsum</h2>
+            <button onClick={() => setSelectedSquare(null)}>
+              <i className="fas fa-times fa-2x"/>
+            </button>
+          </div>
+          <div className="card__content">
+            <div className="card__img-placeholder" />
+            <div className="card__text-placeholder">
+                Lorem ipsum...
+            </div>
+          </div>
+        </motion.div>
+      )
+      : (
+        <motion.div 
+          className="cp-transition__squares-wrapper"
+          key="squares"
+          variants={wrapperVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          {renderSquares()}
+        </motion.div>
+      )
+    }
+  </AnimatePresence>
+</div>
+```
+
+Let's begin by explaining the core concept. `selectedSquare` state variable that you can see at the very top of the code fragment above is used to store currently selected square color. Then, `selectedSquare` is used to create dynamic CSS class name, that gives the components various background colors. I could use just a simple id number instead of color name string for that, but I think `card__wrapper--yellow` class name describes the component better, than, for example, `card__wrapper--0`. 
+
+There is a one, parent container `cp-transition__container` which has two wrappers inside: `card_wrapper` and `cp-transition__squares-wrapper`. Only one wrapper is rendered at a time, `squares-wrapper` when there is no square selected, and `card__wrapper` in opposite cases. 
+
+Parent container is at the bottom of stacking context and it's visible, if its children aren't. It also has that halfly transparent gradient backgrounds of different colors, depending on the selected square. `card_wrapper` has fully opaque background, and `squares-wrapper` background is fully white.
+
+So, that's what happening when user clicks on a square:
+
+1. `square-wrapper`'s clip-path is animated to hide completely, starting from left to right and revealing `cp-transition__container`'s halfly trasparent gradient background
+2. `square-wrapper` is now hidden, the parent container is visible
+3. `card__wrapper`'s clip-path is animated from completely hidden to fully visible, from left to right, covering `cp-transition__container`
+
+Card's closing animation is basically the same, except the order is reversed. `card__wrapper` is animated to be hidden first, and then `square-wrapper` is shown.
+
+```jsx
+<AnimatePresence exitBeforeEnter initial={false}>
+  {selectedSquare 
+    ? (
+      <motion.div 
+        className={`card card__wrapper card__wrapper--${selectedSquare}`}
+        key="card"
+        variants={wrapperVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        // card's code here
+      </motion.div>
+    )
+    : (
+      <motion.div 
+        className="cp-transition__squares-wrapper"
+        key="squares"
+        variants={wrapperVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        {renderSquares()}
+      </motion.div>
+    )
+  }
+</AnimatePresence>
+```
+
+To make wrappers' exit animations possible, I wrapped them into a `AnimatePresence` parent component. Each `motion` child of `AnimatePresence` require an unique `key` prop, so I added them aswell. 
+
+With `AnimatePresence` you can define a state for the component to animate to before it's unmounted from the DOM in a `exit` prop. Of course you can pass a variant name, if your component has them added, as I did.
+
+Let's talk about `AnimatePresence` props. `exitBeforeEnter` set to true means `AnimatePresence` will render only one component at a time. The exiting component will finish its exit animation before the entering component is rendered.
+
+`initial={false}` is pretty straightforward. By setting it to false on `AnimatePresence`, components present when `AnimatePresence` first loads will start in `their` animate state, instead of `initial`. 
+
+To define animation states I used variants instead of direct objects. It's useful in scenarios where you want to create animations that propagate throughout the DOM. 
+
+```jsx
+<motion.div 
+  className={`card card__wrapper card__wrapper--${selectedSquare}`}
+  key="card"
+  variants={wrapperVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+ //card's code here
+</motion.div>
+```
+
+Variants are sets of pre-defined animation target objects. You pass them to `motion` components via the `variants` prop, and then you can refer to them by label, as you can see in the code above. 
+
+Cool thing about variants is that if there was a child `motion` component, with the same named variants, you don't have to specify them again in `initial`, `animate`, etc., and each time parent animates to some variant, all children that meet the variant naming condition do so, unless some child has its own `animate` property. See the docs I linked at the bottom of the page or the code fragment below. 
+
+```jsx
+const someVariants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+}
+
+const anotherVariants = {
+  visible: { color: '#000000' },
+  hidden: { color: '#ffffff' },
+}
+
+<motion.div
+  className="parent"
+  variants={someVariants}
+  initial="visible"
+  animate="hidden"
+>
+  <motion.div
+    className="child"
+    variants={anotherVariants}
+  >
+</motion.div>
+```
+
+I wouldn't mention that without a reason. I use exactly that mechanism in `squares-wrapper` and its children.
+
+```jsx
+const wrapperVariants = {
+  initial: {
+    clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)', 
+    transition: { duration: .4 }
+  },
+  animate: {
+    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+    transition: { duration: .4, staggerChildren: .1 }
+  },
+  exit: {
+    clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)',
+    transition: { duration: .4 }
+  }
+}
+
+const squareVariants = {
+  initial: {
+    opacity: 0,
+    scale: .3,
+  },
+  animate: {
+    opacity: 1,
+    scale: 1,
+  }
+}
+
+const renderSquares = () => {
+  const squares = ['yellow', 'green', 'blue', 'violet'];
+
+  return squares.map((color, i) => (
+    <motion.div 
+      key={i}
+      className={`square square--${color}`} 
+      onClick={() => setSelectedSquare(color)}
+      variants={squareVariants}
+      transition={{ duration: .2, type: 'spring' }}
+    />    
+  ));
+}
+
+<motion.div 
+  className="cp-transition__squares-wrapper"
+  key="squares"
+  variants={wrapperVariants}
+  initial="initial"
+  animate="animate"
+  exit="exit"
+>
+  {renderSquares()}
+</motion.div>
+```
+
+`wrapperVariants` have the same names as `squareVariants`, so I didn't have to specify `animate` and `initial` properties for `square` div again. 
+
+With variants you can also orchestrate the execution of child animations, using transition props like `when`, `delayChildren`, and `staggerChildren`. 
+
+```jsx
+//wrapperVariants "animate" variant with staggerChildren
+animate: {
+  clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+  transition: { duration: .4, staggerChildren: .1 }
+},
+```
+
+By setting `staggerChildren` in an 'animate' variant to a .1, I made each child's animation start with an time offset of 100ms, relatively to the previous child. So first child's animation will start immediately, second's after 100ms, third's after 200ms etc.
+You could achieve the same effect by, for example, calculating `delay` based on child's index or something, but with variants it's as simple as it can be. Of course, to make that work, children must have added same named variants.
+
+## Useful links
+- [Variants](https://www.framer.com/api/motion/animation/#variants)
+- [AnimatePresence](https://www.framer.com/api/motion/animate-presence/)
