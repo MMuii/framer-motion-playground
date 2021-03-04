@@ -33,7 +33,7 @@ const tutorials = [
     {
         slug: 'bouncing-bar',
         name: 'Bouncing bar',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'Morphing SVG paths? Why not!',
         className: 'c2 r2',
         component: <BouncingBar />,
         direction: 'right'

@@ -1,0 +1,186 @@
+---
+path: "/tutorial/bouncing-bar"
+title: "Bouncing bar"
+type: "tutorial"
+---
+
+import BouncingBar from '../../components/bouncing-bar/BouncingBar';
+
+# Bouncing Bar
+## Morphing SVG paths? Why not!
+
+<div className="guide__component-wrapper">
+  <div className="bouncing-bar__guide-wrapper">
+    <BouncingBar />
+  </div>
+</div>
+
+At first glance there might be a lot of things happening, but actually, all the magic here are just three animations going simultaneously:
+
+- white bar SVG path is morphing, giving a bouncy effect
+- home and cog icons `top` and `left` properties are animated back and forth for a push and release effect
+- bubbles are bouncing in and out
+
+And that's all the things happening here! Now, let's analyse each of them one by one, starting with SVG morphing.
+
+```jsx
+  const svgControls = useAnimation();
+
+<svg viewBox="0 0 400 200" className="bar">
+  <motion.path 
+    d="M 0 100 Q 200 100 400 100 L 400 200 L 0 200 Z"
+    animate={svgControls}
+  />
+</svg>
+```
+
+The code fragment from above is the white SVG background. Initially, it's just a rectangle and nothing more. Path animations are triggered by an `AnimationController`, so I can run them programmaticaly whenever I want by its `start` method. You can create a `AnimationController` with an `useAnimation` hook.
+
+```jsx
+<motion.div 
+  className="icon-background"
+  animate={{ 
+    rotate: isClicked ? 45 : 0,
+    y: isTapping ? 7 : 0
+  }}
+  onClick={() => setIsClicked(!isClicked)}
+  onTapStart={handleTapStart}
+  onTap={handleTapEnd}
+  onTapCancel={handleTapCancel}
+  whileTap={{ backgroundColor: '#ffcdcc' }}
+>
+  <i className="fas fa-plus" />
+</motion.div>
+```
+
+`handleTapStart`, `handleTapEnd` and `handleTapCancel` are event handlers passed to the middle icon ('+') container. They are used to trigger pretty much all the animations. There is also `setIsClicked` passed as `onClick` handler and it's just a regular state switcher. `isClicked` stores the information if '+' icon has been clicked or not.
+
+```jsx
+const handleTapStart = () => {
+  if (!isClicked) {
+    setIsTapping(true);
+    svgControls.start({
+      d: 'M 0 100 Q 200 125 400 100 L 400 200 L 0 200 Z'
+    });
+  }
+}
+```
+
+`handleTapStart` does nothing, if `isClicked` is true. If it isn't, then it sets the `isTapping` state to true (so side icons and bubbles can also know that it's time to animate, but I'll talk about that later) and then starts SVG path animation, morphing it from a regular rectangle into a concave one.
+
+```jsx
+const handleTapEnd = () => {
+  if (!isClicked) {
+    setIsTapping(false);
+    svgControls.start({
+      d: [
+        'M 0 100 Q 200 125 400 100 L 400 200 L 0 200 Z',
+        'M 0 100 Q 200 75 400 100 L 400 200 L 0 200 Z',
+        'M 0 100 Q 200 100 400 100 L 400 200 L 0 200 Z'
+      ],
+      transition: {
+        ease: [1, .14, .45, .86],
+        duration: .5
+      }
+    });
+  } 
+}
+```
+
+`handleTapEnd` does nothing if `isClicked` is true aswell. Otherwise, it sets 'isTapping' to false and animates the path from concave shape, to convect, finishing with regular rectangle and giving nice bounce effect. Passing array as some `animate` object property is a way to create keyframes. Animation will go through each value in sequence. There's also an array of 4 values in `ease` property. It's a custom cubic bezier transition. Instead of just using default eases like `easeIn` or `easeOut`, you can create your very own cubic bezier, by specifying position of all of its 4 control points. At the bottom of the page I linked really useful cubic bezier generator, which I personally used for creating this.
+
+```jsx
+const handleTapCancel = () => {
+  setIsTapping(false);
+  svgControls.start({
+    d: 'M 0 100 Q 200 100 400 100 L 400 200 L 0 200 Z'
+  })
+}
+```
+
+`handleTapCancel` runs when user finishes the tap outside of element where it has started. It's setting `isTapping`to false and morphing path to regular rectangle again.
+
+Let's move to side icons' animations now.
+
+```jsx
+//left home icon
+<motion.i 
+  className="fas fa-home" 
+  animate={{ 
+    x: isTapping ? 8 : 0,
+    y: isTapping ? 4 : 0
+  }}
+/>
+
+//middle '+' icon
+<motion.div 
+  className="icon-background"
+  animate={{ 
+    rotate: isClicked ? 45 : 0,
+    y: isTapping ? 7 : 0
+  }}
+  whileTap={{ backgroundColor: '#ffcdcc' }}
+  //there are more props but they are unrelated 
+  //to the icon animation itself
+>
+  <i className="fas fa-plus" />
+</motion.div>
+
+//right cog icon
+<motion.i 
+  className="fas fa-cog" 
+  animate={{ 
+    x: isTapping ? -8 : 0,
+    y: isTapping ? 4 : 0
+  }}
+/>
+```
+
+Well... It's as simple as it can be. Whenever `isTapping` change, icons animate to new positions. If user is tapping, side icons are moving 4px bottom and 8px towards the middle. 
+
+Middle '+' icon does just a little bit more than going 7px down, rotating 45 degrees to  the 'x' position aswell.
+
+```jsx
+const bubbleVariants = {
+  opened: {
+    y: -115,
+    opacity: 1
+  },
+  closed: {
+    y: 0,
+    opacity: 0
+  }
+}
+
+<motion.div 
+  className="bubbles-container"
+  animate={isClicked ? "opened" : "closed"}
+>
+  <motion.div 
+    className="bubble"
+    variants={bubbleVariants}
+  >
+    <i className="fas fa-image"/>
+  </motion.div>
+  <motion.div 
+    className="bubble"
+    variants={bubbleVariants}
+    transition={{ delay: isClicked ? .07 : .05 }}
+  >
+    <i className="fas fa-camera"/>
+  </motion.div>
+  <motion.div 
+    className="bubble"
+    variants={bubbleVariants}
+  >
+    <i className="fas fa-folder"/>
+  </motion.div>
+</motion.div>
+```
+
+Bubbles mechanism isn't too complex neither. Bubbles container have its `animate` property set to 'opened' or 'closed', depending on `isClicked` state. It doesn't animate itself but its children instead, as they have added variants named 'opened' and 'closed'. Instead of specifing `animation` target object for each bubble I did it with variants, increasing readability and saving some lines of code. If you are not familiar with variants propagation, see the docs, there are great examples of how does it work. I linked it below.
+
+## Useful links
+- [Inspiration](https://dribbble.com/shots/11997785-Bouncing-tab-bar)
+- [Variants propagation](https://www.framer.com/api/motion/animation/#propagation)
+- [Cubic bezier generator](https://cubic-bezier.com/)

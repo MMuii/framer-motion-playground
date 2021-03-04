@@ -3,6 +3,7 @@
     height: 100%;
     display: grid;
     place-items: center center;
+    overflow: hidden;
 
     .bar-container {
         width: 100%;
@@ -80,6 +81,25 @@
                 height: 4rem;
                 width: 4rem;
                 font-size: 2rem;
+            }
+        }
+    }
+}
+
+.bouncing-bar__guide-wrapper {
+    height: 33rem;
+    width: 33rem;
+    margin: 3rem 0;
+    padding: 3rem;
+    background-image: radial-gradient(circle at 85.54% 7.65%, #fdecc7 0, #f2deb5 50%, #e7d0a4 100%);
+    border-radius: 15px;
+
+    .bouncing-bar {
+        border-radius: 15px;
+    
+        .bar-container {
+            .icons-container {
+                bottom: 1.5rem;
             }
         }
     }
