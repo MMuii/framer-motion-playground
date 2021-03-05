@@ -3,11 +3,11 @@ import { motion, useAnimation } from 'framer-motion';
 
 const bubbleVariants = {
     opened: {
-        y: -115,
+        y: '-11.5rem',
         opacity: 1
     },
     closed: {
-        y: 0,
+        y: '0rem',
         opacity: 0
     }
 }

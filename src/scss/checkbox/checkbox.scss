@@ -5,6 +5,14 @@
     place-items: center center;
     cursor: pointer;
 
+    @media (max-width: 768px) {
+        position: relative;
+        border-radius: 15px;
+        background: #F6F1EC;
+        height: 125px;
+        width: 125px;
+    }
+
     .checkbox-container {
         height: 3.5rem;
         width: 3.5rem;
@@ -83,10 +91,5 @@
 }
 
 .checkbox__guide-wrapper {
-    position: relative;
     margin: 20px 0;
-    border-radius: 15px;
-    background: #F6F1EC;
-    height: 125px;
-    width: 125px;
 }

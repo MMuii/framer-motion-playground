@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
 // import { isBrowser, isMobile } from 'react-device-detect';
-// import { WindowSizeContext } from '../contexts/WindowSizeContext';
+import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { BrowserView, MobileView } from 'react-device-detect';
 import GalleryCard from '../components/GalleryCard';
 import GalleryCardMobile from '../components/GalleryCardMobile';
@@ -32,7 +32,8 @@ const tutorials = [
         description: 'Simple switch button, powered by layout animations.',
         className: 'c1 r1',
         component: <Switch />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     },
     {
         slug: 'bouncing-bar',
@@ -40,7 +41,8 @@ const tutorials = [
         description: 'Morphing SVG paths? Why not!',
         className: 'c2 r2',
         component: <BouncingBar />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'flashcards',
@@ -48,7 +50,8 @@ const tutorials = [
         description: 'Card flip animation, which you might have seen on Framer Motion landing page.',
         className: 'c2 r1',
         component: <Flashcards />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'infinite-cards',
@@ -56,7 +59,8 @@ const tutorials = [
         description: 'You can swipe them all day long and they never end!',
         className: 'c1 r1',
         component: <InfiniteCards />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'custom-cursor',
@@ -64,7 +68,8 @@ const tutorials = [
         description: 'It\'s almost pure CSS. Almost!',
         className: 'c2 r2',
         component: <CustomCursor />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: true
     },
     {
         slug: 'app-opening-animation',
@@ -72,7 +77,8 @@ const tutorials = [
         description: 'AnimateSharedLayout can do magic in just few lines of code. Click one of the icons if you don\'t believe!',
         className: 'c2 r3',
         component: <IphoneAnimation />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'clip-path-transition',
@@ -80,7 +86,8 @@ const tutorials = [
         description: 'Nice transition made possible with animating clip path. Same mechanism as this site\'s page transition.',
         className: 'c3 r2',
         component: <ClipPathTransition />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'underlined-menu',
@@ -88,7 +95,8 @@ const tutorials = [
         description: 'Great example of very basic AnimateSharedLayout usage.',
         className: 'c4 r1',
         component: <UnderlinedMenu />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     },
     {
         slug: 'checkbox',
@@ -96,7 +104,8 @@ const tutorials = [
         description: 'You can animate SVGs easier than you\'d think.',
         className: 'c1 r1',
         component: <Checkbox />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     },
     {
         slug: 'upload-button',
@@ -104,7 +113,8 @@ const tutorials = [
         description: 'The power of AnimationControls!',
         className: 'c1 r1',
         component: <UploadButton />,
-        direction: 'right'
+        direction: 'right',
+        forDesktop: false
     },
     {
         slug: 'side-menu',
@@ -112,7 +122,8 @@ const tutorials = [
         description: 'Many tiny animations combined into one, nice side menu.',
         className: 'c2 r3',
         component: <SideMenu />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     },
     {
         slug: 'layout-cards',
@@ -120,7 +131,8 @@ const tutorials = [
         description: 'A little bit trickier usage of layout animations.',
         className: 'c3 r2',
         component: <LayoutCards />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     },
     {
         slug: 'link-animation',
@@ -128,7 +140,8 @@ const tutorials = [
         description: 'Simple, yet cool effect. More of CSS trick, but still there\'s some Framer Motion magic.',
         className: 'c1 r1',
         component: <LinkAnimation />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: true
     },
     {
         slug: 'star-rating',
@@ -136,7 +149,8 @@ const tutorials = [
         description: 'Simple and common design implemented with Framer Motion.',
         className: 'c2 r1',
         component: <StarRating />,
-        direction: 'left'
+        direction: 'left',
+        forDesktop: false
     }
 ]
 
@@ -249,35 +263,41 @@ const tutorials = [
 
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
-    // const { width } = useContext(WindowSizeContext) || 0; 
+    const { width } = useContext(WindowSizeContext) || 0; 
 
     const renderTutorials = () => {
-        // if (width >= 768) {
-            // console.log('rendering desktop view');
-            return tutorials.map((tut, i) => (
-                <GalleryCard
-                    key={i}
-                    tutorial={tut}
-                    hovering={hovering === tut}
-                    setHovering={setHovering}
-                >
-                    {tut.component}
-                </GalleryCard>
-            ));
-        // } 
-        
-        // else {
-        //     console.log('rendering mobile view');
-        //     return tutorials.map((tut, i) => (
-        //         <GalleryCardMobile
-        //             key={i}
-        //             tutorial={tut}
-        //         >
-        //             {tut.component}
-        //         </GalleryCardMobile>
-        //     ));
-        // }
+        return tutorials.map((tut, i) => (
+            <GalleryCard
+                key={i}
+                tutorial={tut}
+                hovering={hovering === tut}
+                setHovering={setHovering}
+            >
+                {tut.component}
+            </GalleryCard>
+        ));
     }
+
+    const renderTutorialsMobile = () => {
+        return tutorials.map((tut, i) => (
+            <GalleryCardMobile key={i} tutorial={tut}>
+                {tut.component}
+            </GalleryCardMobile>
+        ))
+    }
+
+    // return (
+    //     <div className="gallery--mobile">
+    //         <div className="gallery__info">
+    //             <h1>framer motion<br />playground</h1>
+    //             <button><Link to="/tutorial">about</Link></button>
+    //         </div>
+
+    //         <div className="gallery--mobile__container">
+    //             {renderTutorialsMobile()}
+    //         </div>
+    //     </div>
+    // )
 
     return (
         <div className="gallery">
@@ -285,7 +305,7 @@ const IndexPage = () => {
                 <h1>framer motion<br />playground</h1>
                 <button><Link to="/tutorial">about</Link></button>
             </div>
-            
+
             <BrowserView>
                 <div className="gallery__container">
                     {renderTutorials()}
@@ -300,7 +320,16 @@ const IndexPage = () => {
             </BrowserView>
 
             <MobileView>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, voluptatem.
+                <div className="gallery--mobile">
+                    <div className="gallery__info">
+                        <h1>framer motion<br />playground</h1>
+                        <button><Link to="/tutorial">about</Link></button>
+                    </div>
+
+                    <div className="gallery--mobile__container">
+                        {renderTutorialsMobile()}
+                    </div>
+                </div>
             </MobileView>
         </div>
     )

@@ -6,6 +6,10 @@
     color: rgba($color: #171717, $alpha: .8);
     background: #ffd11a;
 
+    @media (max-width: 768px) {
+        padding: 4rem 0;
+    }
+
     .wrapper {
         display: flex;
         justify-content: space-evenly;

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
 const starVariants = {
     initial: {
@@ -33,9 +34,10 @@ const Star = ({ i, isVisible, isRated }) => {
     const [isHovering, setIsHovering] = useState(false);
     const starControls = useAnimation();
     const backgroundControls = useAnimation();
+    const { width } = useContext(WindowSizeContext);
 
     useEffect(() => {
-        if (isRated && isHovering) starControls.start('hovered');
+        if (isRated && isHovering && width >= 768) starControls.start('hovered');
         else if (isRated) starControls.start('animate');
         else starControls.start('exit');
     }, [isRated, isHovering]);

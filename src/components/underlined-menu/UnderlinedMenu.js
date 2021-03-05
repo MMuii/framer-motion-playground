@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, AnimateSharedLayout } from 'framer-motion';
-
-const menuItems = ['Lorem', 'ipsum', 'dolor', 'sit'];
+import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
 const MenuItem = ({ text, selected, onClick }) => (
     <motion.div 
@@ -21,6 +20,11 @@ const MenuItem = ({ text, selected, onClick }) => (
 
 const UnderlinedMenu = () => {
     const [selected, setSelected] = useState(0);
+    const { width } = useContext(WindowSizeContext) || 0;
+
+    const menuItems = width >= 768 
+        ? ['Lorem', 'ipsum', 'dolor', 'sit']
+        : ['Lorem', 'ipsum', 'dolor'];
 
     return (
         <div className="underlined-menu">

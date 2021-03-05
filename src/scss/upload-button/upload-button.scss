@@ -5,6 +5,10 @@
     place-items: center center;      
     background: #ffcad4;
 
+    @media (max-width: 768px) {
+        height: 15rem;
+    }
+
     .wrapper {
         position: relative;
         height: 4rem;
@@ -70,7 +74,6 @@
 
 .upload-button__guide-wrapper {
     margin: 20px 0;
-    height: 15rem;
     width: 15rem;
     border-radius: 15px;
     overflow: hidden;

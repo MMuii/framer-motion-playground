@@ -4,6 +4,10 @@
     display: grid;
     place-items: center center;
 
+    @media (max-width: 768px) {
+        height: 20rem;
+    }
+
     .stars-container {
         display: flex;
         font-size: 3rem;
@@ -38,6 +42,5 @@
 }
 
 .star-rating__guide-wrapper {
-    height: 20rem;
     width: 100%;
 }
