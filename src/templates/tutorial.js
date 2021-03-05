@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { MobileView, BrowserView } from 'react-device-detect';
 import FullPageContainer from '../components/FullPageContainer';
 import Guide from '../components/Guide';
 import CodeRenderer from '../components/CodeRenderer';
-import { useWindowSize } from '../hooks/useWindowSize';
+// import { useWindowSize } from '../hooks/useWindowSize';
 import BookFilled from '../icons/book-filled.inline.svg';
 import Book from '../icons/book.inline.svg';
 import BracketFilled from '../icons/bracket-filled.inline.svg';
@@ -34,7 +35,7 @@ export const query = graphql`
 
 export default function Template ({ data: { mdx: post, allMdx: { nodes: files } }}) {
     const [showCode, setShowCode] = useState(false);
-    const { width } = useWindowSize();
+    // const { width } = useWindowSize();
 
     const { body } = post;
 
@@ -48,55 +49,104 @@ export default function Template ({ data: { mdx: post, allMdx: { nodes: files } 
         }
     })
 
-    useEffect(() => {
-        const debug = () => setShowCode(!showCode);
-
-        window.addEventListener('keypress', debug);
-
-        return () => window.removeEventListener('keypress', debug);
-    });
-
-    if (width >= 768) {
-        return (
-            <FullPageContainer className="tutorial">
-                <Guide isMobile={false} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
-                    <MDXRenderer>
-                        {body}
-                    </MDXRenderer>
-                </Guide>
-                <div className="code__wrapper">
-                    <CodeRenderer files={filesData} isMobile={false}/>
-                </div>
-            </FullPageContainer>
-        )
-    }
-
     return (
-        <FullPageContainer className="tutorial">
-            {showCode
-            ? (
-                <div className="code__wrapper">
-                    <CodeRenderer files={filesData} isMobile={true}/>
-                </div> 
-            )
-            : (
-                <Guide isMobile={true} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
-                    <MDXRenderer>
-                        {body}
-                    </MDXRenderer>
-                </Guide>
-            )}
+        <>
+            <BrowserView>
+                <FullPageContainer className="tutorial">
+                    <Guide 
+                        isMobile={false} 
+                        identifier={post.frontmatter.title} 
+                        url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
+                        title={post.frontmatter.title}
+                    >
+                        <MDXRenderer>
+                            {body}
+                        </MDXRenderer>
+                    </Guide>
+                    <div className="code__wrapper">
+                        <CodeRenderer files={filesData} isMobile={false}/>
+                    </div>
+                </FullPageContainer>
+            </BrowserView>
 
-            <div className="mobile-navbar">
-                <div className="mobile-navbar__icon">
-                    {showCode ? <Book onClick={() => setShowCode(false)}/> : <BookFilled />}
-                    <span>Guide</span>
-                </div>
-                <div className="mobile-navbar__icon">
-                    {showCode ? <BracketFilled/> : <Bracket onClick={() => setShowCode(true)}/>}
-                    <span>Code</span>
-                </div>
-            </div>
-        </FullPageContainer>
+            <MobileView>
+                <FullPageContainer className="tutorial">
+                    {showCode
+                        ? (
+                            <div className="code__wrapper">
+                                <CodeRenderer files={filesData} isMobile={true}/>
+                            </div> 
+                        )
+                        : (
+                            <Guide 
+                                isMobile={true} 
+                                identifier={post.frontmatter.title} 
+                                url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
+                                title={post.frontmatter.title}
+                            >
+                                <MDXRenderer>
+                                    {body}
+                                </MDXRenderer>
+                            </Guide>
+                        )
+                    }
+
+                    <div className="mobile-navbar">
+                        <div className="mobile-navbar__icon">
+                            {showCode ? <Book onClick={() => setShowCode(false)}/> : <BookFilled />}
+                            <span>Guide</span>
+                        </div>
+                        <div className="mobile-navbar__icon">
+                            {showCode ? <BracketFilled/> : <Bracket onClick={() => setShowCode(true)}/>}
+                            <span>Code</span>
+                        </div>
+                    </div>
+                </FullPageContainer>
+            </MobileView>
+        </>
     )
+
+    // if (width >= 768) {
+    //     return (
+            // <FullPageContainer className="tutorial">
+            //     <Guide isMobile={false} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
+            //         <MDXRenderer>
+            //             {body}
+            //         </MDXRenderer>
+            //     </Guide>
+            //     <div className="code__wrapper">
+            //         <CodeRenderer files={filesData} isMobile={false}/>
+            //     </div>
+            // </FullPageContainer>
+    //     )
+    // }
+
+    // return (
+        // <FullPageContainer className="tutorial">
+        //     {showCode
+        //     ? (
+        //         <div className="code__wrapper">
+        //             <CodeRenderer files={filesData} isMobile={true}/>
+        //         </div> 
+        //     )
+        //     : (
+        //         <Guide isMobile={true} identifier={post.frontmatter.title} url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} title={post.frontmatter.title}>
+        //             <MDXRenderer>
+        //                 {body}
+        //             </MDXRenderer>
+        //         </Guide>
+        //     )}
+
+        //     <div className="mobile-navbar">
+        //         <div className="mobile-navbar__icon">
+        //             {showCode ? <Book onClick={() => setShowCode(false)}/> : <BookFilled />}
+        //             <span>Guide</span>
+        //         </div>
+        //         <div className="mobile-navbar__icon">
+        //             {showCode ? <BracketFilled/> : <Bracket onClick={() => setShowCode(true)}/>}
+        //             <span>Code</span>
+        //         </div>
+        //     </div>
+        // </FullPageContainer>
+    // )
 }
