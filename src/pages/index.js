@@ -105,7 +105,7 @@ const tutorials = [
     {
         slug: 'side-menu',
         name: 'Side menu',
-        description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos, in!',
+        description: 'Many tiny animations combined into one, nice side menu.',
         className: 'c2 r3',
         component: <SideMenu />,
         direction: 'left'

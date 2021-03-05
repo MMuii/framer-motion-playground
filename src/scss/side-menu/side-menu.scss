@@ -19,8 +19,8 @@
             border-radius: 15px;
             transform: rotate(45deg);
             text-align: right;
-            padding-top: 5px;
-            padding-right: 6px;
+            padding-top: .5rem;
+            padding-right: .6rem;
             font-size: 1.8rem;
             z-index: 1;
             cursor: pointer;
@@ -139,4 +139,12 @@
             }
         }
     }
+}
+
+.side-menu__guide-wrapper {
+    height: 51rem;
+    width: 33rem;
+    margin: 3rem 0;
+    border-radius: 15px;
+    overflow: hidden;
 }

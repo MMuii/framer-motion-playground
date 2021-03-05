@@ -1,0 +1,280 @@
+---
+path: "/tutorial/side-menu"
+title: "Side menu"
+type: "tutorial"
+---
+
+import SideMenu from '../../components/side-menu/SideMenu';
+
+# Side menu
+## Many tiny animations combined into one, nice side menu.
+
+<div className="guide__component-wrapper">
+  <div className="side-menu__guide-wrapper">
+    <SideMenu />
+  </div>
+</div>
+
+This component seems to be pretty complex, but actually, it is combination of many, simple animations. When you look at all of the code at once it might be overwhelming, so let's split it into smaller fragments and analyse one by one. 
+
+Before we begin, anticipating the questions: all of the icons here come from fontawesome. It is a great and maybe the simpliest way to have plenty of icons on your site. I linked it at the bottom of the page.
+
+```jsx
+<motion.div 
+  className="container"
+  initial="closed"
+  variants={containerVariants}
+  animate={isOpened ? 'opened' : 'closed'}
+  transition={{ 
+    duration: .8, 
+    staggerChildren: .015, 
+    staggerDirection: isOpened ? 1 : -1 
+  }}
+  onMouseOver={() => controls.start({ left: 'calc(100% - 4rem)' })}
+  onMouseOut={() => !isOpened && controls.start({ left: 'calc(100% - 6rem)' })} 
+>
+  //rest of the code
+</motion.div>
+```
+
+The core mechanism here is variants propagation. Docs say: 'If a motion component has children, changes in variant will flow down through the component hierarchy. These changes in variant will flow down until a child component defines its own animate property'. This means, that if there is a parent with some variants, and it has children with samely named variants, any parent variant animation will trigger children to animate to that variant too.
+
+```jsx
+const someVariants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+}
+
+const anotherVariants = {
+  visible: { color: '#000000' },
+  hidden: { color: '#ffffff' },
+}
+
+<motion.div
+  className="parent"
+  variants={someVariants}
+  initial="visible"
+  animate="hidden"
+>
+  <motion.div
+    className="child"
+    variants={anotherVariants}
+  >
+</motion.div>
+```
+
+In the example above if parent animated to `hidden` variant, child would do the same. Also, you don't have to specify again that child's `initial` state is `initial`, `animate` animates to `animate`, etc. It 'inherits' that from parent.
+
+```jsx
+//main container's transition prop
+transition={{ 
+  duration: .8, 
+  staggerChildren: .015, 
+  staggerDirection: isOpened ? 1 : -1 
+}}
+```
+
+When you use variants, you can add to transitions props like `staggerChildren` or `staggerDirection`. `staggerChildren`, as its name says, stagger children components by some value (in seconds). If I set `staggerChildren` to 0.015, first child will animate immediately, second with delay of 0.015s, third with 0.030s delay, and so on. `staggerDirection` defines the direction in which children are staggered. `1` means from first to the last, and `-1` the opposite. 
+
+```jsx
+const containerVariants = {
+  opened: { width: '20rem' },
+  closed: { width: '8rem' }
+}
+
+const [isOpened, setIsOpened] = useState(false);
+const controls = useAnimation();
+
+<motion.div 
+  className="container"
+  initial="closed"
+  variants={containerVariants}
+  animate={isOpened ? 'opened' : 'closed'}
+  transition={{ 
+    duration: .8, 
+    staggerChildren: .015, 
+    staggerDirection: isOpened ? 1 : -1 
+  }}
+  onMouseOver={() => controls.start({ left: 'calc(100% - 4rem)' })}
+  onMouseOut={() => !isOpened && controls.start({ left: 'calc(100% - 6rem)' })} 
+>
+```
+
+Let's look again at the main container but with wider context. Main container's variants are pretty simple and the only thing they animate is its width. Animation triggers on `isOpened` state change, which is just a boolean value, keeping the data about whether the menu is opened or not. 
+
+`controls`, created with `useAnimation` are `AnimationControls`, which passed as `animate` prop to some `motion` component allows to trigger and stop animations manually with `start` and `stop` methods.
+
+`controls` are then passed to sliding-out button, which has state switcher as its `onClick`, so it can open and close the menu:
+
+```jsx
+<motion.div 
+  className="expand-btn-container"
+  animate={controls}
+  onClick={() => setIsOpened(!isOpened)}
+>
+  <motion.i 
+    className="fas fa-chevron-up" 
+    animate={{ rotate: isOpened ? -135 : 45 }}
+  />
+</motion.div>
+```
+
+This way, when you hover the main container you trigger the `controls.start()` method and button knows that it's time to animate.
+
+```jsx
+const items = [
+  {
+    text: 'Your profile',
+    icon: 'fas fa-user'
+  },
+    //I removed some items from there
+    //so the code fragment isn't that long
+    //see the completed code for the full array
+  {
+    text: false
+  },
+  {
+    text: 'New file',
+    icon: 'fas fa-file-medical'
+  }
+]
+
+//map function that renders MenuItems
+{items.map((item, i) => {
+  if (!item.text) return (
+    <motion.div 
+      className="line" 
+      key={i}
+      animate={{ 
+        width: isOpened ? '75%' : '60%',
+        transition: { duration: .8 }
+      }}
+    />
+  )
+
+  return (
+    <MenuItem 
+      isOpened={isOpened} 
+      item={item} 
+      i={i+1}
+      key={i} 
+    />
+  )
+})}
+```
+
+All the `MenuItems` are rendered by `map` function which iterates over `items` array. Each array element is an object with `text` and `icon` properties, except one which `text` is false. This one is rendered as a separating line, visible between chats and files icon. In every other case `MenuItem` is returned. 
+
+```jsx
+const MenuItem = ({ isOpened, i, item: { text, icon } }) => {
+  return (
+    <motion.div 
+      className="option-container" 
+      variants={menuIconVariants}
+      custom={i}
+      transition={{ duration: .8 }}
+    >
+      <i className={icon} />
+      <AnimatePresence>
+        {isOpened && (
+          <motion.div 
+            initial="initial"
+            variants={menuItemVariants}
+          >
+            {text}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>        
+  );
+}
+```
+
+Neither `option-container` its child `motion.div` have their own `animate` prop specified, so they inherit it from the main `container` parent and they animate on `container` variant change.
+
+`option-container` also have `custom` prop, so its variants can be dynamic. You can define variants as single argument functions that resolve whenever a variant is accessed, and you can pass the argument via `custom` prop. 
+
+```jsx
+const menuItemVariants = {
+  initial: {
+    opacity: 0
+  },
+  opened: {
+    opacity: 1,
+    transition: { 
+      duration: .9, 
+      ease: 'easeIn'
+    }
+  },
+  closed: {
+    opacity: 0,
+    transition: {
+      duration: .9,
+      ease: [.1, 1, .57, 1]
+    }
+  }
+}
+
+const menuIconVariants = {
+  opened: i => ({
+    x: [0, i*2.4, 0],
+  }), 
+  closed: i => ({
+    x: [0, -i*2.4, 0],
+  })
+}
+```
+
+`menuItemVariants` are pretty simple, affecting only opacity. Let's focus on dynamic `menuIconVariants`. As I said, variants can be dynamic by making them single argument function. These variants are used to move the icons left or right, depending on if menu is closing or opening. `i` argument, which is basically an icon's index determines how far icon can go. 
+
+`x` property is an array. By setting any property this way, you can define keyframes. `x` will animate from `0`, to `i * 2.4`, finishing with `0` again. You can set as many keyframes as you want.
+
+And, I think it's pretty clear now, that's why I'm passing `i+1` as index to `MenuItem`s, to make sure that first element won't stay in place, because if its index were 0, `x` array would be `[0, 0, 0]`.
+
+```jsx
+<div className="logo-container">
+  <div className="logo-icon">L</div>
+
+  <AnimatePresence>
+    {isOpened && (
+      <motion.div variants={menuItemVariants}>
+        <div className="logo-text">Logo</div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+```
+
+Logo animation is pretty simple aswell, it's basically the same as icon animation, inheriting `animate` from the main `container`.
+
+```jsx
+<motion.div 
+  className="search-container" 
+  animate={{ background: isOpened ? '#e6e6e6' : '#ffffff' }}
+  transition={{ duration: .6 }}
+  whileHover={{ 
+    background: isOpened ? '#d9d9d9' : '#ffffff',
+    transition: { duration: .2 } 
+  }}
+>
+  <i className="fas fa-search" />
+  <AnimatePresence>
+    {isOpened && (
+      <motion.input 
+        variants={menuItemVariants}
+        placeholder="Search"
+        initial="initial"
+        animate="opened"
+        exit="closed"
+      />
+    )}
+  </AnimatePresence>
+</motion.div>
+```
+
+`search-container` has its own `animate` changing background color on `isOpened` changes, but its `motion.input` child is animated the same way as rest of the icons. `motion.input` must have `initial`, `animate` and `exit` specified again, because its parent no longer the main container. And that's all! For more info, check the docs I linked below.
+
+## Useful links
+- [Variant propagation](https://www.framer.com/api/motion/animation/#propagation)
+- [Dynamic variants](https://www.framer.com/api/motion/animation/#dynamic-variants)
+- [AnimationControls](https://www.framer.com/api/motion/animation/#component-animation-controls)

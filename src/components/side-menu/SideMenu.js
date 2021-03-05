@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { WindowSizeContext } from '../../contexts/WindowSizeContext';
 
 const items = [
     {
@@ -32,8 +33,8 @@ const items = [
 ]
 
 const containerVariants = {
-    opened: { width: 200 },
-    closed: { width: 80 }
+    opened: { width: '20rem' },
+    closed: { width: '8rem' }
 }
 
 const menuItemVariants = {
@@ -89,13 +90,32 @@ const MenuItem = ({ isOpened, i, item: { text, icon } }) => {
 
 const SideMenu = () => {
     const [isOpened, setIsOpened] = useState(false);
+    const { width } = useContext(WindowSizeContext) || 0; 
     const controls = useAnimation();
+
+    //for mobile only
+    const handleOnClick = () => {
+        if (width >= 768) return;
+        setIsOpened(!isOpened);
+    }
+
+    //larger than mobile
+    const handleMouseOver = () => {
+        if (width < 768) return;
+        controls.start({ left: 'calc(100% - 4rem)' });
+    }
+
+    //larger than mobile
+    const handleMouseOut = () => {
+        if (width < 768) return;
+        if (!isOpened) controls.start({ left: 'calc(100% - 6rem)' });
+    }
 
     return (
         <div className="side-menu">
             <motion.div 
                 className="container"
-                initial={{ width: 80 }}
+                initial="closed"
                 variants={containerVariants}
                 animate={isOpened ? 'opened' : 'closed'}
                 transition={{ 
@@ -103,10 +123,14 @@ const SideMenu = () => {
                     staggerChildren: .015, 
                     staggerDirection: isOpened ? 1 : -1 
                 }}
-                onMouseOver={() => controls.start({ left: 'calc(100% - 4rem)' })}
-                onMouseOut={() => !isOpened && controls.start({ left: 'calc(100% - 6rem)' })} 
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut} 
+                onClick={handleOnClick}
             >
-                <div className="menu-container" >
+                <div 
+                    className="menu-container" 
+                    style={{ pointerEvents: width < 768 ? 'none' : 'all' }}
+                >
                     <div className="logo-container">
                         <div className="logo-icon">L</div>
 
