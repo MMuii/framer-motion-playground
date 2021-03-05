@@ -34,7 +34,7 @@ const Star = ({ i, isVisible, isRated }) => {
     const [isHovering, setIsHovering] = useState(false);
     const starControls = useAnimation();
     const backgroundControls = useAnimation();
-    const { width } = useContext(WindowSizeContext);
+    const { width } = useContext(WindowSizeContext) || 0;
 
     useEffect(() => {
         if (isRated && isHovering && width >= 768) starControls.start('hovered');
