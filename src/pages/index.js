@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from 'gatsby';
 import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
+// import { isBrowser, isMobile } from 'react-device-detect';
+// import { WindowSizeContext } from '../contexts/WindowSizeContext';
+import { BrowserView, MobileView } from 'react-device-detect';
 import GalleryCard from '../components/GalleryCard';
+import GalleryCardMobile from '../components/GalleryCardMobile';
 import Switch from '../components/Switch';
 import ClipPathTransition from '../components/clip-path-transition/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
@@ -245,18 +249,34 @@ const tutorials = [
 
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
+    // const { width } = useContext(WindowSizeContext) || 0; 
 
     const renderTutorials = () => {
-        return tutorials.map((tut, i) => (
-            <GalleryCard
-                key={i}
-                tutorial={tut}
-                hovering={hovering === tut}
-                setHovering={setHovering}
-            >
-                {tut.component}
-            </GalleryCard>
-        ));
+        // if (width >= 768) {
+            // console.log('rendering desktop view');
+            return tutorials.map((tut, i) => (
+                <GalleryCard
+                    key={i}
+                    tutorial={tut}
+                    hovering={hovering === tut}
+                    setHovering={setHovering}
+                >
+                    {tut.component}
+                </GalleryCard>
+            ));
+        // } 
+        
+        // else {
+        //     console.log('rendering mobile view');
+        //     return tutorials.map((tut, i) => (
+        //         <GalleryCardMobile
+        //             key={i}
+        //             tutorial={tut}
+        //         >
+        //             {tut.component}
+        //         </GalleryCardMobile>
+        //     ));
+        // }
     }
 
     return (
@@ -266,16 +286,22 @@ const IndexPage = () => {
                 <button><Link to="/tutorial">about</Link></button>
             </div>
             
-            <div className="gallery__container">
-                {renderTutorials()}
-            </div>
+            <BrowserView>
+                <div className="gallery__container">
+                    {renderTutorials()}
+                </div>
 
-            <motion.div 
-                className="gallery__dim-layer" 
-                style={{ height: use100vh() }} 
-                animate={{ opacity: hovering ? .8 : 0 }}
-                transition={{ duration: .15 }}
-            />
+                <motion.div 
+                    className="gallery__dim-layer" 
+                    style={{ height: use100vh() }} 
+                    animate={{ opacity: hovering ? .8 : 0 }}
+                    transition={{ duration: .15 }}
+                />
+            </BrowserView>
+
+            <MobileView>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, voluptatem.
+            </MobileView>
         </div>
     )
 }
