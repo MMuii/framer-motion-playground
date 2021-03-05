@@ -37,9 +37,7 @@
     "react-dom": "^16.14.0",
     "react-helmet": "^6.1.0",
     "react-syntax-highlighter": "^15.1.0",
-    "require-dir": "^1.2.0",
-    "styled-components": "^5.2.1",
-    "swiper": "^6.3.2"
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "prettier": "2.1.2"
