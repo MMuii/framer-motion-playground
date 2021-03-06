@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { useWindowSize } from '../hooks/useWindowSize';
@@ -11,24 +11,20 @@ const variants = {
     initial: {
         // clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' //poziomo
         // clipPath: 'circle(0.0% at 50% 50%)' //kółko
-        clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)' //NIEWIDOCZNY LEWO
+        // clipPath: 'polygon(0 0, 0 0, 0 100%, 0% 100%)' //NIEWIDOCZNY LEWO
+        opacity: 0
     },
     animate: {
         // clipPath: 'polygon(0 0, 100% 0%, 100% 100%, 0% 100%)'
         // clipPath: 'circle(70.7% at 50% 50%)'
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-        transition: {
-            duration: .5,
-            delay: 1
-        }
+        // clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'
+        opacity: 1
     },
     exit: {
         // clipPath: 'polygon(0 100%, 100% 100%, 100% 100%, 0% 100%)'
         // clipPath: 'circle(0.0% at 50% 50%)'
-        clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)', //NIEWIDOCZNY PRAWO
-        transition: {
-            duration: .5
-        }
+        // clipPath: 'polygon(100% 0, 100% 0, 100% 100%, 100% 100%)' //NIEWIDOCZNY PRAWO
+        opacity: 0
     }
 }
 
@@ -45,7 +41,7 @@ const PageLayout = ({ children, location }) => {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                // transition={{ duration: .5 }}
+                transition={{ duration: .5 }}
             >
                 <WindowSizeContext.Provider value={{ height, width }}>
                     {children}
