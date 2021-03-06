@@ -39,7 +39,9 @@ html {
     font-family: 'Poppins', sans-serif;
     vertical-align: baseline;
     box-sizing: border-box;
-    background: var(--font-black);
+    // background: var(--font-black);
+    background: rgb(253,252,251);
+    background-image: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
 
     * {
         box-sizing: inherit;

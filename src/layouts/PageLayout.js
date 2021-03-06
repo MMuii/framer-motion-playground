@@ -32,18 +32,18 @@ const PageLayout = ({ children, location }) => {
 
     return (
         <AnimatePresence initial={false} exitBeforeEnter>
-            <motion.main 
+            {/* <motion.main 
                 key={location.pathname}
                 variants={variants}
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 transition={{ duration: .3 }}
-            >
+            > */}
                 <WindowSizeContext.Provider value={{ height, width }}>
                     {children}
                 </WindowSizeContext.Provider>
-            </motion.main>
+            {/* </motion.main> */}
         </AnimatePresence>
     )
 }
