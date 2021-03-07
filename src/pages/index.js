@@ -264,7 +264,7 @@ const tutorials = [
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
     // const { width } = useContext(WindowSizeContext) || 0; 
-    const { deviceType } = useContext(WindowSizeContext);
+    const { deviceType } = useContext(WindowSizeContext) || '';
 
     const renderTutorials = () => {
         return tutorials.map((tut, i) => (
