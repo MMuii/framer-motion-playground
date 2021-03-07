@@ -1,4 +1,5 @@
 import React from 'react';
+import { isBrowser } from 'react-device-detect';
 import PageLayout from './src/layouts/PageLayout';
 import { MDXProvider } from '@mdx-js/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -79,3 +80,5 @@ export const wrapRootElement = ({ element }) => {
 export const wrapPageElement = ({ element, props }) => {
     return <PageLayout {...props}>{element}</PageLayout>;
 }
+
+export const shouldUpdateScroll = () => false;
