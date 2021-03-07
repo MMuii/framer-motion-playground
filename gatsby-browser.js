@@ -1,10 +1,9 @@
 import React from 'react';
-import { isBrowser } from 'react-device-detect';
 import PageLayout from './src/layouts/PageLayout';
 import { MDXProvider } from '@mdx-js/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import styled from 'styled-components';
-import { use100vh } from 'react-div-100vh';
+import UAParser from 'ua-parser-js'
 
 import './src/scss/main.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -76,28 +75,14 @@ export const wrapRootElement = ({ element }) => {
             {element}
         </MDXProvider>
     )
-
-    // const browserStyle = {
-    //     background: '#272727'
-    // }
-
-    // const mobileStyle = {
-    //     background: 'rgb(253,252,251)',
-    //     backgroundImage: 'linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%)',
-    // }
-
-    // return (
-    //     <>
-    //         <div className="app-background" style={isBrowser ? browserStyle : mobileStyle}/>
-    //         <MDXProvider components={components}>
-    //             {element}
-    //         </MDXProvider>
-    //     </>
-    // )
 }
 
 export const wrapPageElement = ({ element, props }) => {
-    return <PageLayout {...props}>{element}</PageLayout>;
+    const parser = new UAParser();
+    const deviceType = parser.getResult().device.type;
+    // console.log(parser.getResult().device.type);
+
+    return <PageLayout deviceType={deviceType} {...props}>{element}</PageLayout>;
 }
 
 export const shouldUpdateScroll = () => false;

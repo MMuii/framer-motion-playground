@@ -286,19 +286,6 @@ const IndexPage = () => {
         ))
     }
 
-    // return (
-    //     <div className="gallery--mobile">
-    //         <div className="gallery__info">
-    //             <h1>framer motion<br />playground</h1>
-    //             <button><Link to="/tutorial">about</Link></button>
-    //         </div>
-
-    //         <div className="gallery--mobile__container">
-    //             {renderTutorialsMobile()}
-    //         </div>
-    //     </div>
-    // )
-
     return (
         <>
             <BrowserView>

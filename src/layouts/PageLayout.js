@@ -2,8 +2,7 @@ import React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { useWindowSize } from '../hooks/useWindowSize';
-import { BrowserView, MobileView, isBrowser } from 'react-device-detect';
-import { use100vh } from 'react-div-100vh';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 // 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' WIDOCZNY
 // polygon(0 0, 0 0, 0 100%, 0% 100%) NIEWIDOCZNY LEWO
@@ -30,35 +29,60 @@ const variants = {
     }
 }
 
-const PageLayout = ({ children, location }) => {
+const PageLayout = ({ children, location, deviceType }) => {
     const { height, width } = useWindowSize();
     
-    return (
-        <>
-            <BrowserView>
-                <AnimatePresence initial={false} exitBeforeEnter>
-                    <motion.main 
-                        key={location.pathname}
-                        variants={variants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        transition={{ duration: .5 }}
-                    >
-                        <WindowSizeContext.Provider value={{ height, width }}>
-                            {children}
-                        </WindowSizeContext.Provider>
-                    </motion.main>
-                </AnimatePresence>
-            </BrowserView>
+    if (deviceType === 'mobile') {
+        return (
+            <WindowSizeContext.Provider value={{ height, width }}>
+                {children}
+            </WindowSizeContext.Provider>
+        )
+    }
 
-            <MobileView>
+    return (
+        <AnimatePresence initial={false} exitBeforeEnter>
+            <motion.main 
+                key={location.pathname}
+                variants={variants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: .5 }}
+            >
                 <WindowSizeContext.Provider value={{ height, width }}>
                     {children}
                 </WindowSizeContext.Provider>
-            </MobileView>
-        </>
+            </motion.main>
+        </AnimatePresence>
     )
+
+    // return (
+    //     <>
+    //         <BrowserView>
+    //             <AnimatePresence initial={false} exitBeforeEnter>
+    //                 <motion.main 
+    //                     key={location.pathname}
+    //                     variants={variants}
+    //                     initial="initial"
+    //                     animate="animate"
+    //                     exit="exit"
+    //                     transition={{ duration: .5 }}
+    //                 >
+    //                     <WindowSizeContext.Provider value={{ height, width }}>
+    //                         {children}
+    //                     </WindowSizeContext.Provider>
+    //                 </motion.main>
+    //             </AnimatePresence>
+    //         </BrowserView>
+
+    //         <MobileView>
+    //             <WindowSizeContext.Provider value={{ height, width }}>
+    //                 {children}
+    //             </WindowSizeContext.Provider>
+    //         </MobileView>
+    //     </>
+    // )
 }
 
 export default PageLayout;
