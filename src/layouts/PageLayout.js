@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { useWindowSize } from '../hooks/useWindowSize';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { BrowserView, MobileView, isMobile } from 'react-device-detect';
 
 // 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' WIDOCZNY
 // polygon(0 0, 0 0, 0 100%, 0% 100%) NIEWIDOCZNY LEWO
@@ -30,9 +30,14 @@ const variants = {
 }
 
 const PageLayout = ({ children, location, deviceType }) => {
+    const [isMobile, setIsMobile] = useState(isMobile)
     const { height, width } = useWindowSize();
     
-    if (deviceType === 'mobile') {
+    useEffect(() => {
+        setIsMobile(isMobile);
+    }, [isMobile])
+
+    if (isMobile) {
         return (
             <WindowSizeContext.Provider value={{ height, width, deviceType }}>
                 {children}

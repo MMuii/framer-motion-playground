@@ -1,8 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from 'gatsby';
 import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
-// import { isBrowser, isMobile } from 'react-device-detect';
+import { isBrowser, isMobile } from 'react-device-detect';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { BrowserView, MobileView } from 'react-device-detect';
 import GalleryCard from '../components/GalleryCard';
@@ -263,8 +263,12 @@ const tutorials = [
 
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
+    const [isMobile, setIsMobile] = useState(isMobile);
     // const { width } = useContext(WindowSizeContext) || 0; 
-    const { deviceType } = useContext(WindowSizeContext) || '';
+
+    useEffect(() => {
+        setIsMobile(isMobile);
+    }, [isMobile])
 
     const renderTutorials = () => {
         return tutorials.map((tut, i) => (
@@ -287,9 +291,7 @@ const IndexPage = () => {
         ))
     }
 
-    const height = use100vh();
-
-    if (deviceType === 'mobile') {
+    if (isMobile) {
         return (
             <div className="gallery--mobile">
                 <div className="gallery__info">
@@ -317,7 +319,7 @@ const IndexPage = () => {
 
             <motion.div 
                 className="gallery__dim-layer" 
-                style={{ height }} 
+                style={{ height: use100vh() }} 
                 animate={{ opacity: hovering ? .8 : 0 }}
                 transition={{ duration: .15 }}
             />
@@ -347,16 +349,16 @@ const IndexPage = () => {
     //         </BrowserView>
         
     //         <MobileView>
-                // <div className="gallery--mobile">
-                //     <div className="gallery__info">
-                //         <h1>framer motion<br />playground</h1>
-                //         <button><Link to="/tutorial">about</Link></button>
-                //     </div>
+    //             <div className="gallery--mobile">
+    //                 <div className="gallery__info">
+    //                     <h1>framer motion<br />playground</h1>
+    //                     <button><Link to="/tutorial">about</Link></button>
+    //                 </div>
 
-                //     <div className="gallery--mobile__container">
-                //         {renderTutorialsMobile()}
-                //     </div>
-                // </div>
+    //                 <div className="gallery--mobile__container">
+    //                     {renderTutorialsMobile()}
+    //                 </div>
+    //             </div>
     //         </MobileView>
     //     </>
     // )
