@@ -293,7 +293,7 @@ const IndexPage = () => {
 
     const height = use100vh();
 
-    if (isMobile) {
+    if (isMobileDevice) {
         return (
             <div className="gallery--mobile">
                 <div className="gallery__info">
