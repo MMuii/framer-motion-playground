@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Disqus } from 'gatsby-plugin-disqus';
-import { use100vh } from 'react-div-100vh';
 
 //TODO - w templatce dodać url, title i identifier (chyba zrobione ale disqus może dalej nie działać)
 const Guide = (/*{ children, url, identifier, title, isMobile }*/ props) => {
@@ -14,7 +13,11 @@ const Guide = (/*{ children, url, identifier, title, isMobile }*/ props) => {
     }   
 
     return (
-        <div className="guide guide__wrapper" ref={wrapperRef} onScroll={onScroll} style={{ height: use100vh() }}>
+        <div 
+            className="guide guide__wrapper" 
+            ref={wrapperRef} 
+            onScroll={onScroll} 
+        >
             {!props.isMobile && (
                 <motion.div 
                     className="guide__scroll-top" 

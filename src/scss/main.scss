@@ -123,3 +123,14 @@ a {
     text-decoration: none;
     color: var(--font-black);
 }
+
+.mobile-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(253,252,251);
+    background: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
+    pointer-events: none;
+    z-index: -1;
+}
