@@ -53,7 +53,6 @@ const PageLayout = ({ children, location }) => {
             </BrowserView>
 
             <MobileView>
-                <div className="mobile-background" style={{ height: use100vh() }}/>
                 <WindowSizeContext.Provider value={{ height, width }}>
                     {children}
                 </WindowSizeContext.Provider>

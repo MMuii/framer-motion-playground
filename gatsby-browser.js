@@ -4,6 +4,7 @@ import PageLayout from './src/layouts/PageLayout';
 import { MDXProvider } from '@mdx-js/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import styled from 'styled-components';
+import { use100vh } from 'react-div-100vh';
 
 import './src/scss/main.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -70,10 +71,22 @@ const components =  {
 }
 
 export const wrapRootElement = ({ element }) => {
+    const browserStyle = {
+        background: '#272727'
+    }
+
+    const mobileStyle = {
+        background: 'rgb(253,252,251)',
+        backgroundImage: 'linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%)',
+    }
+
     return (
-        <MDXProvider components={components}>
-            {element}
-        </MDXProvider>
+        <>
+            <div className="app-background" style={isBrowser ? browserStyle : mobileStyle}/>
+            <MDXProvider components={components}>
+                {element}
+            </MDXProvider>
+        </>
     )
 }
 
