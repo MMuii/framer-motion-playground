@@ -39,6 +39,7 @@ html {
     font-family: 'Poppins', sans-serif;
     vertical-align: baseline;
     box-sizing: border-box;
+    background: #272727;
 
     * {
         box-sizing: inherit;
@@ -54,6 +55,11 @@ html {
 
     @media (max-width: 768px) {
         font-size: 43.75%;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+        background: rgb(253,252,251);
+        background: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
     }
 }
 
@@ -119,13 +125,4 @@ pre {
 a {
     text-decoration: none;
     color: var(--font-black);
-}
-
-.app-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-height: 100%;
-    z-index: -1;
 }

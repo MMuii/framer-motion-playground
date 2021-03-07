@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
 // import { isBrowser, isMobile } from 'react-device-detect';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import GalleryCard from '../components/GalleryCard';
 import GalleryCardMobile from '../components/GalleryCardMobile';
 import Switch from '../components/Switch';
@@ -286,79 +286,55 @@ const IndexPage = () => {
         ))
     }
 
-    const height = use100vh();
-
-    if (isBrowser) {
-        return (
-            <div className="gallery">
-                <div className="gallery__info">
-                    <h1>framer motion<br />playground</h1>
-                    <button><Link to="/tutorial">about</Link></button>
-                </div>
-
-                <div className="gallery__container">
-                    {renderTutorials()}
-                </div>
-
-                <motion.div 
-                    className="gallery__dim-layer" 
-                    style={{ height }} 
-                    animate={{ opacity: hovering ? .8 : 0 }}
-                    transition={{ duration: .15 }}
-                />
-            </div>
-        )
-    } else {
-        return (
-            <div className="gallery--mobile">
-                <div className="gallery__info">
-                    <h1>framer motion<br />playground</h1>
-                    <button><Link to="/tutorial">about</Link></button>
-                </div>
-
-                <div className="gallery--mobile__container">
-                    {renderTutorialsMobile()}
-                </div>
-            </div>
-        )
-    }
-
     // return (
-    //     <>
-    //         <BrowserView>
-                // <div className="gallery">
-                //     <div className="gallery__info">
-                //         <h1>framer motion<br />playground</h1>
-                //         <button><Link to="/tutorial">about</Link></button>
-                //     </div>
+    //     <div className="gallery--mobile">
+    //         <div className="gallery__info">
+    //             <h1>framer motion<br />playground</h1>
+    //             <button><Link to="/tutorial">about</Link></button>
+    //         </div>
 
-                //     <div className="gallery__container">
-                //         {renderTutorials()}
-                //     </div>
-
-                //     <motion.div 
-                //         className="gallery__dim-layer" 
-                //         style={{ height: use100vh() }} 
-                //         animate={{ opacity: hovering ? .8 : 0 }}
-                //         transition={{ duration: .15 }}
-                //     />
-                // </div>
-    //         </BrowserView>
-        
-    //         <MobileView>
-                // <div className="gallery--mobile">
-                //     <div className="gallery__info">
-                //         <h1>framer motion<br />playground</h1>
-                //         <button><Link to="/tutorial">about</Link></button>
-                //     </div>
-
-                //     <div className="gallery--mobile__container">
-                //         {renderTutorialsMobile()}
-                //     </div>
-                // </div>
-    //         </MobileView>
-    //     </>
+    //         <div className="gallery--mobile__container">
+    //             {renderTutorialsMobile()}
+    //         </div>
+    //     </div>
     // )
+
+    return (
+        <>
+            <BrowserView>
+                <div className="gallery">
+                    <div className="gallery__info">
+                        <h1>framer motion<br />playground</h1>
+                        <button><Link to="/tutorial">about</Link></button>
+                    </div>
+
+                    <div className="gallery__container">
+                        {renderTutorials()}
+                    </div>
+
+                    <motion.div 
+                        className="gallery__dim-layer" 
+                        style={{ height: use100vh() }} 
+                        animate={{ opacity: hovering ? .8 : 0 }}
+                        transition={{ duration: .15 }}
+                    />
+                </div>
+            </BrowserView>
+        
+            <MobileView>
+                <div className="gallery--mobile">
+                    <div className="gallery__info">
+                        <h1>framer motion<br />playground</h1>
+                        <button><Link to="/tutorial">about</Link></button>
+                    </div>
+
+                    <div className="gallery--mobile__container">
+                        {renderTutorialsMobile()}
+                    </div>
+                </div>
+            </MobileView>
+        </>
+    )
 }
 
 export default IndexPage

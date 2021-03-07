@@ -32,15 +32,6 @@ const variants = {
 
 const PageLayout = ({ children, location }) => {
     const { height, width } = useWindowSize();
-
-    const browserStyle = {
-        background: '#272727'
-    }
-
-    const mobileStyle = {
-        background: 'rgb(253,252,251)',
-        backgroundImage: 'linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%)',
-    }
     
     return (
         <>
@@ -66,8 +57,6 @@ const PageLayout = ({ children, location }) => {
                     {children}
                 </WindowSizeContext.Provider>
             </MobileView>
-
-            <div className="app-background" style={isBrowser ? browserStyle : mobileStyle}/>
         </>
     )
 }
