@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { useWindowSize } from '../hooks/useWindowSize';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { use100vh } from 'react-div-100vh';
 
 // 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' WIDOCZNY
 // polygon(0 0, 0 0, 0 100%, 0% 100%) NIEWIDOCZNY LEWO
@@ -53,7 +52,7 @@ const PageLayout = ({ children, location }) => {
             </BrowserView>
 
             <MobileView>
-                <main style={{ height: use100vh() }}>
+                <main>
                     <WindowSizeContext.Provider value={{ height, width }}>
                         {children}
                     </WindowSizeContext.Provider>
