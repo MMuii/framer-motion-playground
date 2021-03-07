@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import { MobileView, BrowserView } from 'react-device-detect';
+import useDeviceDetect from '../hooks/useDeviceDetect';
 import FullPageContainer from '../components/FullPageContainer';
 import Guide from '../components/Guide';
 import CodeRenderer from '../components/CodeRenderer';
@@ -34,7 +34,7 @@ export const query = graphql`
 
 export default function Template ({ data: { mdx: post, allMdx: { nodes: files } }}) {
     const [showCode, setShowCode] = useState(false);
-
+    const { isMobile } = useDeviceDetect();
     const { body } = post;
 
     const filesData = files.map((file, idx) => {
@@ -47,60 +47,58 @@ export default function Template ({ data: { mdx: post, allMdx: { nodes: files } 
         }
     })
 
+    if (isMobile) {
+        return (
+            <FullPageContainer className="tutorial">
+                {showCode
+                    ? (
+                        <div className="code__wrapper">
+                            <CodeRenderer files={filesData} isMobile={true}/>
+                        </div> 
+                    )
+                    : (
+                        <Guide 
+                            isMobile={true} 
+                            identifier={post.frontmatter.title} 
+                            url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
+                            title={post.frontmatter.title}
+                        >
+                            <MDXRenderer>
+                                {body}
+                            </MDXRenderer>
+                        </Guide>
+                    )
+                }
+
+                <div className="mobile-navbar">
+                    <div className="mobile-navbar__icon">
+                        {showCode ? <Book onClick={() => setShowCode(false)}/> : <BookFilled />}
+                        <span>Guide</span>
+                    </div>
+                    <div className="mobile-navbar__icon">
+                        {showCode ? <BracketFilled/> : <Bracket onClick={() => setShowCode(true)}/>}
+                        <span>Code</span>
+                    </div>
+                </div>
+            </FullPageContainer>
+        )
+    }
+
     return (
-        <>
-            <BrowserView>
-                <FullPageContainer className="tutorial">
-                    <Guide 
-                        isMobile={false} 
-                        identifier={post.frontmatter.title} 
-                        url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
-                        title={post.frontmatter.title}
-                    >
-                        <MDXRenderer>
-                            {body}
-                        </MDXRenderer>
-                    </Guide>
-                    <div className="code__wrapper">
-                        <CodeRenderer files={filesData} isMobile={false}/>
-                    </div>
-                </FullPageContainer>
-            </BrowserView>
-
-            <MobileView>
-                <FullPageContainer className="tutorial">
-                    {showCode
-                        ? (
-                            <div className="code__wrapper">
-                                <CodeRenderer files={filesData} isMobile={true}/>
-                            </div> 
-                        )
-                        : (
-                            <Guide 
-                                isMobile={true} 
-                                identifier={post.frontmatter.title} 
-                                url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
-                                title={post.frontmatter.title}
-                            >
-                                <MDXRenderer>
-                                    {body}
-                                </MDXRenderer>
-                            </Guide>
-                        )
-                    }
-
-                    <div className="mobile-navbar">
-                        <div className="mobile-navbar__icon">
-                            {showCode ? <Book onClick={() => setShowCode(false)}/> : <BookFilled />}
-                            <span>Guide</span>
-                        </div>
-                        <div className="mobile-navbar__icon">
-                            {showCode ? <BracketFilled/> : <Bracket onClick={() => setShowCode(true)}/>}
-                            <span>Code</span>
-                        </div>
-                    </div>
-                </FullPageContainer>
-            </MobileView>
-        </>
+        <FullPageContainer className="tutorial">
+            <Guide 
+                isMobile={false} 
+                identifier={post.frontmatter.title} 
+                url={`https://relaxed-kepler-bb2656.netlify.app${post.frontmatter.path}`} 
+                title={post.frontmatter.title}
+            >
+                <MDXRenderer>
+                    {body}
+                </MDXRenderer>
+            </Guide>
+            <div className="code__wrapper">
+                <CodeRenderer files={filesData} isMobile={false}/>
+            </div>
+        </FullPageContainer>
     )
 }

@@ -87,12 +87,13 @@
 }
 
 .gallery--mobile {
-    padding-top: 100px;
-    height: 100%;
+    padding: 100px 0;
+    height: min-content;
     width: 100%;
+    background: rgb(253,252,251);
+    background: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
 
     &__container {
-        padding-bottom: 200px;
         height: min-content;
         width: 100%;
         display: grid;
@@ -100,8 +101,6 @@
         grid-auto-flow: row;
         place-items: center center;
         row-gap: 3rem;
-        background: rgb(253,252,251);
-        background: linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%);
     }
 }
 
