@@ -30,14 +30,14 @@ const variants = {
 }
 
 const PageLayout = ({ children, location, deviceType }) => {
-    const [isMobile, setIsMobile] = useState(isMobile || false);
+    const [isMobileDevice, setIsMobileDevice] = useState(isMobile);
     const { height, width } = useWindowSize();
     
     useEffect(() => {
-        setIsMobile(isMobile);
+        setIsMobileDevice(isMobile);
     }, [isMobile])
 
-    if (isMobile) {
+    if (isMobileDevice) {
         return (
             <WindowSizeContext.Provider value={{ height, width, deviceType }}>
                 {children}

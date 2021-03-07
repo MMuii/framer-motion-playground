@@ -263,12 +263,12 @@ const tutorials = [
 
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
-    const [isMobile, setIsMobile] = useState(isMobile || false);
+    const [isMobileDevice, setIsMobileDevice] = useState(isMobile);
     // const { width } = useContext(WindowSizeContext) || 0; 
 
     useEffect(() => {
-        setIsMobile(isMobile);
-    }, [isMobile])
+        setIsMobileDevice(isMobile);
+    }, [isMobile]);
 
     const renderTutorials = () => {
         return tutorials.map((tut, i) => (
