@@ -3,7 +3,6 @@ import PageLayout from './src/layouts/PageLayout';
 import { MDXProvider } from '@mdx-js/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import styled from 'styled-components';
-import UAParser from 'ua-parser-js';
 
 import './src/scss/main.scss';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -78,13 +77,7 @@ export const wrapRootElement = ({ element }) => {
 }
 
 export const wrapPageElement = ({ element, props }) => {
-    const parser = new UAParser();
-    const deviceType = parser.getResult().device.type;
-    console.log(parser.getResult().device.type);
-
-    return (
-        <PageLayout deviceType={deviceType} {...props}>{element}</PageLayout>
-    );
+    return <PageLayout {...props}>{element}</PageLayout>
 }
 
 export const shouldUpdateScroll = () => false;
