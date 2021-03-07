@@ -263,7 +263,7 @@ const tutorials = [
 
 const IndexPage = () => {
     const [hovering, setHovering] = useState(null);
-    const [isMobile, setIsMobile] = useState(isMobile);
+    const [isMobile, setIsMobile] = useState(isMobile || false);
     // const { width } = useContext(WindowSizeContext) || 0; 
 
     useEffect(() => {
@@ -290,6 +290,8 @@ const IndexPage = () => {
             </GalleryCardMobile>
         ))
     }
+
+    const height = use100vh();
 
     if (isMobile) {
         return (
@@ -319,7 +321,7 @@ const IndexPage = () => {
 
             <motion.div 
                 className="gallery__dim-layer" 
-                style={{ height: use100vh() }} 
+                style={{ height }} 
                 animate={{ opacity: hovering ? .8 : 0 }}
                 transition={{ duration: .15 }}
             />

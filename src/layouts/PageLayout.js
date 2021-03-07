@@ -30,7 +30,7 @@ const variants = {
 }
 
 const PageLayout = ({ children, location, deviceType }) => {
-    const [isMobile, setIsMobile] = useState(isMobile)
+    const [isMobile, setIsMobile] = useState(isMobile || false);
     const { height, width } = useWindowSize();
     
     useEffect(() => {
