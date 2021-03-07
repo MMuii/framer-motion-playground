@@ -71,23 +71,29 @@ const components =  {
 }
 
 export const wrapRootElement = ({ element }) => {
-    const browserStyle = {
-        background: '#272727'
-    }
-
-    const mobileStyle = {
-        background: 'rgb(253,252,251)',
-        backgroundImage: 'linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%)',
-    }
-
     return (
-        <>
-            <div className="app-background" style={isBrowser ? browserStyle : mobileStyle}/>
-            <MDXProvider components={components}>
-                {element}
-            </MDXProvider>
-        </>
+        <MDXProvider components={components}>
+            {element}
+        </MDXProvider>
     )
+
+    // const browserStyle = {
+    //     background: '#272727'
+    // }
+
+    // const mobileStyle = {
+    //     background: 'rgb(253,252,251)',
+    //     backgroundImage: 'linear-gradient(135deg, rgba(253,252,251,1) 0%, rgba(226,209,195,1) 100%)',
+    // }
+
+    // return (
+    //     <>
+    //         <div className="app-background" style={isBrowser ? browserStyle : mobileStyle}/>
+    //         <MDXProvider components={components}>
+    //             {element}
+    //         </MDXProvider>
+    //     </>
+    // )
 }
 
 export const wrapPageElement = ({ element, props }) => {
