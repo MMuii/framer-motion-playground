@@ -34,7 +34,7 @@ const PageLayout = ({ children, location, deviceType }) => {
     
     if (deviceType === 'mobile') {
         return (
-            <WindowSizeContext.Provider value={{ height, width }}>
+            <WindowSizeContext.Provider value={{ height, width, deviceType }}>
                 {children}
             </WindowSizeContext.Provider>
         )
@@ -50,7 +50,7 @@ const PageLayout = ({ children, location, deviceType }) => {
                 exit="exit"
                 transition={{ duration: .5 }}
             >
-                <WindowSizeContext.Provider value={{ height, width }}>
+                <WindowSizeContext.Provider value={{ height, width, deviceType }}>
                     {children}
                 </WindowSizeContext.Provider>
             </motion.main>
