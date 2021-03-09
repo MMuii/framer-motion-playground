@@ -184,7 +184,7 @@ const IndexPage = () => {
             <div className="gallery--mobile">
                 <div className="gallery__info">
                     <h1>framer motion<br />playground</h1>
-                    <button><Link to="/tutorial">about</Link></button>
+                    <Link to="/about">about</Link>
                 </div>
 
                 <div className="gallery--mobile__container">
@@ -195,23 +195,28 @@ const IndexPage = () => {
     }
 
     return (
-        <div className="gallery">
-            <div className="gallery__info">
-                <h1>framer motion<br />playground</h1>
-                <button><Link to="/tutorial">about</Link></button>
-            </div>
+        <>
+            <div className="gallery">
+                <div className="gallery__info">
+                    <h1>framer motion<br />playground</h1>
+                    <Link to="/about">about</Link>
+                </div>
 
-            <div className="gallery__container">
-                {renderTutorials()}
-            </div>
+                <div className="gallery__container">
+                    {renderTutorials()}
+                </div>
 
-            <motion.div 
-                className="gallery__dim-layer" 
-                style={{ height }} 
-                animate={{ opacity: hovering ? .8 : 0 }}
-                transition={{ duration: .15 }}
-            />
-        </div>
+                <motion.div 
+                    className="gallery__dim-layer" 
+                    style={{ height }} 
+                    animate={{ opacity: hovering ? .8 : 0 }}
+                    transition={{ duration: .15 }}
+                />
+            </div>
+            <div className="footer">
+                <span>made by</span> <Link to="https://github.com/MMuii">mmuii</Link>
+            </div>
+        </>
     )
 }
 

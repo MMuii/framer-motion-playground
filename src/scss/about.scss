@@ -1,0 +1,72 @@
+.about {
+    padding: 150px 0;
+    height: 100%;
+    width: 100%;
+
+    @media (max-width: 768px) {
+        padding: 75px 0;
+    }
+
+    .container {
+        height: 100%;
+        width: 87rem;
+        margin: 0 auto;
+        text-align: justify;
+        line-height: 1.4;
+    
+        @media (max-width: 768px) {
+            width: 100%;
+            padding: 0 8rem;
+        }
+
+        .wrapper {
+            width: 50%;
+
+            @media (max-width: 1200px) {
+                width: 60%;
+            }
+        
+            @media (max-width: 992px) {
+                width: 70%;
+            }
+        
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+
+            h1 {
+                color: var(--font-black);
+                font-size: 4.8rem;
+                font-weight: 900;
+                padding-bottom: 3rem;
+            }
+
+            p {
+                font-size: 1.4rem;
+                padding-bottom: 3rem;
+            }
+    
+            a {
+                font-weight: 700;
+            }
+
+            .footer-about {
+                font-size: 1.2rem;
+
+                span {
+                    opacity: .5;
+                }
+            
+                a {
+                    opacity: .8;
+                    font-weight: 400;
+            
+                    &:hover {
+                        opacity: 1;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

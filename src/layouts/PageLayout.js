@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { AnimatePresence, motion } from 'framer-motion';
 import { WindowSizeContext } from '../contexts/WindowSizeContext';
 import { useWindowSize } from '../hooks/useWindowSize';

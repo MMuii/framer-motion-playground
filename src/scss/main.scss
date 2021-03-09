@@ -1,6 +1,7 @@
 @import "./variables.scss";
 @import "./cp-transition.scss";
 @import "./gallery.scss";
+@import "./about.scss";
 @import "./gallery-card.scss";
 @import "./utilities.scss";
 @import "./switch.scss";
@@ -126,4 +127,26 @@ pre {
 a {
     text-decoration: none;
     color: var(--font-black);
+}
+
+.footer {
+    position: relative;
+    width: calc(87rem);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 120px;
+    font-size: 1.2rem;
+
+    span {
+        opacity: .5;
+    }
+
+    a {
+        opacity: .8;
+
+        &:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    }
 }
