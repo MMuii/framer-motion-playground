@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from 'gatsby';
 import { motion } from 'framer-motion';
 import { use100vh } from 'react-div-100vh';
@@ -9,11 +9,8 @@ import Switch from '../components/Switch';
 import ClipPathTransition from '../components/clip-path-transition/ClipPathTransition';
 import CustomCursor from '../components/custom-cursor/CustomCursor';
 import InfiniteCards from '../components/infinite-cards/InfiniteCards';
-// import TextWave from '../components/text-wave/TextWave';
-// import Text3d from '../components/text-3d/Text3d';
 import UnderlinedMenu from '../components/underlined-menu/UnderlinedMenu';
 import Checkbox from '../components/checkbox/Checkbox';
-// import RotatingCard from '../components/rotating-card/RotatingCard';
 import UploadButton from '../components/upload-button/UploadButton';
 import IphoneAnimation from '../components/iphone-animation/IphoneAnimation';
 import Flashcards from '../components/flashcards/Flashcards';

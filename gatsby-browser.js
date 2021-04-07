@@ -2,6 +2,7 @@ import React from 'react';
 import PageLayout from './src/layouts/PageLayout';
 import { MDXProvider } from '@mdx-js/react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
+import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
 import './src/scss/main.scss';
@@ -70,9 +71,21 @@ const components =  {
 
 export const wrapRootElement = ({ element }) => {
     return (
-        <MDXProvider components={components}>
-            {element}
-        </MDXProvider>
+        <>
+            <Helmet 
+                title="Framer Motion Playground" 
+                meta={[
+                    {
+                        name: 'description',
+                        content: 'Interactive blog with Framer Motion Tutorials.'
+                    }
+                ]}    
+            />
+
+            <MDXProvider components={components}>
+                {element}
+            </MDXProvider>
+        </>
     )
 }
 
